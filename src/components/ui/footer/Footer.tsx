@@ -24,7 +24,7 @@ export const Footer = () => {
         href='/'
         className="mx-3"
       >
-        Ubicaciones
+        Ubicación
       </Link>
 
 
