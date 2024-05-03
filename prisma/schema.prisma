@@ -18,10 +18,10 @@ enum Size {
 }
 
 enum Gender {
-  men
-  women
+  carnes
+  pastas
   kid
-  unisex
+  vegetales
 }
 
 enum Role {
