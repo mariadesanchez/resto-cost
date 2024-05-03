@@ -251,3 +251,4 @@ export const ProductForm = ({ product, categories }: Props) => {
     </form>
   );
 };
+

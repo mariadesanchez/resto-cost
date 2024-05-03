@@ -18,10 +18,10 @@ enum Size {
 }
 
 enum Gender {
-  carnes
-  pastas
+  men
+  women
   kid
-  vegetales
+  unisex
 }
 
 enum Role {
@@ -161,4 +161,5 @@ model OrderAddress {
   Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
 }
+
 
