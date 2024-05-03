@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma';
 
 
-export const getCategoryByid = async( id: string ) => {
+export async function getCategoryByid( id: string ) {
 
 
   try {

@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 cloudinary.config( process.env.CLOUDINARY_URL ?? '' );
 
 
-export const deleteProductImage = async (imageUrl: string) => {
+export async function deleteProductImage(imageUrl: string){
   try {
     // Buscar la imagen basada en la URL antes de eliminarla
     const imageToDelete = await prisma.productImage.findFirst({

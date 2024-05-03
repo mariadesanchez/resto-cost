@@ -19,7 +19,7 @@ const categorySchema = z.object({
   
 });
 
-export const createUpdateCategory = async( formData: FormData ) => {
+export async function createUpdateCategory( formData: FormData ) {
 
   const data = Object.fromEntries( formData );
   const categoryParsed = categorySchema.safeParse( data );

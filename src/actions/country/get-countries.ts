@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma';
 
 
-export const getCountries = async() => {
+export async function getCountries(){
 
   try {
     

@@ -3,8 +3,8 @@
 import prisma from '@/lib/prisma';
 
 
-
-export const deleteUserAddress = async( userId: string ) => {
+export async function deleteUserAddress(userId: string){
+// export const deleteUserAddress = async( userId: string ) => {
 
   try {
 

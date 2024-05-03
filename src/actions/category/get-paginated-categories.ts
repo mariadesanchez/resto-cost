@@ -9,11 +9,11 @@ interface PaginationOptions {
   // gender?: Gender;
 }
 
-export const getPaginatedCategories = async ({
+export async function getPaginatedCategories({
   page = 1,
   take = 12,
   // gender,
-}: PaginationOptions) => {
+}: PaginationOptions) {
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
 

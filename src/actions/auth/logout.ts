@@ -4,7 +4,7 @@ import { signOut } from '@/auth.config';
 // import { redirect } from 'next/navigation';
 
 
-export const logout = async() => {
+export async function logout(){
 
   await signOut();
   // redirect("/auth/login");

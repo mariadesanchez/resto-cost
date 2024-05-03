@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma';
 
 
-export const setTransactionId = async( orderId: string, transactionId: string ) => {
+export async function setTransactionId( orderId: string, transactionId: string ){
 
   try {
     

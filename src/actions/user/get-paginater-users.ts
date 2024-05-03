@@ -4,7 +4,7 @@ import { auth } from '@/auth.config';
 import prisma from '@/lib/prisma';
 
 
-export const getPaginatedUsers = async() => {
+export async function getPaginatedUsers(){
 
   const session = await auth();
 

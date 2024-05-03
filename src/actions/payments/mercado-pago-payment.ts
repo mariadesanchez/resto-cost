@@ -9,7 +9,7 @@ interface Order {
   total: number;
 }
 
-export const mercadoPagoCheckPayment = async (order: Order) => {
+export async function mercadoPagoCheckPayment(order: Order){
   const accessToken = process.env.NEXT_MERCADO_PAGO_ACCESS_TOKEN!;
   
   const client = new MercadoPagoConfig({ accessToken });

@@ -34,7 +34,7 @@ const productSchema = z.object({
 
 
 
-export const createUpdateProduct = async( formData: FormData ) => {
+export async function createUpdateProduct( formData: FormData ){
 
   const data = Object.fromEntries( formData );
   const productParsed = productSchema.safeParse( data );

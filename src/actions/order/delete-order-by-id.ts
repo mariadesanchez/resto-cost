@@ -4,7 +4,7 @@
 import { auth } from '@/auth.config';
 import prisma from '@/lib/prisma';
 
-export const deleteOrderById = async (id: string) => {
+export async function deleteOrderById(id: string){
   const session = await auth();
 
   if (!session?.user) {

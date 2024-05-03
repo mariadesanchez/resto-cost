@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import bcryptjs from 'bcryptjs'
 
 
-export const registerUser = async( name: string, email: string, password: string ) => {
+export async function registerUser( name: string, email: string, password: string ){
 
 
   try {

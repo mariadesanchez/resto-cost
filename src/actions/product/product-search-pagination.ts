@@ -9,11 +9,11 @@ interface PaginationOptions {
   query: string;
 }
 
-export const getPaginatedProductsSearchWithImages = async ({
+export async function getPaginatedProductsSearchWithImages ({
   page = 1,
   take = 6,
   query,
-}: PaginationOptions) => {
+}: PaginationOptions){
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
   // const productsSearch = await searchProductByTerm(query);

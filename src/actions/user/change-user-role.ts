@@ -4,8 +4,8 @@ import { auth } from '@/auth.config';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
-
-export const changeUserRole = async( userId: string, role: string ) => {
+// export async function getUserAddress(userId: string){
+  export async function changeUserRole( userId: string, role: string ){
 
   const session = await auth();
 

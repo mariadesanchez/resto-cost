@@ -10,10 +10,10 @@ interface ProductToOrder {
   size: Size;
 }
 
-export const placeOrder = async (
+export async function placeOrder(
   productIds: ProductToOrder[],
   address: Address
-) => {
+){
   const session = await auth();
   const userId = session?.user.id;
 

@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 
 
 
-export const getPaginatedOrders = async() => {
+export async function getPaginatedOrders() {
 
   const session = await auth();
 
