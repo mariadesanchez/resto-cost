@@ -25,7 +25,7 @@ export default async function OrdersPage({ searchParams }: Props) {
 
   return (
     <>
-      <Title title="Agregar o Editar Producto" />
+      <Title title="Agregar o Editar Plato" />
 
       <div className="flex justify-end mb-5">
         <Link href="/admin/product/new" className="btn-primary">
@@ -59,7 +59,7 @@ export default async function OrdersPage({ searchParams }: Props) {
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Género
+                Tipo
               </th>
               <th
                 scope="col"
@@ -71,7 +71,7 @@ export default async function OrdersPage({ searchParams }: Props) {
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Tallas
+               Peso(gramos)
               </th>
 
               <th
@@ -116,7 +116,7 @@ export default async function OrdersPage({ searchParams }: Props) {
                 </td>
 
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  {product.gender}
+                  {product.plato}
                 </td>
 
                 <td className="text-sm text-gray-900 font-bold px-6 py-4 whitespace-nowrap">

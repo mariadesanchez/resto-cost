@@ -1,18 +1,18 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Gender } from "@prisma/client";
+import { Plato } from "@prisma/client";
 
 interface PaginationOptions {
   page?: number;
   take?: number;
-  gender?: Gender;
+  plato?: Plato;
 }
 
 export async function getPaginatedProductsWithImages({
   page = 1,
   take = 6,
-  gender,
+  plato,
 }: PaginationOptions){
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -30,9 +30,9 @@ export async function getPaginatedProductsWithImages({
           },
         },
       },
-      //! Por género
+      //! Por plato
       where: {
-        gender: gender,
+        plato: plato,
       },
     });
 
@@ -40,7 +40,7 @@ export async function getPaginatedProductsWithImages({
     // todo:
     const totalCount = await prisma.product.count({
       where: {
-        gender: gender,
+        plato: plato,
       },
     });
     

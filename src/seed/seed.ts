@@ -11,7 +11,7 @@ interface SeedProduct {
   tags: string[];
   title: string;
   type: ValidTypes;
-  gender: 'men' | 'women' | 'kid' | 'unisex';
+  plato: 'carne' | 'pastas' | 'kid' | 'vegetales';
 }
 
 interface SeedUser {
@@ -74,7 +74,7 @@ export const initialData: SeedData = {
       type: 'shirts',
       tags: [ 'sweatshirt' ],
       title: "Men’s Chill Crew Neck Sweatshirt",
-      gender: 'men'
+      plato: 'carne'
     }
     // ,
     // {

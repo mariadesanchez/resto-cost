@@ -32,27 +32,33 @@ export const TopMenu = () => {
       <div className="flex justify-center md:justify-start md:ml-auto">
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/carnes"
+          href="/plato/carnes"
         >
           Carnes
         </Link>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/pastas"
+          href="/plato/pastas"
         >
           Pastas
         </Link>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/kid"
+          href="/plato/kid"
         >
           Niños
         </Link>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/vegetales"
+          href="/plato/vegetales"
         >
           Vegetales
+        </Link>
+        <Link
+          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          href="/plato/pescados"
+        >
+          Pescados
         </Link>
       </div>
 

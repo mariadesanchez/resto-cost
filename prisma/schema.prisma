@@ -17,11 +17,11 @@ enum Size {
   XXXL
 }
 
-enum Gender {
-  men
-  women
+enum Plato {
+  carne
+  pastas
   kid
-  unisex
+  vegetales
 }
 
 enum Role {
@@ -45,7 +45,7 @@ model Product {
   sizes       Size[]   @default([])
   slug        String   @unique
   tags        String[] @default([])
-  gender      Gender
+  plato      Plato
 
   // Relaciones
 
@@ -55,7 +55,7 @@ model Product {
   images ProductImage[]
   OrderItem    OrderItem[]
 
-  @@index([gender])
+  @@index([plato])
 }
 
 model ProductImage {
@@ -161,5 +161,4 @@ model OrderAddress {
   Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
 }
-
 

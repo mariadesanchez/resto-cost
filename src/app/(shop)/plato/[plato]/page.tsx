@@ -3,14 +3,15 @@ export const revalidate = 60; // 60 segundos
 import { getPaginatedProductsWithImages } from '@/actions';
 import { Pagination, ProductGrid, Title } from '@/components';
 
-import { Gender } from '@prisma/client';
+import { Plato } from '@prisma/client';
 import { redirect } from 'next/navigation';
 
 
 
 interface Props {
+ 
   params: {
-    gender: string;
+    plato: string;
   },
   searchParams: {
     page?: string; 
@@ -18,28 +19,31 @@ interface Props {
 }
 
 
-export default async function GenderByPage({ params, searchParams }: Props) {
+export default async function PlatoByPage({ params, searchParams }: Props) {
 
-  const { gender } = params;
+  const { plato } = params;
 
   const page = searchParams.page ? parseInt( searchParams.page ) : 1;
 
   const { products, currentPage, totalPages } = await getPaginatedProductsWithImages({ 
     page, 
-    gender: gender as Gender,
+    plato: plato as Plato,
   });
 
 
   if ( products.length === 0 ) {
-    redirect(`/gender/${ gender }`);
+    redirect(`/plato/${ plato }`);
   }
   
 
   const labels: Record<string, string>  = {
-    'men': ' hombres',
-    'women': ' mujeres',
-    'kid': ' niños',
-    'unisex': 'unisex'
+    'carne': 'carne',
+    'pastas': 'pastas',
+    'kid': 'infantil',
+    'vegetales': 'vegetales',
+    'pescados': 'pescados'
+   
+    
   }
 
   
@@ -47,13 +51,14 @@ export default async function GenderByPage({ params, searchParams }: Props) {
   return (
     <>
       <Title
-        title={` ${ labels[gender] }`}
+        title={` ${ labels[plato] }`}
         // subtitle="Todos los productos"
         className="mb-2"
       />
 
       <ProductGrid 
-        products={ products }
+      products={products}
+        // products={ products }
       />
 
       <Pagination totalPages={ totalPages }  />

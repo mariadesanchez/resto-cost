@@ -2,7 +2,7 @@
 CREATE TYPE "Size" AS ENUM ('XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL');
 
 -- CreateEnum
-CREATE TYPE "Gender" AS ENUM ('men', 'women', 'kid', 'unisex');
+CREATE TYPE "Plato" AS ENUM ('carne', 'pastas', 'kid', 'vegetales');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('admin', 'user');
@@ -25,7 +25,7 @@ CREATE TABLE "Product" (
     "sizes" "Size"[] DEFAULT ARRAY[]::"Size"[],
     "slug" TEXT NOT NULL,
     "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "gender" "Gender" NOT NULL,
+    "plato" "Plato" NOT NULL,
     "categoryId" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -129,7 +129,7 @@ CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 CREATE UNIQUE INDEX "Product_slug_key" ON "Product"("slug");
 
 -- CreateIndex
-CREATE INDEX "Product_gender_idx" ON "Product"("gender");
+CREATE INDEX "Product_plato_idx" ON "Product"("plato");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

@@ -6,6 +6,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { createUpdateProduct, deleteProductImage } from "@/actions";
 import { useRouter } from 'next/navigation';
+import { useEffect } from "react";
 
 
 
@@ -24,7 +25,10 @@ interface FormInputs {
   inStock: number;
   sizes: string[];
   tags: string;
-  gender: "men" | "women" | "kid" | "unisex";
+
+  plato: "carne" | "pastas" | "kid" | "vegetales";
+  
+  
   categoryId: string;
 
   images?: FileList;
@@ -76,7 +80,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append("sizes", productToSave.sizes.toString());
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
-    formData.append("gender", productToSave.gender);
+    formData.append("plato", productToSave.plato);
     
     if ( images ) {
       for ( let i = 0; i < images.length; i++  ) {
@@ -98,6 +102,15 @@ export const ProductForm = ({ product, categories }: Props) => {
 
   };
 
+  const title = watch('title');
+
+  useEffect(() => {
+    if (title) {
+      const slug = title.trim().toLowerCase().replace(/\s+/g, '_');
+      setValue('slug', slug);
+    }
+  }, [title, setValue]);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -105,23 +118,25 @@ export const ProductForm = ({ product, categories }: Props) => {
     >
       {/* Textos */}
       <div className="w-full">
-        <div className="flex flex-col mb-2">
-          <span>Título</span>
-          <input
-            type="text"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("title", { required: true })}
-          />
-        </div>
+      <div className="flex flex-col mb-2">
+        <span>Título</span>
+        <input
+          type="text"
+          className="p-2 border rounded-md bg-gray-200"
+          {...register("title", { required: true })}
+        />
+      </div>
 
-        <div className="flex flex-col mb-2">
-          <span>Slug</span>
-          <input
-            type="text"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("slug", { required: true })}
-          />
-        </div>
+      <div className="flex flex-col mb-2">
+        <span>Slug</span>
+        <input
+          type="text"
+          className="p-2 border rounded-md bg-gray-200"
+          {...register("slug", { required: true })}
+          readOnly // Para que el campo sea de solo lectura
+          value={watch('slug')} // El valor se obtiene del hook watch
+        />
+      </div>
 
         <div className="flex flex-col mb-2">
           <span>Descripción</span>
@@ -151,16 +166,17 @@ export const ProductForm = ({ product, categories }: Props) => {
         </div>
 
         <div className="flex flex-col mb-2">
-          <span>Gender</span>
+          <span>Plato</span>
           <select
             className="p-2 border rounded-md bg-gray-200"
-            {...register("gender", { required: true })}
+            {...register("plato", { required: true })}
           >
             <option value="">[Seleccione]</option>
-            <option value="men">Men</option>
-            <option value="women">Women</option>
+            <option value="carne">Carne</option>
+            <option value="pastas">Pastas</option>
             <option value="kid">Kid</option>
-            <option value="unisex">Unisex</option>
+            <option value="vegetales">Vegetales</option>
+            <option value="pescados">Pescados</option>
           </select>
         </div>
 

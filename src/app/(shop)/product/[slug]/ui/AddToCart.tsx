@@ -42,11 +42,11 @@ export const AddToCart = ({ product }: Props) => {
     <>
       {posted && !size && (
         <span className="mt-2 text-red-500 fade-in">
-          Debe de seleccionar una talla*
+          Debe de seleccionar una cantidad *
         </span>
       )}
 
-      {/* Selector de Tallas */}
+      {/* Selector de Cantidad */}
     
       {product.inStock > 0 && (
         <>
