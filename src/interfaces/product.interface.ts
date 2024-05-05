@@ -32,7 +32,7 @@ export interface ProductImage {
 }
 
 
-type Category = "carne" | "pastas" | "kid" | "vegetales";
+type Category = "carne" | "pastas" | "kid" | "vegetales"|"pescados";
 export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 export type Type = 'shirts'|'pants'|'hoodies'|'hats';
 export type Plato = "carne" | "pastas" | "kid" | "vegetales"| "pescados";

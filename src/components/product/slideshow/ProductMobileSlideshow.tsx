@@ -21,8 +21,11 @@ export const ProductMobileSlideshow = ({ images, title, className }: Props) => {
     <div className={className}>
       <Swiper
         style={{
-          width: '100vw',
-          height: '500px'
+          width: '90vw',
+          height: '300px',
+          borderRadius: '10px', // Ajusta el valor según el radio que desees
+          overflow: 'hidden', 
+        
         }}
         pagination
         autoplay={{

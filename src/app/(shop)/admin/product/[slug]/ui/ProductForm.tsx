@@ -26,7 +26,7 @@ interface FormInputs {
   sizes: string[];
   tags: string;
 
-  plato: "carne" | "pastas" | "kid" | "vegetales";
+  plato: "carne" | "pastas" | "kid" | "vegetales"|"pescados";
   
   
   categoryId: string;

@@ -75,13 +75,13 @@ export default async function ProductBySlugPage({ params }: Props) {
 
       {/* Detalles */}
       <div className="col-span-1 px-5">
-        <StockLabel slug={product.slug} />
+        {/* <StockLabel slug={product.slug} /> */}
 
         <h1 className={` ${titleFont.className} antialiased font-bold text-xl`}>
           {product.title}
         </h1>
         { product.inStock > 0 &&
-        <p className="text-lg mb-5">`${product.price}</p>
+        <p className="text-lg mb-5">${product.price}</p>
          }
         <AddToCart product={ product } />
 

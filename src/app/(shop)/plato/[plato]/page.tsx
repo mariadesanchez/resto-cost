@@ -39,9 +39,9 @@ export default async function PlatoByPage({ params, searchParams }: Props) {
   const labels: Record<string, string>  = {
     'carne': 'carne',
     'pastas': 'pastas',
-    'kid': 'infantil',
-    'vegetales': 'vegetales',
-    'pescados': 'pescados'
+    'kid': 'Menú infantil',
+    'vegetales': 'vegetales de estación',
+    'pescados': 'pescados frescos'
    
     
   }
@@ -53,7 +53,7 @@ export default async function PlatoByPage({ params, searchParams }: Props) {
       <Title
         title={` ${ labels[plato] }`}
         // subtitle="Todos los productos"
-        className="mb-2"
+        className="mb-2, text-xs"
       />
 
       <ProductGrid 

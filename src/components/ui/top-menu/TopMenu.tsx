@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { IoSearchOutline, IoCartOutline } from 'react-icons/io5';
+import { IoSearchOutline, IoCartOutline, IoMenuOutline } from 'react-icons/io5';
 import { titleFont } from '@/config/fonts';
 import { useCartStore, useUIStore } from '@/store';
 
@@ -31,39 +31,51 @@ export const TopMenu = () => {
       {/* Géneros */}
       <div className="flex justify-center md:justify-start md:ml-auto">
         <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/plato/carnes"
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          href="/plato/carne"
         >
-          Carnes
+          Carne
         </Link>
         <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/pastas"
         >
           Pastas
         </Link>
         <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/kid"
         >
           Niños
         </Link>
         <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/vegetales"
         >
           Vegetales
         </Link>
         <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/pescados"
         >
           Pescados
         </Link>
+        <Link
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          href="/plato/tragos"
+        >
+          Tragos
+        </Link>
+        <Link
+          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          href="/plato/dulces"
+        >
+          Dulces
+        </Link>
       </div>
 
       {/* Search */}
-      <form className="relative w-full mx-auto mt-4 md:mt-5 md:ml-4">
+      {/* <form className="relative w-full mx-auto mt-4 md:mt-5 md:ml-4">
         <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
           Buscar
         </label>
@@ -89,7 +101,7 @@ export const TopMenu = () => {
             </button>
           </Link>
         </div>
-      </form>
+      </form> */}
 
       {/* Right Menu */}
       <div className="flex items-center mt-4 md:mt-0 md:ml-auto">
@@ -109,7 +121,7 @@ export const TopMenu = () => {
           onClick={openSideMenu}
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
         >
-          Menú
+           <IoMenuOutline className="w-5 h-5" />
         </button>
       </div>
     </nav>
