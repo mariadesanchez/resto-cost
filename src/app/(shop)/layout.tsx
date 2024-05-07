@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Footer, Sidebar, TopMenu } from '@/components';
+import { Menu } from '@/components/menu/Menu';
 
 export default function ShopLayout({ children }: { children: React.ReactNode; }) {
   return (
@@ -21,7 +22,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode; })
       <div className="px-0 sm:px-10 relative z-10">
         {children}
       </div>
-
+      <Menu/>
       {/* <Footer /> */}
 
   

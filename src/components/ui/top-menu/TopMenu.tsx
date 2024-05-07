@@ -21,7 +21,7 @@ export const TopMenu = () => {
       {/* Logo */}
       <div>
         <Link href="/">
-          <span className={`${titleFont.className} antialiased font-bold text-white`}>
+          <span className={`${titleFont.className} antialiased font-bold text-white text-3xl`}>
             Cocina
     
        | Blanch</span>
@@ -31,13 +31,13 @@ export const TopMenu = () => {
       {/* Géneros */}
       <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-white`}>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
           href="/plato/carne"
         >
           Carne
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
           href="/plato/pastas"
         >
           Pastas
@@ -49,25 +49,25 @@ export const TopMenu = () => {
           Niños
         </Link> */}
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
           href="/plato/vegetales"
         >
           Vegetales
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
           href="/plato/pescados"
         >
           Pescados
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
           href="/plato/tragos"
         >
           Tragos
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
           href="/plato/dulces"
         >
           Dulces
@@ -109,11 +109,11 @@ export const TopMenu = () => {
         <Link href={(totalItemsInCart === 0 && loaded) ? '/empty' : "/cart"} className="mx-2">
           <div className="relative">
             {(loaded && totalItemsInCart > 0) && (
-              <span className="fade-in absolute text-xs px-1 rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white">
+              <span className="fade-in absolute text-xs px-1 rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white text-3xl">
                 {totalItemsInCart}
               </span>
             )}
-            <IoCartOutline className="w-5 h-5 text-white" />
+            <IoCartOutline className="w-5 h-5 text-white text-3xl" />
           </div>
         </Link>
 
