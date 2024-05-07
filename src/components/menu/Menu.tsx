@@ -2,7 +2,7 @@ import { titleFont } from '@/config/fonts';
 export const Menu = () => {
     return (
         <div style={{ 
-            fontSize: '36px', 
+            fontSize: '32px', 
             lineHeight: '1.1', 
             margin: '0 auto', 
             maxWidth: '600px', 
