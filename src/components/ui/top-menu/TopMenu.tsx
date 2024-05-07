@@ -21,7 +21,7 @@ export const TopMenu = () => {
       {/* Logo */}
       <div>
         <Link href="/">
-          <span className={`${titleFont.className} antialiased font-bold`}>
+          <span className={`${titleFont.className} antialiased font-bold text-white`}>
             Cocina
     
        | Blanch</span>
@@ -29,45 +29,45 @@ export const TopMenu = () => {
       </div>
 
       {/* Géneros */}
-      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto`}>
+      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-white`}>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/carne"
         >
           Carne
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/pastas"
         >
           Pastas
         </Link>
         {/* <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/kid"
         >
           Niños
         </Link> */}
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/vegetales"
         >
           Vegetales
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/pescados"
         >
           Pescados
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/tragos"
         >
           Tragos
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
+          className="m-1 p-1 rounded-md transition-all hover:bg-black"
           href="/plato/dulces"
         >
           Dulces
@@ -113,15 +113,15 @@ export const TopMenu = () => {
                 {totalItemsInCart}
               </span>
             )}
-            <IoCartOutline className="w-5 h-5" />
+            <IoCartOutline className="w-5 h-5 text-white" />
           </div>
         </Link>
 
         <button
           onClick={openSideMenu}
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+          className="m-2 p-2 rounded-md transition-all hover:bg-black"
         >
-           <IoMenuOutline className="w-5 h-5" />
+           <IoMenuOutline className="w-5 h-5 text-white" />
         </button>
       </div>
     </nav>

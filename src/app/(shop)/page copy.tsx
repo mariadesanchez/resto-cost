@@ -29,8 +29,8 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <>
-   
-{/* 
+{/*    
+
     <ProductGrid 
       products={products}
     />
@@ -40,4 +40,3 @@ export default async function Home({ searchParams }: Props) {
   </>
   );
 }
-
