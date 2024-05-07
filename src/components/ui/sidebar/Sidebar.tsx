@@ -14,7 +14,6 @@ import {
   IoSearchOutline,
   IoShirtOutline,
   IoTicketOutline,
-
 } from "react-icons/io5";
 
 import { useUIStore } from "@/store";
@@ -33,7 +32,7 @@ export const Sidebar = () => {
     <div>
       {/* Background black */}
       {isSideMenuOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-30" />
+        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-40" />
       )}
 
       {/* Blur */}
@@ -47,7 +46,7 @@ export const Sidebar = () => {
       {/* Sidemenu */}
       <nav
         className={clsx(
-          "fixed p-5 right-0 top-0 w-[250px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
+          "fixed p-5 right-0 top-0 w-[250px] h-screen bg-grey-500 z-20 shadow-2xl transform transition-all duration-300",
           {
             "translate-x-full": !isSideMenuOpen,
           }
@@ -55,110 +54,95 @@ export const Sidebar = () => {
       >
         <IoCloseOutline
           size={50}
-          className="absolute top-5 right-5 cursor-pointer"
+          className="absolute top-5 right-5 cursor-pointer text-white"
           onClick={() => closeMenu()}
         />
 
-        {/* Input */}
-        {/* <div className="relative mt-14">
-          <IoSearchOutline size={20} className="absolute top-2 left-2" />
-          <input
-            type="text"
-            placeholder="Buscar"
-            className="w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-xl border-gray-200 focus:outline-none focus:border-blue-500"
-          />
-        </div> */}
-
         {/* Menú */}
-
         {isAuthenticated && (
           <>
-            <Link
+            {/* <Link
               href="/profile"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+              className={`${titleFont.className}  text-white flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-allm`}
             >
               <IoPersonOutline size={30} />
-              <span className="ml-3 text-xl">Perfil</span>
-            </Link>
+              <span className="ml-3 text-xl" style={{ color: "white" }}>Perfil</span>
+            </Link> */}
 
             <Link
               href="/orders"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+              className={`${titleFont.className} flex items-center mt-10 p-2
+               hover:bg-gray-600 rounded transition-all text-white`}
             >
               <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl">Ordenes</span>
+              <span className="ml-3 text-xl" style={{ color: "white" }}>Mis Ordenes</span>
             </Link>
-
-           
           </>
         )}
 
         {isAuthenticated && (
           <button
-            className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            className="flex w-full items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all  text-white"
             onClick={() => logout()}
           >
             <IoLogOutOutline size={30} />
-            <span  className={`${titleFont.className} ml-3 text-xl`}>Salir</span>
+            <span className={`${titleFont.className} ml-3 text-xl`} style={{ color: "white" }}>Salir</span>
           </button>
-       
         )}
-        
 
         {!isAuthenticated && (
           <Link
             href="/auth/login"
-            className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+            className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
             onClick={() => closeMenu()}
           >
             <IoLogInOutline size={30} />
-            <span className="ml-3 text-xl">Ingresar</span>
+            <span className="ml-3 text-xl" style={{ color: "white" }}>Ingresar</span>
           </Link>
         )}
 
         {isAdmin && (
           <>
             {/* Line Separator */}
-            <div className="w-full h-px bg-gray-200 my-10" />
+            <div className="w-full h-px bg-gray-400 my-10" />
 
             <Link
               href="/admin/products"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
             >
               <IoRestaurantOutline size={30} />
-              <span className="ml-3 text-xl">Platos</span>
+              <span className="ml-3 text-xl" style={{ color: "white" }}>Platos</span>
             </Link>
 
             <Link
               href="/admin/categories"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
             >
-              < IoAppsOutline size={30} />
-              <span className="ml-3 text-xl">Categorías</span>
+              <IoAppsOutline size={30} />
+              <span className="ml-3 text-xl" style={{ color: "white" }}>Categorías</span>
             </Link>
 
             <Link
               href="/admin/orders"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
             >
               <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl">Ordenes</span>
+              <span className="ml-3 text-xl" style={{ color: "white" }}>Ordenes</span>
             </Link>
 
             <Link
               href="/admin/users"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
             >
               <IoPeopleOutline size={30} />
-              <span className="ml-3 text-xl">Usuarios</span>
+              <span className="ml-3 text-xl" style={{ color: "white" }}>Usuarios</span>
             </Link>
-            
           </>
         )}
       </nav>
