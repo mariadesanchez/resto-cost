@@ -23,13 +23,13 @@ export const TopMenu = () => {
         <Link href="/">
           <span className={`${titleFont.className} antialiased font-bold`}>
             Cocina
-          </span>
-          <span> | Blanch</span>
+    
+       | Blanch</span>
         </Link>
       </div>
 
       {/* Géneros */}
-      <div className="flex justify-center md:justify-start md:ml-auto">
+      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto`}>
         <Link
           className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/carne"
@@ -42,12 +42,12 @@ export const TopMenu = () => {
         >
           Pastas
         </Link>
-        <Link
+        {/* <Link
           className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/kid"
         >
           Niños
-        </Link>
+        </Link> */}
         <Link
           className="m-1 p-1 rounded-md transition-all hover:bg-gray-100"
           href="/plato/vegetales"

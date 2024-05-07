@@ -19,6 +19,7 @@ import {
 
 import { useUIStore } from "@/store";
 import { logout } from "@/actions";
+import { titleFont } from "@/config/fonts";
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
@@ -75,7 +76,7 @@ export const Sidebar = () => {
             <Link
               href="/profile"
               onClick={() => closeMenu()}
-              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             >
               <IoPersonOutline size={30} />
               <span className="ml-3 text-xl">Perfil</span>
@@ -84,7 +85,7 @@ export const Sidebar = () => {
             <Link
               href="/orders"
               onClick={() => closeMenu()}
-              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             >
               <IoTicketOutline size={30} />
               <span className="ml-3 text-xl">Ordenes</span>
@@ -100,7 +101,7 @@ export const Sidebar = () => {
             onClick={() => logout()}
           >
             <IoLogOutOutline size={30} />
-            <span className="ml-3 text-xl">Salir</span>
+            <span  className={`${titleFont.className} ml-3 text-xl`}>Salir</span>
           </button>
        
         )}
@@ -109,7 +110,7 @@ export const Sidebar = () => {
         {!isAuthenticated && (
           <Link
             href="/auth/login"
-            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             onClick={() => closeMenu()}
           >
             <IoLogInOutline size={30} />
@@ -125,7 +126,7 @@ export const Sidebar = () => {
             <Link
               href="/admin/products"
               onClick={() => closeMenu()}
-              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             >
               <IoRestaurantOutline size={30} />
               <span className="ml-3 text-xl">Platos</span>
@@ -134,7 +135,7 @@ export const Sidebar = () => {
             <Link
               href="/admin/categories"
               onClick={() => closeMenu()}
-              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             >
               < IoAppsOutline size={30} />
               <span className="ml-3 text-xl">Categorías</span>
@@ -143,7 +144,7 @@ export const Sidebar = () => {
             <Link
               href="/admin/orders"
               onClick={() => closeMenu()}
-              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             >
               <IoTicketOutline size={30} />
               <span className="ml-3 text-xl">Ordenes</span>
@@ -152,7 +153,7 @@ export const Sidebar = () => {
             <Link
               href="/admin/users"
               onClick={() => closeMenu()}
-              className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
             >
               <IoPeopleOutline size={30} />
               <span className="ml-3 text-xl">Usuarios</span>
