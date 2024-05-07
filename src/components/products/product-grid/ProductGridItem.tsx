@@ -7,6 +7,7 @@ import { ProductImage } from '../../product/product-image/ProductImage';
 import { Product } from '@/interfaces';
 import { useState } from 'react';
 import { useSession } from "next-auth/react";
+import { titleFont } from '@/config/fonts';
 
 interface Props {
   product: Product;
@@ -22,7 +23,7 @@ export const ProductGridItem = ( { product }: Props ) => {
   const isAdmin = session?.user.role === "admin";
 
   return (
-    <div className="rounded-md overflow-hidden fade-in">
+    <div  className={`${titleFont.className} rounded-md overflow-hidden fade-in`}>
  
       <Link href={ `/product/${ product.slug }` }>
          <Image
