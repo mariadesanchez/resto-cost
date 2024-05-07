@@ -8,13 +8,9 @@ datasource db {
 }
 
 enum Size {
-  XS
-  S
-  M
-  L
-  XL
-  XXL
-  XXXL
+ CH
+ M
+ G
 }
 
 enum Plato {
@@ -24,6 +20,12 @@ enum Plato {
   vegetales
   pescados
 }
+
+// enum Porcion {
+//   chica
+//   mediana
+//   grande
+// }
 
 enum Role {
   admin
@@ -43,11 +45,11 @@ model Product {
   description String
   inStock     Int
   price       Float    @default(0)
-  sizes       Size[]   @default([])
+  sizes      Size[]   @default([])
   slug        String   @unique
   tags        String[] @default([])
   plato      Plato
-
+  // porciones    Porcion[]   @default([])
   // Relaciones
 
   category   Category @relation(fields: [categoryId], references: [id])
@@ -55,8 +57,9 @@ model Product {
 
   images ProductImage[]
   OrderItem    OrderItem[]
-
-  @@index([plato])
+   @@index([plato])
+   @@index([sizes])
+  //  @@index([porciones])
 }
 
 model ProductImage {
@@ -136,6 +139,8 @@ model OrderItem {
   quantity Int
   price    Float
   size     Size
+  // porcion Porcion
+
 
   // Relaciones
   order   Order  @relation(fields: [orderId], references: [id])
@@ -162,4 +167,3 @@ model OrderAddress {
   Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
 }
-

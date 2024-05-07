@@ -15,8 +15,9 @@ interface Props {
   categories: Category[];
 }
 
-const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-
+const sizes = ["CH", "M", "G"];
+// const porciones = ["chica", "mediana", "grande"];
+// const platos = ["carne", "pastas", "kid", "vegetales", "pescados"];
 interface FormInputs {
   title: string;
   slug: string;
@@ -25,12 +26,9 @@ interface FormInputs {
   inStock: number;
   sizes: string[];
   tags: string;
-
   plato: "carne" | "pastas" | "kid" | "vegetales"|"pescados";
-  
-  
+  // porciones: string[];
   categoryId: string;
-
   images?: FileList;
 }
 
@@ -50,6 +48,8 @@ export const ProductForm = ({ product, categories }: Props) => {
       ...product,
       tags: product.tags?.join(", "),
       sizes: product.sizes ?? [],
+      // porciones: product.porciones ?? [],
+  
 
       images: undefined,
     },
@@ -62,6 +62,17 @@ export const ProductForm = ({ product, categories }: Props) => {
     sizes.has(size) ? sizes.delete(size) : sizes.add(size);
     setValue("sizes", Array.from(sizes));
   };
+
+  // watch("porciones");
+
+  // const onPorcionChanged = (porcion: string) => {
+  //   const porciones = new Set(getValues("porciones"));
+  //   porciones.has(porcion) ? porciones.delete(porcion) : porciones.add(porcion);
+  //   setValue("porciones", Array.from(porciones));
+  // };
+
+
+
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
@@ -78,6 +89,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append("price", productToSave.price.toString());
     formData.append("inStock", productToSave.inStock.toString());
     formData.append("sizes", productToSave.sizes.toString());
+    // formData.append("porciones", productToSave.porciones.toString());
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
     formData.append("plato", productToSave.plato);
@@ -178,7 +190,7 @@ export const ProductForm = ({ product, categories }: Props) => {
             <option value="vegetales">Vegetales</option>
             <option value="pescados">Pescados</option>
           </select>
-        </div>
+        </div> 
 
         <div className="flex flex-col mb-2">
           <span>Categoria</span>
@@ -192,11 +204,11 @@ export const ProductForm = ({ product, categories }: Props) => {
                 {category.name}
               </option>
             ))}
-          </select>
+            </select>
+          </div>
+  
+          <button className="btn-primary w-full">Guardar</button>
         </div>
-
-        <button className="btn-primary w-full">Guardar</button>
-      </div>
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
@@ -210,8 +222,9 @@ export const ProductForm = ({ product, categories }: Props) => {
         </div>
 
         {/* As checkboxes */}
-        <div className="flex flex-col">
-          <span>Tallas</span>
+      
+          <div className="flex flex-col">
+          <span>Porción</span>
           <div className="flex flex-wrap">
             {sizes.map((size) => (
               // bg-blue-500 text-white <--- si está seleccionado
@@ -229,7 +242,6 @@ export const ProductForm = ({ product, categories }: Props) => {
               </div>
             ))}
           </div>
-
           <div className="flex flex-col mb-2">
             <span>Fotos</span>
             <input
@@ -258,7 +270,7 @@ export const ProductForm = ({ product, categories }: Props) => {
                   className="btn-danger w-full rounded-b-xl"
                 >
                   Eliminar
-                </button>
+                  </button>
               </div>
             ))}
           </div>

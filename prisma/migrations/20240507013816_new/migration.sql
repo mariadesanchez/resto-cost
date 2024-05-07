@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Size" AS ENUM ('XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL');
+CREATE TYPE "Size" AS ENUM ('CH', 'M', 'G');
 
 -- CreateEnum
-CREATE TYPE "Plato" AS ENUM ('carne', 'pastas', 'kid', 'vegetales');
+CREATE TYPE "Plato" AS ENUM ('carne', 'pastas', 'kid', 'vegetales', 'pescados');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('admin', 'user');
@@ -130,6 +130,9 @@ CREATE UNIQUE INDEX "Product_slug_key" ON "Product"("slug");
 
 -- CreateIndex
 CREATE INDEX "Product_plato_idx" ON "Product"("plato");
+
+-- CreateIndex
+CREATE INDEX "Product_sizes_idx" ON "Product"("sizes");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

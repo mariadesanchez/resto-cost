@@ -1,3 +1,5 @@
+
+
 export interface Product {
   images: any;
   id: string;
@@ -9,6 +11,7 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
+  // porciones : Porcion[];
   //todo: type: Type;
   plato: Category;
 }
@@ -22,6 +25,7 @@ export interface CartProduct {
   size: Size;
   image: string;
   inStock: number;
+  // porcion: Porcion;
 }
 
 
@@ -33,6 +37,7 @@ export interface ProductImage {
 
 
 type Category = "carne" | "pastas" | "kid" | "vegetales"|"pescados";
-export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
+export type Size = 'CH'|'M'|'G';
+// export type Porcion = 'chica'|'mediana'|'grande';
 export type Type = 'shirts'|'pants'|'hoodies'|'hats';
 export type Plato = "carne" | "pastas" | "kid" | "vegetales"| "pescados";

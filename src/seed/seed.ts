@@ -11,7 +11,8 @@ interface SeedProduct {
   tags: string[];
   title: string;
   type: ValidTypes;
-  plato: 'carne' | 'pastas' | 'kid' | 'vegetales';
+  plato: 'carne' | 'pastas' | 'kid' | 'vegetales'|'pescados';
+  // porciones: ValidPorciones[];
 }
 
 interface SeedUser {
@@ -23,8 +24,9 @@ interface SeedUser {
 
 
 
-type ValidSizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+type ValidSizes = 'CH' | 'M' | 'G';
 type ValidTypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
+// type ValidPorciones = 'chica' | 'mediana' | 'grande';
 
 interface SeedData {
   users: SeedUser[];
@@ -69,7 +71,8 @@ export const initialData: SeedData = {
       ],
       inStock: 7,
       price: 75,
-      sizes: [ 'XS', 'S', 'M', 'L', 'XL', 'XXL' ],
+      sizes: [ 'CH', 'M', 'G' ],
+      // porciones: [ 'chica', 'mediana', 'grande' ],
       slug: "mens_chill_crew_neck_sweatshirt",
       type: 'shirts',
       tags: [ 'sweatshirt' ],
