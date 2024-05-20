@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Footer, Sidebar, TopMenu } from '@/components';
-import { Menu } from '@/components/menu/Menu';
+import { Menu } from '@/app/(shop)/menu/MenuDay';
 
 export default function ShopLayout({ children }: { children: React.ReactNode; }) {
   return (
@@ -8,7 +8,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode; })
       {/* Imagen de fondo */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
         <Image
-          src="/imgs/cocina-branch.jpg"
+          src="/imgs/marmol-background.jpg"
           alt="Starman"
           layout="fill"
           objectFit="cover"
@@ -22,8 +22,8 @@ export default function ShopLayout({ children }: { children: React.ReactNode; })
       <div className="px-0 sm:px-10 relative z-10">
         {children}
       </div>
-      <Menu/>
-      {/* <Footer /> */}
+  
+      <Footer />
 
   
     </main>

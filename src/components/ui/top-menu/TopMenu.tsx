@@ -21,7 +21,7 @@ export const TopMenu = () => {
       {/* Logo */}
       <div>
         <Link href="/">
-          <span className={`${titleFont.className} antialiased font-bold text-white text-3xl`}>
+          <span className={`${titleFont.className} antialiased font-bold text-black text-3xl`}>
             Cocina
     
        | Blanch</span>
@@ -29,45 +29,45 @@ export const TopMenu = () => {
       </div>
 
       {/* Géneros */}
-      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-white`}>
+      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-black`}>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/carne"
         >
           Carne
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/pastas"
         >
           Pastas
         </Link>
         {/* <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white"
           href="/plato/kid"
         >
           Niños
         </Link> */}
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/vegetales"
         >
           Vegetales
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/pescados"
         >
           Pescados
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/tragos"
         >
           Tragos
         </Link>
         <Link
-          className="m-1 p-1 rounded-md transition-all hover:bg-black text-3xl"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/dulces"
         >
           Dulces
@@ -76,7 +76,7 @@ export const TopMenu = () => {
 
       {/* Search */}
       {/* <form className="relative w-full mx-auto mt-4 md:mt-5 md:ml-4">
-        <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+        <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-black">
           Buscar
         </label>
         <div className="flex items-center">
@@ -86,7 +86,7 @@ export const TopMenu = () => {
           <input
             type="search"
             id="default-search"
-            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Buscar por producto, por marca..."
             required
             value={searchQuery}
@@ -95,7 +95,7 @@ export const TopMenu = () => {
           <Link href={`/search/${encodeURIComponent(searchQuery)}`}>
             <button
               type="button"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-black bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Buscar
             </button>
@@ -109,19 +109,19 @@ export const TopMenu = () => {
         <Link href={(totalItemsInCart === 0 && loaded) ? '/empty' : "/cart"} className="mx-2">
           <div className="relative">
             {(loaded && totalItemsInCart > 0) && (
-              <span className="fade-in absolute text-xs px-1 rounded-full font-bold -top-2 -right-2 bg-blue-700 text-white text-3xl">
+              <span className="fade-in absolute text-xs px-1 rounded-full font-bold -top-2 -right-2 bg-blue-700 text-black text-3xl">
                 {totalItemsInCart}
               </span>
             )}
-            <IoCartOutline className="w-5 h-5 text-white text-3xl" />
+            <IoCartOutline className="w-5 h-5 text-black text-3xl" />
           </div>
         </Link>
 
         <button
           onClick={openSideMenu}
-          className="m-2 p-2 rounded-md transition-all hover:bg-black"
+          className="m-2 p-2 rounded-md transition-all hover:bg-white"
         >
-           <IoMenuOutline className="w-5 h-5 text-white" />
+           <IoMenuOutline className="w-5 h-5 text-black" />
         </button>
       </div>
     </nav>

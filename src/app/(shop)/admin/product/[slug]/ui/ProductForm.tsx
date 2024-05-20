@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { Category, Product, ProductImage as ProductWithImage } from "@/interfaces";
+import { Category, Product,ProductImage as ProductWithImage } from "@/interfaces";
 import Image from "next/image";
 import clsx from "clsx";
 import { createUpdateProduct, deleteProductImage } from "@/actions";
@@ -16,8 +16,7 @@ interface Props {
 }
 
 const sizes = ["CH", "M", "G"];
-// const porciones = ["chica", "mediana", "grande"];
-// const platos = ["carne", "pastas", "kid", "vegetales", "pescados"];
+
 interface FormInputs {
   title: string;
   slug: string;
@@ -27,12 +26,11 @@ interface FormInputs {
   sizes: string[];
   tags: string;
   plato: "carne" | "pastas" | "kid" | "vegetales"|"pescados";
-  // porciones: string[];
   categoryId: string;
   images?: FileList;
 }
 
-export const ProductForm = ({ product, categories }: Props) => {
+export const ProductForm = ({ product,categories }: Props) => {
 
   const router = useRouter();
 
@@ -48,9 +46,6 @@ export const ProductForm = ({ product, categories }: Props) => {
       ...product,
       tags: product.tags?.join(", "),
       sizes: product.sizes ?? [],
-      // porciones: product.porciones ?? [],
-  
-
       images: undefined,
     },
   });
@@ -62,17 +57,6 @@ export const ProductForm = ({ product, categories }: Props) => {
     sizes.has(size) ? sizes.delete(size) : sizes.add(size);
     setValue("sizes", Array.from(sizes));
   };
-
-  // watch("porciones");
-
-  // const onPorcionChanged = (porcion: string) => {
-  //   const porciones = new Set(getValues("porciones"));
-  //   porciones.has(porcion) ? porciones.delete(porcion) : porciones.add(porcion);
-  //   setValue("porciones", Array.from(porciones));
-  // };
-
-
-
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
@@ -89,7 +73,6 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append("price", productToSave.price.toString());
     formData.append("inStock", productToSave.inStock.toString());
     formData.append("sizes", productToSave.sizes.toString());
-    // formData.append("porciones", productToSave.porciones.toString());
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
     formData.append("plato", productToSave.plato);
@@ -176,21 +159,20 @@ export const ProductForm = ({ product, categories }: Props) => {
             {...register("tags", { required: true })}
           />
         </div>
-
-        <div className="flex flex-col mb-2">
+        {/* <div className="flex flex-col mb-2">
           <span>Plato</span>
           <select
             className="p-2 border rounded-md bg-gray-200"
             {...register("plato", { required: true })}
           >
             <option value="">[Seleccione]</option>
-            <option value="carne">Carne</option>
-            <option value="pastas">Pastas</option>
-            <option value="kid">Kid</option>
-            <option value="vegetales">Vegetales</option>
-            <option value="pescados">Pescados</option>
-          </select>
-        </div> 
+            {platos.map((plato) => (
+              <option key={plato.id} value={plato.id}>
+                {plato.name}
+              </option>
+            ))}
+            </select>
+          </div> */}
 
         <div className="flex flex-col mb-2">
           <span>Categoria</span>

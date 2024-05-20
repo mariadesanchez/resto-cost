@@ -1,7 +1,5 @@
 
-// export * from './address/delete-user-address';
-// export * from './address/get-user-address';
-// export * from './address/set-user-address';
+
 export {deleteUserAddress}from './address/delete-user-address';
 export {getUserAddress}from './address/get-user-address';
 export {setUserAddress}from './address/set-user-address';
@@ -34,5 +32,12 @@ export * from './product/get-product-by-slug';
 export * from './product/get-stock-by-slug';
 export * from './product/product-pagination';
 
+
 export * from './user/change-user-role';
 export * from './user/get-paginater-users';
+
+export * from './ingrediente/create-update-ingrediente';
+export * from './ingrediente/get-ingrediente-by-slug';
+export * from './ingrediente/get-ingrediente-by-productId';
+export * from './mermas/get-mermas'
+export * from './product/get-product-by-id'

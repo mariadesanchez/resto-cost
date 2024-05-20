@@ -9,12 +9,11 @@ import {
   IoLogInOutline,
   IoLogOutOutline,
   IoPeopleOutline,
-  IoPersonOutline,
   IoRestaurantOutline,
-  IoSearchOutline,
-  IoShirtOutline,
   IoTicketOutline,
 } from "react-icons/io5";
+import { MdOutlinePriceChange } from "react-icons/md";
+
 
 import { useUIStore } from "@/store";
 import { logout } from "@/actions";
@@ -32,7 +31,7 @@ export const Sidebar = () => {
     <div>
       {/* Background black */}
       {isSideMenuOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-black opacity-40" />
+        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-white opacity-40" />
       )}
 
       {/* Blur */}
@@ -54,7 +53,7 @@ export const Sidebar = () => {
       >
         <IoCloseOutline
           size={50}
-          className="absolute top-5 right-5 cursor-pointer text-white"
+          className="absolute top-5 right-5 cursor-pointer text-black"
           onClick={() => closeMenu()}
         />
 
@@ -64,42 +63,42 @@ export const Sidebar = () => {
             {/* <Link
               href="/profile"
               onClick={() => closeMenu()}
-              className={`${titleFont.className}  text-white flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-allm`}
+              className={`${titleFont.className}  text-black flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-allm`}
             >
               <IoPersonOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "white" }}>Perfil</span>
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Perfil</span>
             </Link> */}
 
             <Link
               href="/orders"
               onClick={() => closeMenu()}
               className={`${titleFont.className} flex items-center mt-10 p-2
-               hover:bg-gray-600 rounded transition-all text-white`}
+               hover:bg-gray-600 rounded transition-all text-black`}
             >
               <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "white" }}>Mis Ordenes</span>
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Mis Ordenes</span>
             </Link>
           </>
         )}
 
         {isAuthenticated && (
           <button
-            className="flex w-full items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all  text-white"
+            className="flex w-full items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all  text-black"
             onClick={() => logout()}
           >
             <IoLogOutOutline size={30} />
-            <span className={`${titleFont.className} ml-3 text-xl`} style={{ color: "white" }}>Salir</span>
+            <span className={`${titleFont.className} ml-3 text-xl`} style={{ color: "black" }}>Salir</span>
           </button>
         )}
 
         {!isAuthenticated && (
           <Link
             href="/auth/login"
-            className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
+            className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-black`}
             onClick={() => closeMenu()}
           >
             <IoLogInOutline size={30} />
-            <span className="ml-3 text-xl" style={{ color: "white" }}>Ingresar</span>
+            <span className="ml-3 text-xl" style={{ color: "black" }}>Ingresar</span>
           </Link>
         )}
 
@@ -108,40 +107,41 @@ export const Sidebar = () => {
             {/* Line Separator */}
             <div className="w-full h-px bg-gray-400 my-10" />
 
+
             <Link
               href="/admin/products"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-black`}
             >
               <IoRestaurantOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "white" }}>Platos</span>
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Platos</span>
             </Link>
 
             <Link
               href="/admin/categories"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-black`}
             >
               <IoAppsOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "white" }}>Categorías</span>
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Categorías</span>
             </Link>
 
             <Link
               href="/admin/orders"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-black`}
             >
               <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "white" }}>Ordenes</span>
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Ordenes</span>
             </Link>
 
             <Link
               href="/admin/users"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-white`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-600 rounded transition-all text-black`}
             >
               <IoPeopleOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "white" }}>Usuarios</span>
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Usuarios</span>
             </Link>
           </>
         )}

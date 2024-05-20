@@ -2,7 +2,7 @@
 CREATE TYPE "Size" AS ENUM ('CH', 'M', 'G');
 
 -- CreateEnum
-CREATE TYPE "Plato" AS ENUM ('carne', 'pastas', 'kid', 'vegetales', 'pescados');
+CREATE TYPE "UnidadMedida" AS ENUM ('miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('admin', 'user');
@@ -16,6 +16,30 @@ CREATE TABLE "Category" (
 );
 
 -- CreateTable
+CREATE TABLE "Merma" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "porcentaje" DOUBLE PRECISION NOT NULL,
+    "precio" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "Merma_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Ingrediente" (
+    "id" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "cantidadReceta" DOUBLE PRECISION NOT NULL,
+    "unidadMedida" "UnidadMedida" NOT NULL,
+    "cantidadConMerma" DOUBLE PRECISION NOT NULL,
+    "precioConMerma" DOUBLE PRECISION NOT NULL,
+    "productId" TEXT NOT NULL,
+
+    CONSTRAINT "Ingrediente_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -25,7 +49,6 @@ CREATE TABLE "Product" (
     "sizes" "Size"[] DEFAULT ARRAY[]::"Size"[],
     "slug" TEXT NOT NULL,
     "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
-    "plato" "Plato" NOT NULL,
     "categoryId" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -126,10 +149,10 @@ CREATE TABLE "OrderAddress" (
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_slug_key" ON "Product"("slug");
+CREATE UNIQUE INDEX "Ingrediente_name_key" ON "Ingrediente"("name");
 
 -- CreateIndex
-CREATE INDEX "Product_plato_idx" ON "Product"("plato");
+CREATE UNIQUE INDEX "Product_slug_key" ON "Product"("slug");
 
 -- CreateIndex
 CREATE INDEX "Product_sizes_idx" ON "Product"("sizes");
@@ -142,6 +165,9 @@ CREATE UNIQUE INDEX "UserAddress_userId_key" ON "UserAddress"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OrderAddress_orderId_key" ON "OrderAddress"("orderId");
+
+-- AddForeignKey
+ALTER TABLE "Ingrediente" ADD CONSTRAINT "Ingrediente_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

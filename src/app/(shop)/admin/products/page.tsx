@@ -59,7 +59,7 @@ export default async function OrdersPage({ searchParams }: Props) {
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
-                Tipo
+                Ingredientes
               </th>
               <th
                 scope="col"
@@ -111,12 +111,18 @@ export default async function OrdersPage({ searchParams }: Props) {
                     {product.title}
                   </Link>
                 </td>
+
                 <td className="text-sm font-bold  text-gray-900 px-6 py-4 whitespace-nowrap">
                   {currencyFormat(product.price)}
                 </td>
 
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  {product.plato}
+                <td className="text-xl font-bold text-black-900 font-light px-6 py-4 whitespace-nowrap">
+                  <Link
+                    href={`/admin/ingrediente/${product.id}`}
+                    className="hover:underline"
+                  >
+                    Ingredientes
+                  </Link>
                 </td>
 
                 <td className="text-sm text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
@@ -136,6 +142,7 @@ export default async function OrdersPage({ searchParams }: Props) {
             ))}
           </tbody>
         </table>
+      
 
         <Pagination totalPages={totalPages} />
       </div>

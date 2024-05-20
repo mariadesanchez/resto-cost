@@ -61,10 +61,7 @@ export const CategoryForm = ({ category }: Props) => {
 
     const { ok, category:updatedCategory } = await createUpdateCategory(formData);
 
-    // if ( !ok ) {
-    //   alert('La Categoría no se pudo actualizar');
-    //   return;
-    // }
+  
 
     router.replace(`/admin/category/${ updatedCategory?.id }`)
    

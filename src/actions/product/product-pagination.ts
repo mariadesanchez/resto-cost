@@ -1,18 +1,18 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Plato } from "@prisma/client";
+
 
 interface PaginationOptions {
   page?: number;
   take?: number;
-  plato?: Plato;
+ 
 }
 
 export async function getPaginatedProductsWithImages({
   page = 1,
   take = 6,
-  plato,
+
 }: PaginationOptions){
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -32,7 +32,7 @@ export async function getPaginatedProductsWithImages({
       },
       //! Por plato
       where: {
-        plato: plato,
+    
       },
     });
 
@@ -40,7 +40,7 @@ export async function getPaginatedProductsWithImages({
     // todo:
     const totalCount = await prisma.product.count({
       where: {
-        plato: plato,
+     
       },
     });
     

@@ -1,6 +1,7 @@
 import prisma from '../lib/prisma';
 import { initialData } from './seed';
 import { countries } from './seed-countries';
+import {mermas} from './seed-mermas'
 
 
 
@@ -34,12 +35,11 @@ async function main() {
     data: countries
   });
 
+  await prisma.merma.createMany({
+   data:mermas
+  });
 
 
-  //  Categorias
-  // {
-  //   name: 'Shirt'
-  // }
   const categoriesData = categories.map( (name) => ({ name }));
   
   await prisma.category.createMany({
