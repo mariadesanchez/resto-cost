@@ -6,13 +6,16 @@ import prisma from '@/lib/prisma';
 
 
 
-export const IngredienteByProductId = async(productId:string) => {
+export async function IngredienteByProductId(productId:string){
 
  
     try {    
       const ingredientes = await prisma.ingrediente.findMany({
-  
-        orderBy: {
+        where: {
+          productId : productId,
+          
+      },
+      orderBy: {
         name: 'asc'
         }
   

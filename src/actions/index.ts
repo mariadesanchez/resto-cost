@@ -5,13 +5,14 @@ export {getUserAddress}from './address/get-user-address';
 export {setUserAddress}from './address/set-user-address';
 
 
-export * from './auth/login';
-export * from './auth/logout';
-export * from './auth/register';
+export {login,authenticate} from './auth/login';
+export  {logout} from './auth/logout';
+export {registerUser} from './auth/register';
 
 export * from './category/get-categories';
 export * from './category/get-category-by-id';
 export * from './category/create-update-category';
+export * from './category/get-category-by-name'
 
 export * from './country/get-countries';
 
@@ -31,6 +32,7 @@ export * from './product/create-update-product';
 export * from './product/get-product-by-slug';
 export * from './product/get-stock-by-slug';
 export * from './product/product-pagination';
+export * from './product/get-product-by-id'
 
 
 export * from './user/change-user-role';
@@ -39,5 +41,7 @@ export * from './user/get-paginater-users';
 export * from './ingrediente/create-update-ingrediente';
 export * from './ingrediente/get-ingrediente-by-slug';
 export * from './ingrediente/get-ingrediente-by-productId';
+export * from './ingrediente/delete-ingrediente-by-id';
+
 export * from './mermas/get-mermas'
-export * from './product/get-product-by-id'
+

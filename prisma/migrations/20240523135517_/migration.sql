@@ -1,11 +1,11 @@
 -- CreateEnum
-CREATE TYPE "Size" AS ENUM ('CH', 'M', 'G');
-
--- CreateEnum
 CREATE TYPE "UnidadMedida" AS ENUM ('miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('admin', 'user');
+
+-- CreateEnum
+CREATE TYPE "Size" AS ENUM ('CH', 'M', 'G');
 
 -- CreateTable
 CREATE TABLE "Category" (
@@ -46,9 +46,9 @@ CREATE TABLE "Product" (
     "description" TEXT NOT NULL,
     "inStock" INTEGER NOT NULL,
     "price" DOUBLE PRECISION NOT NULL DEFAULT 0,
-    "sizes" "Size"[] DEFAULT ARRAY[]::"Size"[],
+    "sizes" "Size"[],
+    "tags" TEXT[],
     "slug" TEXT NOT NULL,
-    "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "categoryId" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")

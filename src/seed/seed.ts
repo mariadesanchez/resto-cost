@@ -13,6 +13,7 @@ interface SeedProduct {
   tags: string[];
   title: string;
   type: ValidTypes;
+ 
 }
 
 
@@ -36,13 +37,14 @@ interface SeedUser {
 
 
 type ValidSizes = 'CH' | 'M' | 'G';
-type ValidTypes = 'carne' | 'pastas' | 'vegetales' | 'pescado';
+type ValidTypes = 'pastas' | 'carne' | 'vegetales' | 'pescados'|'tragos'|'dulces';
 
 interface SeedData {
   users: SeedUser[];
   categories: string[];
   products: SeedProduct[];
   ingredientes: SeedIngrediente[];
+
   
 
 }
@@ -72,8 +74,9 @@ export const initialData: SeedData = {
 
 
   categories: [
-    'pastas', 'carne', 'vegetales', 'pescado'
-  ],  
+    'pastas', 'carne', 'vegetales', 'pescados','tragos','dulces'
+  ],
+ 
   
   products: [
     { id :'270683a2-8e29-40b2-808e-17e0f4b9f9a4',
@@ -81,8 +84,11 @@ export const initialData: SeedData = {
       images: [
         // 'https://res.cloudinary.com/dluveuqnm/image/upload/v1710293571/e98srcvl8tcmrcimyv4n.webp',
         // 'https://res.cloudinary.com/dluveuqnm/image/upload/v1710293571/gwcrkqedzfdvu3kjebw0.webp'
-         'https://res.cloudinary.com/dluveuqnm/image/upload/v1710782027/k8ja8ugtjhunbkizq6pe.webp',
-         'https://res.cloudinary.com/dluveuqnm/image/upload/v1710782026/mlfepzep5pyc1hqhmfae.webp'  
+        //  'https://res.cloudinary.com/dluveuqnm/image/upload/v1710782027/k8ja8ugtjhunbkizq6pe.webp',
+        //  'https://res.cloudinary.com/dluveuqnm/image/upload/v1710782026/mlfepzep5pyc1hqhmfae.webp' 
+        //  'https://collection.cloudinary.com/dluveuqnm/eb733c5746dd38279c346b01dd682c8f?' ,
+        //  'https://collection.cloudinary.com/dluveuqnm/1ca1726290ebe5bddba3aeaaa5ed16d9?'
+        'https://res.cloudinary.com/dluveuqnm/image/upload/v1716432056/w2mucfmncg0abewcsebh.jpg',
       ],
       inStock: 7,
       price: 75,
@@ -91,6 +97,8 @@ export const initialData: SeedData = {
       type: 'carne',
       tags: [ 'sweatshirt' ],
       title: "Men’s Chill Crew Neck Sweatshirt",
+ 
+     
     
     },
    

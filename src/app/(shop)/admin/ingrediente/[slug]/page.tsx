@@ -1,16 +1,17 @@
-'use client'
+'use client';
 import { useForm } from "react-hook-form";
 import { Ingrediente } from "@/interfaces";
 import { createUpdateIngrediente, getMermas, IngredienteByProductId, getProductById } from "@/actions";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { UnidadMedida } from "@/interfaces/unidad.interface";
+import { DeleteIngrediente } from "@/components";
 
 interface Props {
-  ingrediente?: Ingrediente;
   params: {
-    productId: string;
-  }
+    slug: string;
+  },
+  ingrediente: Ingrediente;
 }
 
 interface FormInputs {
@@ -24,8 +25,9 @@ interface FormInputs {
 }
 
 export default function IngredienteForm({ ingrediente, params }: Props) {
-  const { productId } = params;
-  const [productIdForm, setProductIdForm] = useState('270683a2-8e29-40b2-808e-17e0f4b9f9a4');
+  const { slug } = params;
+  const [productIdForm, setProductIdForm] = useState(slug); // Inicializar con el valor almacenado
+
   const router = useRouter();
   const [selectedPorcentaje, setSelectedPorcentaje] = useState<number | null>(null);
   const [selectedPrecio, setSelectedPrecio] = useState<number | null>(null);
@@ -35,7 +37,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
   const [cantidadConMerma, setCantidadConMerma] = useState<number | null>(null);
   const [precioConMerma, setPrecioConMerma] = useState<number | null>(null);
   const [productName, setProductName] = useState('');
-  const [costoTotal, setCostoTotal] = useState<number>(0);  // Nuevo estado para almacenar el costo total
+  const [costoTotal, setCostoTotal] = useState<number>(0);  
 
   useEffect(() => {
     const fetchMermas = async () => {
@@ -53,31 +55,30 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const product = await getProductById('270683a2-8e29-40b2-808e-17e0f4b9f9a4');
-        setProductName(product?.title || '');  // Aquí se asegura de que siempre se establezca un string
+        const product = await getProductById(slug);
+        setProductName(product?.title || '');
       } catch (error) {
         console.error('Error al obtener el Producto:', error);
       }
     };
 
     fetchProduct();
-  }, []);
+  }, [slug]);
+
+  const fetchIngredientesByProductId = async () => {
+    try {
+      const ingredientesByProductId = await IngredienteByProductId(slug);
+      setIngredientesByProduct(ingredientesByProductId);
+    } catch (error) {
+      console.error('Error al obtener los ingredientes:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchIngredientesByProductId = async () => {
-      try {
-        const ingredientesByProductId = await IngredienteByProductId('270683a2-8e29-40b2-808e-17e0f4b9f9a4');
-        setIngredientesByProduct(ingredientesByProductId);
-      } catch (error) {
-        console.error('Error al obtener los ingredientes:', error);
-      }
-    };
-
     fetchIngredientesByProductId();
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
-    // Calcula el costo total cuando cambie la lista de ingredientes
     const total = ingredientesByProduct.reduce((acc, ingrediente) => acc + ingrediente.precioConMerma, 0);
     setCostoTotal(total);
   }, [ingredientesByProduct]);
@@ -91,9 +92,13 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
   } = useForm<FormInputs>({
     defaultValues: {
       ...ingrediente,
-      productId, // Establece el valor predeterminado de productId
+      productId: productIdForm,
     },
   });
+
+  useEffect(() => {
+    setValue('productId', productIdForm);
+  }, [productIdForm, setValue]);
 
   const onSubmit = async (data: FormInputs) => {
     console.log("Form data before sending:", data);
@@ -119,10 +124,14 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
       return;
     }
 
-    if (updatedIngrediente?.slug) {
-      router.replace(`/admin/ingrediente/${updatedIngrediente.slug}`);
-    } else {
-      router.push('/admin/ingredientes');
+    await fetchIngredientesByProductId();
+
+    // Agregar el nuevo ingrediente a la lista de ingredientes
+    if (updatedIngrediente) {
+      setIngredientesByProduct((prevIngredientes) => [
+        ...prevIngredientes.filter(i => i.id !== updatedIngrediente.id),
+        updatedIngrediente,
+      ]);
     }
   };
 
@@ -165,107 +174,114 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     }
   }, [cantidadReceta, selectedPorcentaje, selectedPrecio]);
 
+  const handleDelete = (id: string) => {
+    setIngredientesByProduct(prevIngredientes => prevIngredientes.filter(ingrediente => ingrediente.id !== id));
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3"
-    >
-      <div className="w-full">
-        <div className="flex flex-col mb-2">
-          <h1>{productName}</h1>
-          <select
-            id="mermasSelect"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("name", { required: true })}
-            onChange={handleMermaChange}
-          >
-            <option value="">Seleccione una merma</option>
-            {mermas.map((merma) => (
-              <option key={merma.id} value={merma.name}>
-                {merma.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex flex-col mb-2 hidden">
-          <span>Slug</span>
-          <input
-            type="text"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("slug", { required: true })}
-            readOnly
-            value={watch('slug')}
-          />
-        </div>
-
-        <div className="flex flex-col mb-2">
-          <span>Cantidad Receta</span>
-          <input
-            type="number"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("cantidadReceta", { required: true, min: 0 })}
-            value={cantidadReceta !== null ? cantidadReceta : ''}
-            onChange={handleCantidadRecetaChange}
-          />
-        </div>
-
-        <div className="flex flex-col mb-2">
-          <label>Unidad de Medida:</label>
-          <select
-            id="unidadMedida"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("unidadMedida")}
-          >
-            <option value="miligramos">Miligramos</option>
-            <option value="gramos">Gramos</option>
-            <option value="kilo">Kilo</option>
-            <option value="mililitros">Mililitros</option>
-            <option value="litro">Litro</option>
-            <option value="unidad">Unidad</option>
-          </select>
-        </div>
-
-        <div className="flex flex-col mb-2">
-          <span>Cantidad Con Merma</span>
-          <div className="p-2 border rounded-md bg-gray-200">
-            {cantidadConMerma !== null ? cantidadConMerma : ''}
-          </div>
-        </div>
-
-        <div className="flex flex-col mb-2">
-          <span>Precio Con Merma</span>
-          <div className="p-2 border rounded-md bg-gray-200">
-            {precioConMerma !== null ? precioConMerma : ''}
-          </div>
-        </div>
-
-        <input
-          type="hidden"
-          {...register("productId")}
-          value={productIdForm}
-        />
-
-        <button className="btn-primary w-full">Guardar</button>
-      </div>
-
-      <div className="w-full">
-        {selectedPorcentaje !== null && (
+    <div className="flex flex-col sm:flex-row gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col w-full sm:w-1/2 bg-white p-5 shadow-lg rounded-lg"
+      >
+        <div className="w-full mb-4">
+          <h1 className="text-2xl font-bold mb-4">{productName}</h1>
           <div className="flex flex-col mb-2">
-            <span>Porcentaje Seleccionado: {selectedPorcentaje}%</span>
+            <label htmlFor="mermasSelect" className="mb-1">Seleccione una merma</label>
+            <select
+              id="mermasSelect"
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("name", { required: true })}
+              onChange={handleMermaChange}
+            >
+              <option value="">Seleccione una merma</option>
+              {mermas.map((merma) => (
+                <option key={merma.id} value={merma.name}>
+                  {merma.name}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
-        {selectedPrecio !== null && (
-          <div className="flex flex-col mb-2">
-            <span>Precio Seleccionado: ${selectedPrecio}</span>
-          </div>
-        )}
-         <div className="mt-4">
-          <h3 className="text-lg font-bold text-red-500">Costo Total: ${costoTotal}</h3>
-        </div>
-      </div>
 
-      <div className="w-full mt-8">
+          <div className="hidden">
+            <label htmlFor="slug" className="mb-1">Slug</label>
+            <input
+              type="text"
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("slug", { required: true })}
+              readOnly
+              value={watch('slug')}
+            />
+          </div>
+
+          <div className="flex flex-col mb-2">
+            <label htmlFor="cantidadReceta" className="mb-1">Cantidad Receta</label>
+            <input
+              type="number"
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("cantidadReceta", { required: true, min: 0 })}
+              value={cantidadReceta !== null ? cantidadReceta : ''}
+              onChange={handleCantidadRecetaChange}
+            />
+          </div>
+
+          <div className="flex flex-col mb-2">
+            <label htmlFor="unidadMedida" className="mb-1">Unidad de Medida</label>
+            <select
+              id="unidadMedida"
+              className="p-2 border rounded-md bg-gray-200"
+              {...register("unidadMedida")}
+            >
+              <option value="miligramos">Miligramos</option>
+              <option value="gramos">Gramos</option>
+              <option value="kilo">Kilo</option>
+              <option value="mililitros">Mililitros</option>
+              <option value="litro">Litro</option>
+              <option value="unidad">Unidad</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col mb-2">
+            <label className="mb-1">Cantidad Con Merma</label>
+            <div className="p-2 border rounded-md bg-gray-200">
+              {cantidadConMerma !== null ? cantidadConMerma : ''}
+            </div>
+          </div>
+
+          <div className="flex flex-col mb-2">
+            <label className="mb-1">Precio Con Merma</label>
+            <div className="p-2 border rounded-md bg-gray-200">
+              {precioConMerma !== null ? precioConMerma : ''}
+            </div>
+          </div>
+
+          <input
+            type="hidden"
+            {...register("productId")}
+            value={productIdForm}
+          />
+
+          <button className="btn-primary w-full p-2 bg-blue-500 text-white rounded-md">Guardar</button>
+        </div>
+
+        <div className="w-full">
+          {selectedPorcentaje !== null && (
+            <div className="flex flex-col mb-2">
+              <span>Porcentaje De merma: {selectedPorcentaje}%</span>
+            </div>
+          )}
+          {selectedPrecio !== null && (
+            <div className="flex flex-col mb-2">
+              <span>Precio De Mercado: ${selectedPrecio}</span>
+            </div>
+          )}
+          <div className="mt-4">
+            <h3 className="text-lg font-bold text-red-500">Costo Total: ${costoTotal}</h3>
+          </div>
+        </div>
+      </form>
+
+      <div className="w-full sm:w-1/2 bg-white p-5 shadow-lg rounded-lg">
         <h2 className="text-lg font-bold mb-4">Ingredientes</h2>
         <table className="min-w-full bg-white border border-gray-200">
           <thead>
@@ -275,6 +291,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
               <th className="px-4 py-2 border-b">Unidad de Medida</th>
               <th className="px-4 py-2 border-b">Cantidad con Merma</th>
               <th className="px-4 py-2 border-b">Precio con Merma</th>
+              <th className="px-4 py-2 border-b">Eliminar</th>
             </tr>
           </thead>
           <tbody>
@@ -285,12 +302,14 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
                 <td className="px-4 py-2 border-b">{ingrediente.unidadMedida}</td>
                 <td className="px-4 py-2 border-b">{ingrediente.cantidadConMerma}</td>
                 <td className="px-4 py-2 border-b">${ingrediente.precioConMerma}</td>
+                <td className="px-4 py-2 border-b">
+                  <DeleteIngrediente id={ingrediente.id} onDelete={handleDelete} />
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-       
       </div>
-    </form>
+    </div>
   );
 }

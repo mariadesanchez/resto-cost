@@ -1,17 +1,21 @@
+"use server";
+
+
+import { CategoryId } from "@/interfaces";
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import {Category} from "@prisma/client";
 
 interface PaginationOptions {
   page?: number;
   take?: number;
-  category?: string; // El ID de la categoría como string (UUID)
+  category?: Category;
 }
 
-export const getPaginatedProductsWithImages = async ({
+export async function getPaginatedProductsWithImages ({
   page = 1,
   take = 6,
   category,
-}: PaginationOptions) => {
+}: PaginationOptions){
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
 
@@ -28,19 +32,20 @@ export const getPaginatedProductsWithImages = async ({
           },
         },
       },
-      //! Por género
+      //! Por categoria
       where: {
-        categoryId: category,
+        category: category,
       },
     });
 
     // 2. Obtener el total de páginas
+    // todo:
     const totalCount = await prisma.product.count({
       where: {
-        categoryId: category,
+        category: category,
       },
     });
-
+    
     const totalPages = Math.ceil(totalCount / take);
 
     return {
@@ -55,4 +60,5 @@ export const getPaginatedProductsWithImages = async ({
     throw new Error("No se pudo cargar los productos");
   }
 };
+
 

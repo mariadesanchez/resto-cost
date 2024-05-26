@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import {  Product, Size } from '@prisma/client';
+import { Product, Size } from '@prisma/client';
 import { z } from 'zod';
 import {v2 as cloudinary} from 'cloudinary';
 cloudinary.config( process.env.CLOUDINARY_URL ?? '' );
@@ -34,7 +34,7 @@ const productSchema = z.object({
 
 
 
-export async function createUpdateProduct( formData: FormData ){
+export const createUpdateProduct = async( formData: FormData ) => {
 
   const data = Object.fromEntries( formData );
   const productParsed = productSchema.safeParse( data );
@@ -171,3 +171,4 @@ const uploadImages = async( images: File[] ) => {
 
 
 }
+

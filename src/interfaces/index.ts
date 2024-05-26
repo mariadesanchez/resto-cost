@@ -8,3 +8,4 @@ export * from './paypal.interface';
 export * from './product.interface';
 export * from './user.interface';
 export * from './ingrediente.interface'
+export * from './merma.interface'

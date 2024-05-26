@@ -1,8 +1,5 @@
-export const revalidate = 604800; //7 días
 import { Metadata, ResolvingMetadata } from "next";
-
 import { notFound } from "next/navigation";
-
 import { titleFont } from "@/config/fonts";
 import {
   ProductMobileSlideshow,
@@ -30,17 +27,20 @@ export async function generateMetadata(
   // fetch data
   const product = await getProductBySlug(slug);
 
+  // Define the base URL for resolving images
+  const metadataBase = new URL("https://misitioweb.com"); // Cambia esto a la URL de tu sitio web
+
   // optionally access and extend (rather than replace) parent metadata
   // const previousImages = (await parent).openGraph?.images || []
 
   return {
+    metadataBase,
     title: product?.title ?? "Producto no encontrado",
     description: product?.description ?? "",
     openGraph: {
       title: product?.title ?? "Producto no encontrado",
       description: product?.description ?? "",
-      // images: [], // https://misitioweb.com/products/image.png
-      images: [ `/products/${ product?.images[1] }`],
+      images: product?.images ? product.images.map(image => `${metadataBase}/products/${image}`) : [],
     },
   };
 }
@@ -92,4 +92,3 @@ export default async function ProductBySlugPage({ params }: Props) {
     </div>
   );
 }
-
