@@ -110,7 +110,7 @@ export const Sidebar = () => {
 
             
             <Link
-              href="/admin/listPrice"
+              href="/admin/precios/listPrice"
               onClick={() => closeMenu()}
               className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all text-black`}
             >

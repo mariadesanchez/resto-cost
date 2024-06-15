@@ -19,6 +19,7 @@ CREATE TABLE "Category" (
 CREATE TABLE "Merma" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "unidadMedida" "UnidadMedida" NOT NULL,
     "porcentaje" DOUBLE PRECISION NOT NULL,
     "precio" DOUBLE PRECISION NOT NULL,
 

@@ -8,7 +8,8 @@ import {
   SizeSelector,
   StockLabel,
 } from "@/components";
-import { getProductBySlug } from "@/actions";
+import { getProductBySlug} from "@/actions";
+ 
 import { AddToCart } from './ui/AddToCart';
 
 interface Props {
@@ -23,13 +24,13 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // read route params
   const slug = params.slug;
-
-  // fetch data
-  const product = await getProductBySlug(slug);
-
+  // const productOldPrice = await getProductBySlug(slug);
+  // const totalPrice = await getPricesWithMermaByProductId(productOldPrice!.id)
+  //modificar el precio del producto segun los precios con merma de cada uno de los ingredientes
+  // const productTotalPrice = await updateProductPrice(productOldPrice!.id,totalPrice )
   // Define the base URL for resolving images
   const metadataBase = new URL("https://misitioweb.com"); // Cambia esto a la URL de tu sitio web
-
+  const product = await getProductBySlug(slug);
   // optionally access and extend (rather than replace) parent metadata
   // const previousImages = (await parent).openGraph?.images || []
 

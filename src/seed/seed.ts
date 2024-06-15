@@ -1,7 +1,5 @@
 import bcryptjs from 'bcryptjs';
 
-
-
 interface SeedProduct {
   id: string;
   description: string;

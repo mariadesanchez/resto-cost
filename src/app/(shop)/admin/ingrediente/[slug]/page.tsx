@@ -1,7 +1,7 @@
 'use client';
 import { useForm } from "react-hook-form";
 import { Ingrediente } from "@/interfaces";
-import { createUpdateIngrediente, getMermas, IngredienteByProductId, getProductById } from "@/actions";
+import { createUpdateIngrediente, getMermas, updateProductPrice,getIngredientsByProductId, getProductById } from "@/actions";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { UnidadMedida } from "@/interfaces/unidad.interface";
@@ -43,9 +43,15 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     const fetchMermas = async () => {
       try {
         const mermasData = await getMermas();
-        setMermas(mermasData);
+        if (mermasData.ok) {
+          setMermas(mermasData.mermas || []);  // Asegúrate de que siempre sea un array
+        } else {
+          console.error('Error al obtener las mermas:', mermasData.message);
+          setMermas([]);  // Establece un array vacío en caso de error
+        }
       } catch (error) {
         console.error('Error al obtener las mermas:', error);
+        setMermas([]);  // Establece un array vacío en caso de error
       }
     };
 
@@ -67,7 +73,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
 
   const fetchIngredientesByProductId = async () => {
     try {
-      const ingredientesByProductId = await IngredienteByProductId(slug);
+      const ingredientesByProductId = await getIngredientsByProductId(slug);
       setIngredientesByProduct(ingredientesByProductId);
     } catch (error) {
       console.error('Error al obtener los ingredientes:', error);
@@ -78,9 +84,20 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     fetchIngredientesByProductId();
   }, [slug]);
 
+ 
+
   useEffect(() => {
-    const total = ingredientesByProduct.reduce((acc, ingrediente) => acc + ingrediente.precioConMerma, 0);
-    setCostoTotal(total);
+    const totalPrice = async () => {
+      try {
+        const total = ingredientesByProduct.reduce((acc, ingrediente) => acc + ingrediente.precioConMerma, 0);
+        setCostoTotal(total);
+        await updateProductPrice(slug, total)
+      } catch (error) {
+        console.error('Error al obtener el Precio total:', error);
+      }
+    };
+
+    totalPrice();
   }, [ingredientesByProduct]);
 
   const {

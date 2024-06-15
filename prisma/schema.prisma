@@ -31,6 +31,7 @@ model Category {
 model Merma {
   id      String    @id @default(uuid())
   name    String 
+  unidadMedida UnidadMedida
   porcentaje Float
   precio Float
 }
@@ -69,6 +70,7 @@ enum Size {
  M
  G
 }
+
 
 model ProductImage {
   id  Int    @id @default(autoincrement())

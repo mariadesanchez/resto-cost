@@ -67,6 +67,9 @@ export const createUpdateProduct = async( formData: FormData ) => {
             },
             tags: {
               set: tagsArray
+            },
+            price: {
+              set: rest.price,
             }
           }
         });

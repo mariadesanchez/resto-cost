@@ -4,28 +4,28 @@ import Link from 'next/link';
 import { IoCartOutline, IoMenuOutline } from 'react-icons/io5';
 import { titleFont } from '@/config/fonts';
 import { useCartStore, useUIStore } from '@/store';
-// import { getCategories } from '@/actions';
+import { getCategories } from '@/actions';
 
-// interface Category {
-//   id: string;
-//   name: string;
-//   slug: string;
-// }
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 export const TopMenu = () => {
   const openSideMenu = useUIStore((state) => state.openSideMenu);
   const totalItemsInCart = useCartStore((state) => state.getTotalItems());
-  // const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
-  // useEffect(() => {
-  //   // Fetch categories
-  //   async function fetchCategories() {
-  //     const categories = await getCategories();
-  //     setCategories(categories);
-  //   }
+  useEffect(() => {
+    // Fetch categories
+    async function fetchCategories() {
+      const categories = await getCategories();
+      setCategories(categories);
+    }
 
-  //   fetchCategories();
-  // }, []);
+    fetchCategories();
+  }, []);
 
   return (
     <nav className="flex flex-col md:flex-row justify-between items-center px-5 w-full mb-4">
@@ -39,7 +39,7 @@ export const TopMenu = () => {
       </div>
 
       {/* Géneros */}
-      {/* <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-black`}>
+      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-black`}>
         {categories.map((category) => (
           <Link
             key={category.id}
@@ -49,45 +49,6 @@ export const TopMenu = () => {
             {category.name}
           </Link>
         ))}
-      </div> */}
-      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-black`}>
-        <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-
-          href="/plato/Carne"
-        >
-          Carne
-        </Link>
-        <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Pastas"
-        >
-          Pastas
-        </Link>
-        <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Pescados"
-        >
-          Pescados
-        </Link>
-        <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Vegetales"
-        >
-          Vegetales
-        </Link>
-        <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Tragos"
-        >
-          Tragos
-        </Link>
-        <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Dulces"
-        >
-          Dulces
-        </Link>
       </div>
 
       {/* Right Menu */}
@@ -114,7 +75,4 @@ export const TopMenu = () => {
     </nav>
   );
 };
-
-
-
 
