@@ -116,7 +116,7 @@ export default async function OrdersPage({ searchParams }: Props) {
                   {currencyFormat(product.price)}
                 </td>
 
-                <td className="text-xl font-bold text-black-900 font-light px-6 py-4 whitespace-nowrap">
+                <td className="text-xl font-bold text-black-900 px-6 py-4 whitespace-nowrap">
                   <Link
                     href={`/admin/ingrediente/${product.id}`}
                     className="hover:underline"

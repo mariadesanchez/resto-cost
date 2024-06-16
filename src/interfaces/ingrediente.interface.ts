@@ -1,3 +1,5 @@
+import { any } from "zod";
+
 // interfaces.ts
 export interface Ingrediente {
   id: string;
@@ -8,4 +10,4 @@ export interface Ingrediente {
   cantidadConMerma: number;
   precioConMerma: number;
   productId: string;
-}
+} 

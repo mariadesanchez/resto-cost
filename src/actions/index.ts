@@ -9,46 +9,47 @@ export {login,authenticate} from './auth/login';
 export  {logout} from './auth/logout';
 export {registerUser} from './auth/register';
 
-export * from './category/get-categories';
-export * from './category/get-category-by-id';
-export * from './category/create-update-category';
-export * from './category/get-category-by-name'
+export {getCategories} from './category/get-categories';
+export {getCategoryByid} from './category/get-category-by-id';
+export {createUpdateCategory} from './category/create-update-category';
+export {getCategoryByName} from './category/get-category-by-name'
 
-export * from './country/get-countries';
+export {getCountries} from './country/get-countries';
 
-export * from './order/place-order';
-export * from './order/get-order-by-id';
-export * from './order/delete-order-by-id';
-export * from './order/get-paginated-orders';
-export * from './order/get-orders-by-user';
+export {placeOrder} from './order/place-order';
+export {getOrderById} from './order/get-order-by-id';
+export {deleteOrderById} from './order/delete-order-by-id';
+export {getPaginatedOrders} from './order/get-paginated-orders';
+export {getOrdersByUser} from './order/get-orders-by-user';
 
-export * from './payments/set-transaction-id';
-export * from './payments/paypal-check-payment';
-export * from './payments/mercado-pago-payment';
-
-
-export * from './product/delete-product-image';
-export * from './product/create-update-product';
-export * from './product/get-product-by-slug';
-export * from './product/get-stock-by-slug';
-export * from './product/product-pagination';
-export * from './product/get-product-by-id';
-export * from './product/update-price-product'
+export {setTransactionId} from './payments/set-transaction-id';
+export {paypalCheckPayment} from './payments/paypal-check-payment';
+export {mercadoPagoCheckPayment} from './payments/mercado-pago-payment';
 
 
+export {deleteProductImage} from './product/delete-product-image';
+export {createUpdateProduct} from './product/create-update-product';
+export {getProductBySlug} from './product/get-product-by-slug';
+export {getStockBySlug} from './product/get-stock-by-slug';
+export {getPaginatedProductsWithImages} from './product/product-pagination';
+export {getProductById} from './product/get-product-by-id';
+export {updateProductPrice} from './product/update-price-product'
 
-export * from './user/change-user-role';
-export * from './user/get-paginater-users';
 
-export * from './ingrediente/create-update-ingrediente';
-export * from './ingrediente/get-ingrediente-by-slug';
-export * from './ingrediente/get-ingredients-by-productId';
-export * from './ingrediente/delete-ingrediente-by-id';
-export * from './ingrediente/get-total-price-by-productId'
 
-export * from './precios/create-update-precios-mermas'
-export * from './precios/get-precio-merma-by-id'
-export * from './precios/get-precios-mermas'
-export * from './precios/detelete-merma'
+export {changeUserRole} from './user/change-user-role';
+export {getPaginatedUsers} from './user/get-paginater-users';
+
+export {createUpdateIngrediente} from './ingrediente/create-update-ingrediente';
+export {getIngredienteBySlug} from './ingrediente/get-ingrediente-by-slug';
+export {getIngredientsByProductId} from './ingrediente/get-ingredients-by-productId';
+export {deleteIngredienteById} from './ingrediente/delete-ingrediente-by-id';
+export {getPricesWithMermaByProductId} from './ingrediente/get-total-price-by-productId'
+
+export {createUpdateMerma} from './precios/create-update-precios-mermas'
+export {getMermaById} from './precios/get-precio-merma-by-id'
+export {getMermas} from './precios/get-precios-mermas'
+export {deleteMermaById} from './precios/detelete-merma'
+
 
 
