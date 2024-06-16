@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma';
 import { z } from 'zod';
 
+// Schema validation
 const mermaSchema = z.object({
   id: z.string().uuid().optional().nullable(),
   name: z.string().min(1).max(255),
@@ -11,13 +12,13 @@ const mermaSchema = z.object({
   unidadMedida: z.enum(['miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad'])
 });
 
-export const createUpdateMerma = async (formData: FormData) => {
+export const createUpdateMerma = async (formData: any[] | FormData) => {
   const data = Object.fromEntries(formData.entries());
   
   const parsedData = {
     ...data,
-    porcentaje: parseFloat(data.porcentaje as string),
-    precio: parseFloat(data.precio as string)
+    porcentaje: parseFloat(data.porcentaje),
+    precio: parseFloat(data.precio)
   };
 
   const mermaParsed = mermaSchema.safeParse(parsedData);
@@ -34,13 +35,13 @@ export const createUpdateMerma = async (formData: FormData) => {
     const prismaTx = await prisma.$transaction(async (tx) => {
       let merma;
       if (id) {
-        // Actualizar
+        // Update
         merma = await prisma.merma.update({
           where: { id },
           data: { ...rest },
         });
       } else {
-        // Crear
+        // Create
         merma = await prisma.merma.create({
           data: { ...rest },
         });

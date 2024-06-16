@@ -1,9 +1,9 @@
 'use client';
+
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
 import { createUpdateMerma, getMermaById } from "@/actions";
-
 import { Merma } from "@/interfaces/merma.interface";
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 }
 
 interface FormInputs {
+  id?: string; // Add id field here
   name: string;
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   porcentaje: number;
@@ -24,6 +25,7 @@ export default function MermaForm({ merma, params }: Props) {
   const { slug } = params;
   const router = useRouter();
   const [initialValues, setInitialValues] = useState<FormInputs>({
+    id: merma?.id || '',
     name: '',
     unidadMedida: 'gramos',
     porcentaje: 0,
@@ -36,8 +38,8 @@ export default function MermaForm({ merma, params }: Props) {
       try {
         const mermaData = await getMermaById(slug);
         if (mermaData.ok && mermaData.merma) {
-          const { name, unidadMedida, porcentaje, precio } = mermaData.merma;
-          setInitialValues({ name, unidadMedida, porcentaje, precio });
+          const { id, name, unidadMedida, porcentaje, precio } = mermaData.merma;
+          setInitialValues({ id, name, unidadMedida, porcentaje, precio });
         } else {
           console.error('Error al obtener la Merma:', mermaData.message);
         }
@@ -55,18 +57,14 @@ export default function MermaForm({ merma, params }: Props) {
     }
   }, [slug]);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { isValid },
-    setValue,
-  } = useForm<FormInputs>({
+  const { handleSubmit, register, formState: { isValid }, setValue } = useForm<FormInputs>({
     defaultValues: initialValues,
     mode: 'onChange',
   });
 
   useEffect(() => {
     if (!loading) {
+      setValue("id", initialValues.id);
       setValue("name", initialValues.name);
       setValue("unidadMedida", initialValues.unidadMedida);
       setValue("porcentaje", initialValues.porcentaje);
@@ -79,14 +77,14 @@ export default function MermaForm({ merma, params }: Props) {
 
     const formData = new FormData();
 
-    if (merma && merma.id) {
-      formData.append("id", merma.id);
+    if (data.id) {
+      formData.append("id", data.id);
     }
 
     formData.append("name", data.name);
     formData.append("unidadMedida", data.unidadMedida);
-    formData.append("porcentaje", data.porcentaje.toString()); // Convertir a string
-    formData.append("precio", data.precio.toString()); // Convertir a string
+    formData.append("porcentaje", data.porcentaje.toString());
+    formData.append("precio", data.precio.toString());
 
     const { ok, merma: updatedMerma } = await createUpdateMerma(formData);
 
