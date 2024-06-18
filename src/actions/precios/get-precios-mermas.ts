@@ -8,6 +8,9 @@ export const getMermas = async () => {
     return {
       ok: true,
       mermas,
+      orderBy: {
+        name: 'asc'
+      }
     };
   } catch (error) {
     console.log('Error fetching mermas:', error);

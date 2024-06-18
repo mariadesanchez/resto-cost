@@ -4,5 +4,6 @@ export interface Merma {
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   name: string;
   porcentaje: number;
-  precio: number;
+  precioAnterior: number;
+  precioActual: number;
 }

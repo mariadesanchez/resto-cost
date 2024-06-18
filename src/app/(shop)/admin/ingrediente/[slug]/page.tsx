@@ -1,17 +1,16 @@
 'use client';
 import { useForm } from "react-hook-form";
 import { Ingrediente } from "@/interfaces";
-// import { createUpdateIngrediente, getMermas, updateProductPrice, getIngredientsByProductId, getProductById } from "@/actions";
 import { useRouter } from 'next/navigation';
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { UnidadMedida } from "@/interfaces/unidad.interface";
 import { DeleteIngrediente } from "@/components";
 import { createUpdateIngrediente, getIngredientsByProductId, getMermas, getProductById, updateProductPrice } from "@/actions";
-export {createUpdateIngrediente} from '@/actions';
-export {getIngredienteBySlug} from '@/actions'
-export {getIngredientsByProductId} from '@/actions'
-export {deleteIngredienteById} from '@/actions'
-export {getPricesWithMermaByProductId} from '@/actions'
+export { createUpdateIngrediente } from '@/actions';
+export { getIngredienteBySlug } from '@/actions'
+export { getIngredientsByProductId } from '@/actions'
+export { deleteIngredienteById } from '@/actions'
+export { getPricesWithMermaByProductId } from '@/actions'
 
 interface Props {
   params: {
@@ -43,14 +42,21 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
   const [cantidadConMerma, setCantidadConMerma] = useState<number | null>(null);
   const [precioConMerma, setPrecioConMerma] = useState<number | null>(null);
   const [productName, setProductName] = useState('');
-  const [costoTotal, setCostoTotal] = useState<number>(0);  
+  const [costoTotal, setCostoTotal] = useState<number>(0);
 
   useEffect(() => {
     const fetchMermas = async () => {
       try {
         const mermasData = await getMermas();
         if (mermasData.ok) {
-          setMermas(mermasData.mermas || []);  // Asegúrate de que siempre sea un array
+          const filteredMermas = (mermasData.mermas || []).map((merma) => ({
+            id: merma.id,
+            name: merma.name,
+            porcentaje: merma.porcentaje,
+            precio: merma.precioActual,  // Usa la propiedad precioActual en lugar de precio
+          }));
+          const sortedMermas = filteredMermas.sort((a, b) => a.name.localeCompare(b.name));
+          setMermas(sortedMermas);
         } else {
           console.error('Error al obtener las mermas:', mermasData.message);
           setMermas([]);  // Establece un array vacío en caso de error
@@ -90,14 +96,12 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     fetchIngredientesByProductId();
   }, [slug]);
 
- 
-
   useEffect(() => {
     const totalPrice = async () => {
       try {
         const total = ingredientesByProduct.reduce((acc, ingrediente) => acc + ingrediente.precioConMerma, 0);
         setCostoTotal(total);
-        await updateProductPrice(slug, total)
+        await updateProductPrice(slug, total);
       } catch (error) {
         console.error('Error al obtener el Precio total:', error);
       }
@@ -299,7 +303,8 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             </div>
           )}
           <div className="mt-4">
-            <h3 className="text-lg font-bold text-red-500">Costo Total: ${costoTotal}</h3>
+            
+            <h3 className="text-lg font-bold text-red-500">Costo Total: ${(costoTotal).toFixed(2)}</h3>
           </div>
         </div>
       </form>
@@ -324,7 +329,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
                 <td className="px-4 py-2 border-b">{ingrediente.cantidadReceta}</td>
                 <td className="px-4 py-2 border-b">{ingrediente.unidadMedida}</td>
                 <td className="px-4 py-2 border-b">{ingrediente.cantidadConMerma}</td>
-                <td className="px-4 py-2 border-b">${ingrediente.precioConMerma}</td>
+                <td className="px-4 py-2 border-b">${(ingrediente.precioConMerma).toFixed(2)}</td>
                 <td className="px-4 py-2 border-b">
                   <DeleteIngrediente id={ingrediente.id} onDelete={handleDelete} />
                 </td>

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from "react";
-import { createUpdateMerma, getMermaById, updateIngredientesByMerma } from "@/actions"; // Asegúrate de importar correctamente
+import { createUpdateMerma, getMermaById } from "@/actions";
 import { Merma } from "@/interfaces/merma.interface";
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface FormInputs {
-  id?: string;
+  id?: string; // Add id field here
   name: string;
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   porcentaje: number;
@@ -102,17 +102,6 @@ export default function MermaForm({ merma, params }: Props) {
     if (!ok) {
       alert('Merma no se pudo actualizar');
       return;
-    }
-
-    // Calcular el factor de ajuste
-    const adjustmentFactor = data.precioActual / data.precioAnterior;
-
-    // Actualizar el precioConMerma de los ingredientes
-    const { ok: updateOk } = await updateIngredientesByMerma(data.name, adjustmentFactor);
-
-    if (!updateOk) {
-      alert('No hay ingredientes a Actualizar!!!');
-      router.push('/admin/precios/listPrice'); 
     }
 
     router.push('/admin/precios/listPrice');  // Redirige a la lista de mermas

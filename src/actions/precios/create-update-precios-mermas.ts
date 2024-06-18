@@ -8,7 +8,9 @@ const mermaSchema = z.object({
   id: z.string().uuid().optional().nullable(),
   name: z.string().min(1).max(255),
   porcentaje: z.number().min(0).max(100),
-  precio: z.number().min(0).transform(val => Number(val.toFixed(2))),
+  precioAnterior: z.number().min(0).transform(val => Number(val.toFixed(2))),
+  precioActual: z.number().min(0).transform(val => Number(val.toFixed(2))),
+
   unidadMedida: z.enum(['miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad'])
 });
 
@@ -18,7 +20,8 @@ export const createUpdateMerma = async (formData: any[] | FormData) => {
   const parsedData = {
     ...data,
     porcentaje: parseFloat(data.porcentaje),
-    precio: parseFloat(data.precio)
+    precioAnterior: parseFloat(data.precioAnterior),
+    precioActual: parseFloat(data.precioActual)
   };
 
   const mermaParsed = mermaSchema.safeParse(parsedData);
@@ -55,6 +58,7 @@ export const createUpdateMerma = async (formData: any[] | FormData) => {
     return {
       ok: true,
       merma: prismaTx.merma,
+     
     };
   } catch (error) {
     console.log(error);

@@ -45,7 +45,7 @@ export {getIngredienteBySlug} from './ingrediente/get-ingrediente-by-slug';
 export {getIngredientsByProductId} from './ingrediente/get-ingredients-by-productId';
 export {deleteIngredienteById} from './ingrediente/delete-ingrediente-by-id';
 export {getPricesWithMermaByProductId} from './ingrediente/get-total-price-by-productId'
-
+export {updateIngredientesByMerma} from './ingrediente/update-ingredientes-by-merma'
 export {createUpdateMerma} from './precios/create-update-precios-mermas'
 export {getMermaById} from './precios/get-precio-merma-by-id'
 export {getMermas} from './precios/get-precios-mermas'

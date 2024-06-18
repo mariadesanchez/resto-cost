@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from "react";
 import { deleteMermaById, getMermas } from "@/actions";
 import Link from "next/link";
@@ -10,7 +11,8 @@ interface Merma {
   name: string;
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   porcentaje: number;
-  precio: number;
+  precioAnterior: number;
+  precioActual: number;
 }
 
 export default function MermaTable() {
@@ -23,7 +25,9 @@ export default function MermaTable() {
       try {
         const { ok, mermas, message } = await getMermas();
         if (ok && mermas) {
-          setMermas(mermas);
+          // Ordenar las mermas por nombre en orden ascendente
+          const sortedMermas = mermas.sort((a: Merma, b: Merma) => a.name.localeCompare(b.name));
+          setMermas(sortedMermas);
         } else {
           setError(message || "Error fetching mermas");
         }
@@ -71,7 +75,8 @@ export default function MermaTable() {
             <th className="px-4 py-2 border-b text-left">Nombre</th>
             <th className="px-4 py-2 border-b text-left">Unidad de Medida</th>
             <th className="px-4 py-2 border-b text-left">Porcentaje</th>
-            <th className="px-4 py-2 border-b text-left">Precio</th>
+            <th className="px-4 py-2 border-b text-left">Precio Anterior</th>
+            <th className="px-4 py-2 border-b text-left">Precio Actual</th>
             <th className="px-4 py-2 border-b text-left">Editar</th>
             <th className="px-4 py-2 border-b text-left">Eliminar</th>
           </tr>
@@ -83,7 +88,8 @@ export default function MermaTable() {
               <td className="px-4 py-2 border-b">{merma.name}</td>
               <td className="px-4 py-2 border-b">{merma.unidadMedida}</td>
               <td className="px-4 py-2 border-b">{merma.porcentaje}</td>
-              <td className="px-4 py-2 border-b">${merma.precio}</td>
+              <td className="px-4 py-2 border-b">${merma.precioAnterior}</td>
+              <td className="px-4 py-2 border-b">${merma.precioActual}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <Link href={`/admin/precios/${merma.id}`}>
                   <IoArchiveOutline size={30} />
@@ -106,3 +112,4 @@ export default function MermaTable() {
     </div>
   );
 }
+

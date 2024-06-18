@@ -33,8 +33,55 @@ model Merma {
   name    String 
   unidadMedida UnidadMedida
   porcentaje Float
-  precio Float
+  precioAnterior Float
+  precioActual Float
 }
+//un producto puede tener uno o mas Ingredientes y un Ingrediente puede estar en uno o mas Productos
+// model Ingrediente {
+//   id               String            @id @default(uuid())
+//   slug             String
+//   name             String            @unique
+//   cantidadReceta   Float
+//   unidadMedida     UnidadMedida
+//   cantidadConMerma Float
+//   precioConMerma   Float
+//   products         ProductIngrediente[]
+// }
+
+// model Product {
+//   id          String               @id @default(uuid())
+//   title       String
+//   description String
+//   inStock     Int
+//   price       Float                @default(0)
+//   sizes       Size[]
+//   tags        String[]
+//   slug        String               @unique
+//   ingredientes ProductIngrediente[]
+//   category    Category             @relation(fields: [categoryId], references: [id])
+//   categoryId  String
+//   images      ProductImage[]
+//   OrderItem   OrderItem[]
+//   @@index([sizes])
+// }
+
+// model ProductIngrediente {
+//   productId     String
+//   product       Product     @relation(fields: [productId], references: [id])
+//   ingredienteId String
+//   ingrediente   Ingrediente @relation(fields: [ingredienteId], references: [id])
+//   @@id([productId, ingredienteId])
+// }
+
+// enum UnidadMedida {
+//   miligramos
+//   gramos
+//   kilo
+//   mililitros
+//   litro
+//   unidad
+// }
+//-----------------------------------------Fin Relacion ProductIngrediente--------------------------------------
 model Ingrediente {
   id      String    @id @default(uuid())
   slug String

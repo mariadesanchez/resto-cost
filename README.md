@@ -20,8 +20,13 @@ AUTH_SECRET="JXN6MEHZv3dEkdeKGwYx1/c/NivQvlAtPAldC+bk+WE=" -->
 npm install cloudinary
 ir a Dashboard API environment variable
 CLOUDINARY_URL=cloudinary://...----.... -->
+<!-- 
+TODO ver como hacer para actualizar solo alguna tabla-migracion y solo alguna semilla
 
-
+Para correr migraciones, todo desde Cero:
+1.- borrar la carpeta migrations
+2.- npx prisma migrate dev
+3.- npm run seed -->
 
 
 1. Clonar el repositorio.
