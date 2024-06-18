@@ -40,7 +40,7 @@ export const ProductGridItem = ( { product }: Props ) => {
 
       <div className="p-4 flex flex-col">
         <Link
-          className="hover:text-blue-600"
+          className="hover:text-blue-600 text-3xl"
           href={ `/product/${ product.slug }` }>
           { product.title }
         </Link>
@@ -66,7 +66,7 @@ export const ProductGridItem = ( { product }: Props ) => {
         
        {product.inStock >0 &&  
          <div className='flex'>
-         <span className="font-bold mr-5">${ product.price }</span>
+         <span className="font-bold mr-5 text-2xl">${(product.price).toFixed(2)  }</span>
         
          </div>
         }

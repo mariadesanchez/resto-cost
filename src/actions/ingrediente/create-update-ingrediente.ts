@@ -1,7 +1,7 @@
 "use server";
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { Ingrediente } from '@prisma/client';
+import { Ingrediente } from '@/interfaces';
 import { z } from 'zod';
 
 const ingredienteSchema = z.object({

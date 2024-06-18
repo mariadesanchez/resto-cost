@@ -1,16 +1,12 @@
+
 'use client';
-import { useForm } from "react-hook-form";
 import { Ingrediente } from "@/interfaces";
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { UnidadMedida } from "@/interfaces/unidad.interface";
 import { DeleteIngrediente } from "@/components";
 import { createUpdateIngrediente, getIngredientsByProductId, getMermas, getProductById, updateProductPrice } from "@/actions";
-export { createUpdateIngrediente } from '@/actions';
-export { getIngredienteBySlug } from '@/actions'
-export { getIngredientsByProductId } from '@/actions'
-export { deleteIngredienteById } from '@/actions'
-export { getPricesWithMermaByProductId } from '@/actions'
+import { useForm } from "react-hook-form";
 
 interface Props {
   params: {
@@ -32,6 +28,7 @@ interface FormInputs {
 export default function IngredienteForm({ ingrediente, params }: Props) {
   const { slug } = params;
   const [productIdForm, setProductIdForm] = useState(slug); // Inicializar con el valor almacenado
+
 
   const router = useRouter();
   const [selectedPorcentaje, setSelectedPorcentaje] = useState<number | null>(null);
@@ -83,18 +80,18 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     fetchProduct();
   }, [slug]);
 
-  const fetchIngredientesByProductId = async () => {
+  const fetchIngredientesByProductId = useCallback(async () => {
     try {
       const ingredientesByProductId = await getIngredientsByProductId(slug);
       setIngredientesByProduct(ingredientesByProductId);
     } catch (error) {
       console.error('Error al obtener los ingredientes:', error);
     }
-  };
+  }, [slug]);
 
   useEffect(() => {
     fetchIngredientesByProductId();
-  }, [slug]);
+  }, [fetchIngredientesByProductId]);
 
   useEffect(() => {
     const totalPrice = async () => {
@@ -108,7 +105,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     };
 
     totalPrice();
-  }, [ingredientesByProduct]);
+  }, [ingredientesByProduct, slug]);
 
   const {
     handleSubmit,
@@ -303,7 +300,6 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             </div>
           )}
           <div className="mt-4">
-            
             <h3 className="text-lg font-bold text-red-500">Costo Total: ${(costoTotal).toFixed(2)}</h3>
           </div>
         </div>
