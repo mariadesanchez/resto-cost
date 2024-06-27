@@ -23,6 +23,8 @@ CREATE TABLE "Merma" (
     "porcentaje" DOUBLE PRECISION NOT NULL,
     "precioAnterior" DOUBLE PRECISION NOT NULL,
     "precioActual" DOUBLE PRECISION NOT NULL,
+    "cantidad" DOUBLE PRECISION NOT NULL,
+    "precioUnitarioActual" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Merma_pkey" PRIMARY KEY ("id")
 );
@@ -36,7 +38,6 @@ CREATE TABLE "Ingrediente" (
     "unidadMedida" "UnidadMedida" NOT NULL,
     "cantidadConMerma" DOUBLE PRECISION NOT NULL,
     "precioConMerma" DOUBLE PRECISION NOT NULL,
-    "productId" TEXT NOT NULL,
 
     CONSTRAINT "Ingrediente_pkey" PRIMARY KEY ("id")
 );
@@ -54,6 +55,14 @@ CREATE TABLE "Product" (
     "categoryId" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ProductIngrediente" (
+    "productId" TEXT NOT NULL,
+    "ingredienteId" TEXT NOT NULL,
+
+    CONSTRAINT "ProductIngrediente_pkey" PRIMARY KEY ("productId","ingredienteId")
 );
 
 -- CreateTable
@@ -151,9 +160,6 @@ CREATE TABLE "OrderAddress" (
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ingrediente_name_key" ON "Ingrediente"("name");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Product_slug_key" ON "Product"("slug");
 
 -- CreateIndex
@@ -169,10 +175,13 @@ CREATE UNIQUE INDEX "UserAddress_userId_key" ON "UserAddress"("userId");
 CREATE UNIQUE INDEX "OrderAddress_orderId_key" ON "OrderAddress"("orderId");
 
 -- AddForeignKey
-ALTER TABLE "Ingrediente" ADD CONSTRAINT "Ingrediente_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ProductIngrediente" ADD CONSTRAINT "ProductIngrediente_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProductIngrediente" ADD CONSTRAINT "ProductIngrediente_ingredienteId_fkey" FOREIGN KEY ("ingredienteId") REFERENCES "Ingrediente"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ProductImage" ADD CONSTRAINT "ProductImage_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

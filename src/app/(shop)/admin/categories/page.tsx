@@ -1,7 +1,6 @@
 
 export const revalidate = 0;
 
-// https://tailwindcomponents.com/component/hoverable-table
 
 import { getPaginatedCategories } from "@/actions/category/get-paginated-categories";
 import { Pagination, Title } from "@/components";

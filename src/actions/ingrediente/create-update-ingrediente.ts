@@ -1,4 +1,4 @@
-"use server";
+'use server';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { Ingrediente } from '@/interfaces';
@@ -20,11 +20,10 @@ const ingredienteSchema = z.object({
     .number()
     .min(0)
     .transform(val => Number(val.toFixed(0))),
-  productId: z.string(),
   unidadMedida: z.enum(['miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad'])
 });
 
-export async function createUpdateIngrediente(formData: FormData) {
+export async function createUpdateIngrediente(formData: FormData, productId: string) {
   const data = Object.fromEntries(formData.entries());
 
   console.log("Parsed data:", data); // Añadir esta línea para depuración
@@ -39,19 +38,7 @@ export async function createUpdateIngrediente(formData: FormData) {
   const ingrediente = ingredienteParsed.data;
   ingrediente.slug = ingrediente.slug.toLowerCase().replace(/ /g, '-').trim();
 
-  const { id, productId, ...rest } = ingrediente;
-
-  // Verificar si el productId existe en la tabla Product
-  const productExists = await prisma.product.findUnique({
-    where: { id: productId },
-  });
-
-  if (!productExists) {
-    return {
-      ok: false,
-      message: 'El productId proporcionado no existe en la tabla Product.',
-    };
-  }
+  const { id, ...rest } = ingrediente;
 
   try {
     const prismaTx = await prisma.$transaction(async (tx) => {
@@ -63,15 +50,37 @@ export async function createUpdateIngrediente(formData: FormData) {
           where: { id },
           data: {
             ...rest,
-            productId, // Asegurar que se actualice con un productId válido
           }
         });
+
+        // Actualizar la tabla intermedia si ya existe la relación
+        await prisma.productIngrediente.upsert({
+          where: {
+            productId_ingredienteId: {
+              productId,
+              ingredienteId: ingrediente.id
+            }
+          },
+          update: {},
+          create: {
+            productId,
+            ingredienteId: ingrediente.id
+          }
+        });
+
       } else {
         // Crear
         ingrediente = await prisma.ingrediente.create({
           data: {
             ...rest,
-            productId, // Asegurar que se cree con un productId válido
+          }
+        });
+
+        // Crear la entrada en la tabla intermedia
+        await prisma.productIngrediente.create({
+          data: {
+            productId,
+            ingredienteId: ingrediente.id
           }
         });
       }

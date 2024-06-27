@@ -9,5 +9,5 @@ export interface Ingrediente {
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   cantidadConMerma: number;
   precioConMerma: number;
-  productId: string;
+
 }

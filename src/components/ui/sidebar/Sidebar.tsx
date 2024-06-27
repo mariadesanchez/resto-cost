@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from "next/link";
 import clsx from "clsx";
@@ -13,20 +13,33 @@ import {
   IoRestaurantOutline,
   IoTicketOutline,
 } from "react-icons/io5";
-import { MdOutlinePriceChange } from "react-icons/md";
-
-
+// import { MdOutlinePriceChange } from "react-icons/md";
 import { useUIStore } from "@/store";
 import { logout } from "@/actions";
 import { titleFont } from "@/config/fonts";
+import { Category } from '@/interfaces/category.interface';
+import { getCategories } from '@/actions';
+import { useEffect, useState } from "react";
+
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
   const closeMenu = useUIStore((state) => state.closeSideMenu);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
   const isAdmin = session?.user.role === "admin";
+
+  useEffect(() => {
+    // Fetch categories
+    async function fetchCategories() {
+      const categories = await getCategories();
+      setCategories(categories);
+    }
+
+    fetchCategories();
+  }, []);
 
   return (
     <div>
@@ -53,10 +66,56 @@ export const Sidebar = () => {
         )}
       >
         <IoCloseOutline
-          size={50}
+          size={30}
           className="absolute top-5 right-5 cursor-pointer text-black"
           onClick={() => closeMenu()}
         />
+
+        {/* Categorías - visible en pantallas pequeñas */}
+        <div className={`${titleFont.className} flex flex-col md:hidden text-black`}>
+          <Link
+            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+            href="/plato/Carne"
+            onClick={() => closeMenu()}
+          >
+            Carne
+          </Link>
+          <Link
+            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+            href="/plato/Pastas"
+            onClick={() => closeMenu()}
+          >
+            Pastas
+          </Link>
+          <Link
+            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+            href="/plato/Pescados"
+            onClick={() => closeMenu()}
+          >
+            Pescados
+          </Link>
+          <Link
+            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+            href="/plato/Vegetales"
+            onClick={() => closeMenu()}
+          >
+            Vegetales
+          </Link>
+          <Link
+            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+            href="/plato/Tragos"
+            onClick={() => closeMenu()}
+          >
+            Tragos
+          </Link>
+          <Link
+            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+            href="/plato/Dulces"
+            onClick={() => closeMenu()}
+          >
+            Dulces
+          </Link>
+        </div>
 
         {/* Menú */}
         {isAuthenticated && (
@@ -64,32 +123,21 @@ export const Sidebar = () => {
             {/* <Link
               href="/profile"
               onClick={() => closeMenu()}
-              className={`${titleFont.className}  text-black flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-allm`}
+              className={`${titleFont.className} text-black flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all`}
             >
               <IoPersonOutline size={30} />
               <span className="ml-3 text-xl" style={{ color: "black" }}>Perfil</span>
             </Link> */}
 
-            <Link
+            {/* <Link
               href="/orders"
               onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2
-               hover:bg-gray-200 rounded transition-all text-black`}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all text-black`}
             >
               <IoTicketOutline size={30} />
               <span className="ml-3 text-xl" style={{ color: "black" }}>Mis Ordenes</span>
-            </Link>
+            </Link> */}
           </>
-        )}
-
-        {isAuthenticated && (
-          <button
-            className="flex w-full items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all  text-black"
-            onClick={() => logout()}
-          >
-            <IoLogOutOutline size={30} />
-            <span className={`${titleFont.className} ml-3 text-xl`} style={{ color: "black" }}>Salir</span>
-          </button>
         )}
 
         {!isAuthenticated && (
@@ -108,7 +156,6 @@ export const Sidebar = () => {
             {/* Line Separator */}
             <div className="w-full h-px bg-gray-400 my-10" />
 
-            
             <Link
               href="/admin/precios/listPrice"
               onClick={() => closeMenu()}
@@ -152,9 +199,20 @@ export const Sidebar = () => {
               <IoPeopleOutline size={30} />
               <span className="ml-3 text-xl" style={{ color: "black" }}>Usuarios</span>
             </Link>
+
+            {isAuthenticated && (
+              <button
+                className="flex w-full items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all text-black"
+                onClick={() => logout()}
+              >
+                <IoLogOutOutline size={30} />
+                <span className={`${titleFont.className} ml-3 text-xl`} style={{ color: "black" }}>Salir</span>
+              </button>
+            )}
           </>
         )}
       </nav>
     </div>
   );
 };
+

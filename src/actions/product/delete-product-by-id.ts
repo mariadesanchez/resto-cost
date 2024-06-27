@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation';
 
 // Configura Cloudinary (asegúrate de haber configurado tus credenciales)
 
-
 export async function deleteProductById(id: string) {
   try {
     // Obtenemos las URLs de las imágenes asociadas al producto
@@ -27,13 +26,21 @@ export async function deleteProductById(id: string) {
       }
     }));
 
-    // Eliminamos las imágenes de la base de datos
+    // Eliminamos las imágenes, ingredientes y el producto de la base de datos
     await prisma.$transaction([
+      // Eliminar relaciones en ProductIngrediente
+      prisma.productIngrediente.deleteMany({
+        where: {
+          productId: id,
+        },
+      }),
+      // Eliminar imágenes del producto
       prisma.productImage.deleteMany({
         where: {
           productId: id,
         },
       }),
+      // Eliminar el producto
       prisma.product.delete({
         where: {
           id: id,
@@ -47,3 +54,4 @@ export async function deleteProductById(id: string) {
     throw error;
   }
 }
+

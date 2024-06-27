@@ -2,18 +2,18 @@ import prisma from '@/lib/prisma';
 
 export async function getPricesWithMermaByProductId(productId: string) {
     try {
-        const ingredients = await prisma.ingrediente.findMany({
+        const ingredients = await prisma.productIngrediente.findMany({
             where: {
                 productId: productId,
             },
-            select: {
-                precioConMerma: true
+            include: {
+                ingrediente: true,  // Incluir los detalles completos del ingrediente
             },
         });
 
         // Calcula el precio total sumando los precios con merma de cada ingrediente
         const totalPrice = ingredients.reduce((total, ingredient) => {
-            return total + ingredient.precioConMerma;
+            return total + ingredient.ingrediente.precioConMerma;
         }, 0);
 
         return totalPrice;
@@ -22,5 +22,3 @@ export async function getPricesWithMermaByProductId(productId: string) {
         throw new Error('Error al obtener precios con merma por ID de producto');
     }
 }
-
-  

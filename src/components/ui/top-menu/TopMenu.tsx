@@ -1,16 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
+
+// import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { IoCartOutline, IoMenuOutline } from 'react-icons/io5';
 import { titleFont } from '@/config/fonts';
 import { useCartStore, useUIStore } from '@/store';
 // import { getCategories } from '@/actions';
-
-// interface Category {
-//   id: string;
-//   name: string;
-//   slug: string;
-// }
+// import { Category } from '@/interfaces/category.interface';
 
 export const TopMenu = () => {
   const openSideMenu = useUIStore((state) => state.openSideMenu);
@@ -18,17 +14,17 @@ export const TopMenu = () => {
   // const [categories, setCategories] = useState<Category[]>([]);
 
   // useEffect(() => {
-  //   // Fetch categories
-  //   async function fetchCategories() {
-  //     const categories = await getCategories();
-  //     setCategories(categories);
+    // Fetch categories
+    // async function fetchCategories() {
+    //   const categories = await getCategories();
+      // setCategories(categories);
   //   }
 
   //   fetchCategories();
   // }, []);
 
   return (
-    <nav className="flex flex-col md:flex-row justify-between items-center px-5 w-full mb-4">
+    <nav className="flex flex-col md:flex-row justify-between items-center px-5 w-full mb-4 mt-7">
       {/* Logo */}
       <div>
         <Link href="/">
@@ -37,70 +33,58 @@ export const TopMenu = () => {
           </span>
         </Link>
       </div>
-
-      {/* Géneros */}
-      {/* <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-black`}>
-        {categories.map((category) => (
-          <Link
-            key={category.id}
-            href={`/plato/${category.slug}`}
-            className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-          >
-            {category.name}
-          </Link>
-        ))}
-      </div> */}
-      <div className={`${titleFont.className} flex justify-center md:justify-start md:ml-auto text-black`}>
+      
+      {/* Categorías - visible en pantallas grandes */}
+      <div className={`${titleFont.className} hidden md:flex justify-center md:justify-start md:ml-auto text-black`}>
         <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
           href="/plato/Carne"
         >
           Carne
         </Link>
         <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Pastas"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+          href="/plato/Pastas"
         >
           Pastas
         </Link>
         <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Pescados"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+          href="/plato/Pescados"
         >
           Pescados
         </Link>
         <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Vegetales"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+          href="/plato/Vegetales"
         >
           Vegetales
         </Link>
         <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Tragos"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+          href="/plato/Tragos"
         >
           Tragos
         </Link>
         <Link
-        className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
-        href="/plato/Dulces"
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+          href="/plato/Dulces"
         >
           Dulces
         </Link>
       </div>
-
+      
       {/* Right Menu */}
       <div className="flex items-center mt-4 md:mt-0 md:ml-auto">
         {/* Carrito y Menú */}
         <Link href={(totalItemsInCart === 0) ? '/empty' : "/cart"} className="mx-2">
           <div className="relative">
             {totalItemsInCart > 0 && (
-              <span className="fade-in absolute px-1 rounded-full font-bold -top-2 -right-2 bg-blue-700 text-black text-3xl">
+              <span className="fade-in absolute flex items-center justify-center w-6 h-6 rounded-full font-bold -top-4 left-3 bg-blue-700 text-white text-sm">
                 {totalItemsInCart}
               </span>
             )}
-            <IoCartOutline className="w-5 h-5 text-black text-3xl" />
+            <IoCartOutline className="w-15 h-15 text-black text-3xl" />
           </div>
         </Link>
 
@@ -108,13 +92,12 @@ export const TopMenu = () => {
           onClick={openSideMenu}
           className="m-2 p-2 rounded-md transition-all hover:bg-white"
         >
-          <IoMenuOutline className="w-5 h-5 text-black" />
+          <IoMenuOutline className="w-10 h-10 text-black" />
         </button>
       </div>
     </nav>
   );
 };
-
 
 
 

@@ -13,12 +13,14 @@ interface Merma {
   porcentaje: number;
   precioAnterior: number;
   precioActual: number;
+  cantidad: number;
 }
 
 export default function MermaTable() {
   const [mermas, setMermas] = useState<Merma[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");  // Estado para el valor de búsqueda
 
   useEffect(() => {
     const fetchMermas = async () => {
@@ -60,6 +62,10 @@ export default function MermaTable() {
     return <div>Error: {error}</div>;
   }
 
+  const filteredMermas = mermas.filter((merma) =>
+    merma.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto p-4">
       <Title title="Listado de Precios Y Mermas" />
@@ -68,28 +74,41 @@ export default function MermaTable() {
           Nuevo Ingrediente
         </Link>
       </div>
+      <div className="mb-5">
+        <input
+          type="text"
+          placeholder="Buscar por nombre"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md w-full"
+        />
+      </div>
       <table className="min-w-full bg-white border border-gray-200">
         <thead>
           <tr>
             {/* <th className="px-4 py-2 border-b text-left">ID</th> */}
             <th className="px-4 py-2 border-b text-left">Nombre</th>
-            <th className="px-4 py-2 border-b text-left">Unidad de Medida</th>
-            <th className="px-4 py-2 border-b text-left">Porcentaje</th>
-            <th className="px-4 py-2 border-b text-left">Precio Anterior</th>
-            <th className="px-4 py-2 border-b text-left">Precio Actual</th>
+            <th className="px-4 py-2 border-b text-left">Medida</th>
+            <th className="px-4 py-2 border-b text-left">Cantidad</th>
+            <th className="px-4 py-2 border-b text-left">% Merma</th>
+            <th className="px-4 py-2 border-b text-left">$ Anterior</th>
+            <th className="px-4 py-2 border-b text-left">$ Actual</th>
+            <th className="px-4 py-2 border-b text-left">$ Actual Unitario</th>
             <th className="px-4 py-2 border-b text-left">Editar</th>
             <th className="px-4 py-2 border-b text-left">Eliminar</th>
           </tr>
         </thead>
         <tbody>
-          {mermas.map((merma) => (
+          {filteredMermas.map((merma) => (
             <tr key={merma.id}>
               {/* <td className="px-4 py-2 border-b">{merma.id}</td> */}
               <td className="px-4 py-2 border-b">{merma.name}</td>
               <td className="px-4 py-2 border-b">{merma.unidadMedida}</td>
+              <td className="px-4 py-2 border-b">{merma.cantidad}</td>
               <td className="px-4 py-2 border-b">{merma.porcentaje}</td>
-              <td className="px-4 py-2 border-b">${merma.precioAnterior}</td>
-              <td className="px-4 py-2 border-b">${merma.precioActual}</td>
+              <td className="px-4 py-2 border-b">{merma.precioAnterior}</td>
+              <td className="px-4 py-2 border-b">{merma.precioActual}</td>
+              <td className="px-4 py-2 border-b">  {merma.cantidad !== 0 ? (merma.precioActual / merma.cantidad).toFixed(2) : ''}</td>                                                                                                                              
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <Link href={`/admin/precios/${merma.id}`}>
                   <IoArchiveOutline size={30} />
@@ -112,4 +131,6 @@ export default function MermaTable() {
     </div>
   );
 }
+
+
 

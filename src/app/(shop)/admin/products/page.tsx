@@ -27,7 +27,7 @@ export default async function OrdersPage({ searchParams }: Props) {
     <>
       <Title title="Agregar o Editar Plato" />
 
-      <div className="flex justify-end mb-5">
+      <div className="flex justify-end mb-5 text-2xl font-bold">
         <Link href="/admin/product/new" className="btn-primary">
           Nuevo Plato
         </Link>
@@ -35,48 +35,48 @@ export default async function OrdersPage({ searchParams }: Props) {
 
       <div className="mb-10">
         <table className="min-w-full">
-          <thead className="bg-gray-200 border-b">
+          <thead className="bg-orange-400 border-b">
             <tr>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl  text-white px-6 py-4 text-left"
               >
-                Imagen
+                Ir a Plato
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl text-white px-6 py-4 text-left"
               >
-                Titulo
+                Editar Plato
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl text-white px-6 py-4 text-left"
               >
-                Precio
+                Precio ($)
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl text-white px-6 py-4 text-left"
               >
                 Ingredientes
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl text-white px-6 py-4 text-left"
               >
-                Inventario
+                Stock
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl text-white px-6 py-4 text-left"
               >
                Porción
               </th>
 
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                className="text-2xl text-white px-6 py-4 text-left"
               >
                 Eliminar
               </th>
@@ -103,7 +103,7 @@ export default async function OrdersPage({ searchParams }: Props) {
           />
                   </Link>
                 </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                <td className="text-xl  text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
                   <Link
                     href={`/admin/product/${product.slug}`}
                     className="hover:underline"
@@ -112,7 +112,7 @@ export default async function OrdersPage({ searchParams }: Props) {
                   </Link>
                 </td>
 
-                <td className="text-sm font-bold  text-gray-900 px-6 py-4 whitespace-nowrap">
+                <td className="text-xl font-bold  text-gray-900 px-6 py-4 whitespace-nowrap">
                   {currencyFormat(product.price)}
                 </td>
 
@@ -125,11 +125,11 @@ export default async function OrdersPage({ searchParams }: Props) {
                   </Link>
                 </td>
 
-                <td className="text-sm text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
+                <td className="text-xl text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
                   {product.inStock}
                 </td>
 
-                <td className="text-sm text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
+                <td className="text-xl text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
                   {product.sizes.join(", ")}
                 </td>
 

@@ -7,10 +7,11 @@ import { z } from 'zod';
 const mermaSchema = z.object({
   id: z.string().uuid().optional().nullable(),
   name: z.string().min(1).max(255),
+  cantidad: z.number().min(0).transform(val => Number(val.toFixed(2))),
   porcentaje: z.number().min(0).max(100),
   precioAnterior: z.number().min(0).transform(val => Number(val.toFixed(2))),
   precioActual: z.number().min(0).transform(val => Number(val.toFixed(2))),
-
+  precioUnitarioActual: z.number().min(0).transform(val => Number(val.toFixed(2))),
   unidadMedida: z.enum(['miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad'])
 });
 
@@ -19,9 +20,11 @@ export const createUpdateMerma = async (formData: any[] | FormData) => {
   
   const parsedData = {
     ...data,
+    cantidad: parseFloat(data.cantidad),
     porcentaje: parseFloat(data.porcentaje),
     precioAnterior: parseFloat(data.precioAnterior),
-    precioActual: parseFloat(data.precioActual)
+    precioActual: parseFloat(data.precioActual),
+    precioUnitarioActual: parseFloat(data.precioUnitarioActual)
   };
 
   const mermaParsed = mermaSchema.safeParse(parsedData);

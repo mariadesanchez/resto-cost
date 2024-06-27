@@ -3,12 +3,18 @@ import { deleteIngredienteById } from '@/actions';
 import React from 'react';
 import { IoTrashOutline } from 'react-icons/io5';
 
-export function DeleteIngrediente({ id, onDelete }: { id: string, onDelete: (id: string) => void }): React.JSX.Element {
+interface DeleteIngredienteProps {
+  id: string;
+  onDelete: () => void;
+  productId: string;
+}
+
+export const DeleteIngrediente: React.FC<DeleteIngredienteProps> = ({ id, onDelete, productId }) => {
   const handleDelete = async () => {
     try {
-      await deleteIngredienteById({ id });
-      onDelete(id);
-      alert('Ingrediente eliminado correctamente');
+      await deleteIngredienteById({ id, productId });
+      onDelete(); // Llama al callback onDelete después de eliminar el ingrediente
+      // alert('Ingrediente eliminado correctamente');
     } catch (error) {
       console.error('Error al eliminar el ingrediente:', error);
       alert('No se pudo eliminar el ingrediente');
@@ -26,4 +32,4 @@ export function DeleteIngrediente({ id, onDelete }: { id: string, onDelete: (id:
       </button>
     </div>
   );
-}
+};
