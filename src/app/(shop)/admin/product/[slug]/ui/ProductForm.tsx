@@ -98,13 +98,18 @@ export const ProductForm = ({ product,categories }: Props) => {
   };
 
   const title = watch('title');
-
   useEffect(() => {
     if (title) {
-      const slug = title.trim().toLowerCase().replace(/\s+/g, '_');
+      const slug = title
+        .trim()
+        .toLowerCase()
+        .normalize("NFD") // Descompone los caracteres unicode
+        .replace(/[\u0300-\u036f]/g, '') // Elimina los acentos
+        .replace(/\s+/g, '_'); // Reemplaza los espacios por _
       setValue('slug', slug);
     }
   }, [title, setValue]);
+  
 
   return (
     <form

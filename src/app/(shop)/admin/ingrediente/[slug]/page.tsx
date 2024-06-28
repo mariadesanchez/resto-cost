@@ -231,7 +231,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     const value = parseFloat(event.target.value);
     setCantidadReceta(isNaN(value) ? null : value);
     if (selectedPorcentaje !== null && value !== null) {
-      setCantidadConMerma(value + (value * (selectedPorcentaje / 100)));
+      setCantidadConMerma(value * (1 + (selectedPorcentaje / 100)));
     }
   };
 
@@ -395,8 +395,8 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
           <thead>
             <tr>
               <th className="py-2 px-4 border-b">Nombre</th>
-              <th className="py-2 px-4 border-b">Cantidad Receta</th>
-              <th className="py-2 px-4 border-b">Unidad Medida</th>
+              {/* <th className="py-2 px-4 border-b">Cantidad Receta</th> */}
+              {/* <th className="py-2 px-4 border-b">Unidad Medida</th> */}
               <th className="py-2 px-4 border-b">Cantidad con Merma</th>
               <th className="py-2 px-4 border-b">Precio con Merma</th>
               <th className="py-2 px-4 border-b">Acciones</th>
@@ -406,8 +406,8 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             {ingredientesByProduct.map((ingrediente) => (
               <tr key={ingrediente.id}>
                 <td className="py-2 px-4 border-b">{ingrediente.name}</td>
-                <td className="py-2 px-4 border-b">{ingrediente.cantidadReceta}</td>
-                <td className="py-2 px-4 border-b">{ingrediente.unidadMedida}</td>
+                {/* <td className="py-2 px-4 border-b">{ingrediente.cantidadReceta}</td> */}
+                {/* <td className="py-2 px-4 border-b">{ingrediente.unidadMedida}</td> */}
                 <td className="py-2 px-4 border-b">{ingrediente.cantidadConMerma}</td>
                 <td className="py-2 px-4 border-b">{ingrediente.precioConMerma}</td>
                 <td className="py-2 px-4 border-b">

@@ -69,8 +69,8 @@ export default function MermaTable() {
   return (
     <div className="container mx-auto p-4">
       <Title title="Listado de Precios Y Mermas" />
-      <div className="flex justify-end mb-5">
-        <Link href="/admin/precios/new" className="btn-primary">
+      <div className="flex justify-end mb-5 text-2xl font-bold">
+        <Link href="/admin/product/new" className="btn-secondary">
           Nuevo Ingrediente
         </Link>
       </div>

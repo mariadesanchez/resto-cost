@@ -26,7 +26,7 @@ interface FormInputs {
 export default function MermaForm({ merma, params }: Props) {
   const { slug } = params;
   const router = useRouter();
-  // const [precioUnitarioActual, setPrecioUnitarioActual]=useState(0);
+  const [adjustmentFactor, setAdjustmentFactor] = useState(1)
   const [initialValues, setInitialValues] = useState<FormInputs>({
     id: merma?.id || '',
     name: '',
@@ -42,10 +42,10 @@ export default function MermaForm({ merma, params }: Props) {
   useEffect(() => {
     const fetchMerma = async () => {
       try {
-      const mermaData = await getMermaById(slug);
-      if (mermaData.ok && mermaData.merma) {
-      const { id, name, unidadMedida, porcentaje, precioAnterior, precioActual,  cantidad,precioUnitarioActual } = mermaData.merma;
-      setInitialValues({ id, name, unidadMedida, porcentaje, precioAnterior, precioActual,  cantidad,precioUnitarioActual});
+        const mermaData = await getMermaById(slug);
+        if (mermaData.ok && mermaData.merma) {
+          const { id, name, unidadMedida, porcentaje, precioAnterior, precioActual, cantidad, precioUnitarioActual } = mermaData.merma;
+          setInitialValues({ id, name, unidadMedida, porcentaje, precioAnterior, precioActual, cantidad, precioUnitarioActual });
         } else {
           console.error('Error al obtener la Merma:', mermaData.message);
         }
@@ -61,7 +61,7 @@ export default function MermaForm({ merma, params }: Props) {
     } else {
       setLoading(false);
     }
-    }, [slug]);
+  }, [slug]);
 
   const { handleSubmit, register, formState: { isValid }, setValue, watch } = useForm<FormInputs>({
     defaultValues: initialValues,
@@ -71,7 +71,7 @@ export default function MermaForm({ merma, params }: Props) {
   const precioActual = watch('precioActual');
   const cantidad = watch('cantidad');
   const precioUnitarioActual = watch('precioUnitarioActual');
-
+  const precioAnterior = watch('precioAnterior');
   useEffect(() => {
     if (!loading) {
       setValue("id", initialValues.id);
@@ -82,6 +82,7 @@ export default function MermaForm({ merma, params }: Props) {
       setValue("precioAnterior", initialValues.precioAnterior);
       setValue("precioActual", initialValues.precioActual);
       setValue("precioUnitarioActual", initialValues.precioUnitarioActual);
+    
     }
   }, [loading, initialValues, setValue]);
 
@@ -92,19 +93,24 @@ export default function MermaForm({ merma, params }: Props) {
   }, [precioActual, initialValues.precioActual, setValue]);
 
   useEffect(() => {
-    if (precioActual || cantidad) {
+    if (precioActual && cantidad) {
       const precioUnitarioActual = precioActual / cantidad;
       setValue('precioUnitarioActual', precioUnitarioActual);
-      // setPrecioUnitarioActual(precioUnitarioActual);
     }
   }, [precioActual, cantidad, setValue]);
 
-  const onSubmit = async (data: FormInputs) => {
-    // Recalcular y establecer precioUnitarioActual justo antes de enviar
-    // const precioUnitarioActual = data.precioActual / data.cantidad;
-    // data.precioUnitarioActual = precioUnitarioActual;
-    // console.log("Form data before sending:", data);
+  useEffect(() => {
+    if (precioActual && precioAnterior) {
+     
+      const adjustmentFactor = precioActual / precioAnterior;
+      setAdjustmentFactor(adjustmentFactor);
+   
+    }
+  
+}, [precioActual, precioAnterior, setValue]);
 
+
+  const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
 
     if (data.id) {
@@ -117,7 +123,7 @@ export default function MermaForm({ merma, params }: Props) {
     formData.append("porcentaje", data.porcentaje.toString());
     formData.append("precioAnterior", data.precioAnterior.toString());
     formData.append("precioActual", data.precioActual.toString());
-    formData.append("precioUnitarioActual", precioUnitarioActual.toString());
+    formData.append("precioUnitarioActual", data.precioUnitarioActual.toString());
 
     const { ok, merma: updatedMerma } = await createUpdateMerma(formData);
 
@@ -126,18 +132,18 @@ export default function MermaForm({ merma, params }: Props) {
       return;
     }
 
-    // Calcular el factor de ajuste
-    const adjustmentFactor = data.precioActual / data.precioAnterior;
+    // Obtener el factor de ajuste calculado
+    // const adjustmentFactor = data.precioActual / data.precioAnterior;
 
     // Actualizar el precioConMerma de los ingredientes
     const { ok: updateOk } = await updateIngredientesByMerma(data.name, adjustmentFactor);
 
     if (!updateOk) {
       alert('Precio Actualizado Correctamente!!!');
-      router.push('/admin/precios/listPrice'); 
+      router.push('/admin/precios/listPrice');
     }
 
-    router.push('/admin/precios/listPrice');  // Redirige a la lista de mermas
+    router.push('/admin/precios/listPrice'); // Redirige a la lista de mermas
   };
 
   if (loading) {
@@ -148,9 +154,6 @@ export default function MermaForm({ merma, params }: Props) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full bg-white p-5 shadow-lg rounded-lg">
       <div className="w-full mb-4">
         <h1 className="text-2xl font-bold mb-4 text-center">Merma y Precios</h1>
-        
-       
-       
         <div className="flex flex-col mb-2">
           <label htmlFor="cantidad" className="mb-1 font-bold">Cantidad</label>
           <input
@@ -160,7 +163,6 @@ export default function MermaForm({ merma, params }: Props) {
             {...register("cantidad", { required: true })}
           />
         </div>
-       
         <div className="flex flex-col mb-2">
           <label htmlFor="precioActual" className="mb-1 font-bold">Precio Actual</label>
           <input
@@ -175,7 +177,6 @@ export default function MermaForm({ merma, params }: Props) {
           <select
             id="unidadMedida"
             className="p-2 border mb-4 rounded-md bg-white font-bold"
-           
             {...register("unidadMedida")}
           >
             <option value="miligramos">Miligramos</option>
@@ -192,36 +193,31 @@ export default function MermaForm({ merma, params }: Props) {
             id="porcentaje"
             type="number"
             className="p-2 border rounded-md bg-gray-200 font-bold"
-    
             {...register("porcentaje", { required: true, min: 0 })}
           />
         </div>
         <div className="m-1 p-3 bg-orange-400 rounded-xl">
-        <div className="flex flex-col mb-2">
-          <label htmlFor="name" className="mb-1 font-bold">Nombre</label>
-          <input
-            id="name"
-            type="text"
-            className="p-2 border rounded-md bg-white font-bold"
-            disabled
-            {...register("name", { required: true })}
-          />
-        </div>
-     
-      
-        
-
-        <div className="flex flex-col mb-2">
-         <label htmlFor="precioAnterior" className="mb-1 font-bold">Precio Anterior</label>
-         <input
-         id="precioAnterior"
-         type="number"
-         className="p-2 border rounded-md  bg-white font-bold cursor-not-allowed" // Añadido cursor-not-allowed para indicar que está deshabilitado
-         {...register("precioAnterior", { required: true, min: 0 })}
-          disabled // Añadido atributo disabled
-          />
+          <div className="flex flex-col mb-2">
+            <label htmlFor="name" className="mb-1 font-bold">Nombre</label>
+            <input
+              id="name"
+              type="text"
+              className="p-2 border rounded-md bg-white font-bold"
+              disabled
+              {...register("name", { required: true })}
+            />
           </div>
-      </div>
+          <div className="flex flex-col mb-2">
+            <label htmlFor="precioAnterior" className="mb-1 font-bold">Precio Anterior</label>
+            <input
+              id="precioAnterior"
+              type="number"
+              className="p-2 border rounded-md bg-white font-bold cursor-not-allowed" // Añadido cursor-not-allowed para indicar que está deshabilitado
+              {...register("precioAnterior", { required: true, min: 0 })}
+              disabled // Añadido atributo disabled
+            />
+          </div>
+        </div>
         <div className="hidden">
           <label htmlFor="precioUnitarioActual" className="mb-1 font-bold">Precio Unitario Actual</label>
           <input

@@ -28,15 +28,12 @@ export default async function Home({ searchParams }: Props) {
 
 
   return (
-    <>
-   
-
-    <ProductGrid 
-      products={products}
-    />
   
-    <Pagination totalPages={totalPages} />
+          <div>
+            <ProductGrid products={products} />
+            <Pagination totalPages={totalPages} />
+          </div>
     
-  </>
   );
 }
+
