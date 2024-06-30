@@ -118,71 +118,58 @@ export const ProductForm = ({ product,categories }: Props) => {
     >
       {/* Textos */}
       <div className="w-full">
-      <div className="flex flex-col mb-2">
+      <div className="flex flex-col mb-2 font-bold">
         <span>Título</span>
         <input
           type="text"
-          className="p-2 border rounded-md bg-gray-200"
+          className="p-2 border rounded-md bg-gray-400"
           {...register("title", { required: true })}
         />
       </div>
 
-      <div className="flex flex-col mb-2">
+      <div className="flex flex-col mb-2 font-bold">
         <span>Slug</span>
         <input
           type="text"
-          className="p-2 border rounded-md bg-gray-200"
+          className="p-2 border rounded-md bg-gray-400 font-bold"
           {...register("slug", { required: true })}
           readOnly // Para que el campo sea de solo lectura
           value={watch('slug')} // El valor se obtiene del hook watch
         />
       </div>
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-2 font-bold">
           <span>Descripción</span>
           <textarea
             rows={5}
-            className="p-2 border rounded-md bg-gray-200"
+            className="p-2 border rounded-md bg-gray-400"
             {...register("description", { required: true })}
           ></textarea>
         </div>
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-2 font-bold">
           <span>Price</span>
           <input
             type="number"
-            className="p-2 border rounded-md bg-gray-200"
+            className="p-2 border rounded-md bg-gray-400 font-bold"
             {...register("price", { required: true, min: 0 })}
           />
         </div>
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-2 font-bold">
           <span>Tags</span>
           <input
             type="text"
-            className="p-2 border rounded-md bg-gray-200"
+            className="p-2 border rounded-md bg-gray-400 font-bold"
             {...register("tags", { required: true })}
           />
         </div>
-        {/* <div className="flex flex-col mb-2">
-          <span>Plato</span>
-          <select
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("plato", { required: true })}
-          >
-            <option value="">[Seleccione]</option>
-            {platos.map((plato) => (
-              <option key={plato.id} value={plato.id}>
-                {plato.name}
-              </option>
-            ))}
-            </select>
-          </div> */}
+       
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-2 font-bold">
           <span>Categoria</span>
           <select
-            className="p-2 border rounded-md bg-gray-200"
+            className="p-2 border rounded-md bg-gray-400 font-bold"
             {...register("categoryId", { required: true })}
           >
             <option value="">[Seleccione]</option>
@@ -199,18 +186,18 @@ export const ProductForm = ({ product,categories }: Props) => {
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-2 font-bold">
           <span>Inventario</span>
           <input
             type="number"
-            className="p-2 border rounded-md bg-gray-200"
+            className="p-2 border rounded-md bg-gray-400 font-bold"
             {...register("inStock", { required: true, min: 0 })}
           />
         </div>
 
         {/* As checkboxes */}
       
-          <div className="flex flex-col">
+          <div className="flex flex-col font-bold">
           <span>Porción</span>
           <div className="flex flex-wrap">
             {sizes.map((size) => (
@@ -229,13 +216,13 @@ export const ProductForm = ({ product,categories }: Props) => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col mb-2">
+          <div className="flex flex-col mb-2 font-bold">
             <span>Fotos</span>
             <input
               type="file"
               { ...register('images') }
               multiple
-              className="p-2 border rounded-md bg-gray-200"
+              className="p-2 border rounded-md bg-gray-400 "
               accept="image/png, image/jpg, image/avif"
             />
           </div>

@@ -2,7 +2,7 @@
 
 // import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { IoCartOutline, IoMenuOutline } from 'react-icons/io5';
+import { IoGridOutline, IoMenuOutline } from 'react-icons/io5';
 import { titleFont } from '@/config/fonts';
 import { useCartStore, useUIStore } from '@/store';
 // import { getCategories } from '@/actions';
@@ -77,14 +77,14 @@ export const TopMenu = () => {
       {/* Right Menu */}
       <div className="flex items-center mt-4 md:mt-0 md:ml-auto">
         {/* Carrito y Menú */}
-        <Link href={(totalItemsInCart === 0) ? '/empty' : "/cart"} className="mx-2">
+        <Link href={(totalItemsInCart === 0) ? '/empty' : "/checkout"} className="mx-2">
           <div className="relative">
             {totalItemsInCart > 0 && (
               <span className="fade-in absolute flex items-center justify-center w-6 h-6 rounded-full font-bold -top-4 left-3 bg-blue-700 text-white text-sm">
                 {totalItemsInCart}
               </span>
             )}
-            <IoCartOutline className="w-15 h-15 text-black text-3xl" />
+             <IoGridOutline size={30} mb={3} className="text-green-600" />
           </div>
         </Link>
 

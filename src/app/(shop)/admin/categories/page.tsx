@@ -11,7 +11,7 @@ import DeleteCategory from "@/components/category/DeleteCategory";
 // import Image from "next/image";
 
 import Link from "next/link";
-import { IoPencilOutline } from "react-icons/io5";
+import { IoArchiveOutline} from "react-icons/io5";
 
 
 
@@ -31,75 +31,63 @@ export default async function CategoriesPage({ searchParams }: Props) {
     <>
       <Title title="Agregar o Editar Categoría" />
 
-      <div className="flex justify-end mb-5">
-        <Link href="/admin/category/new" className="btn-primary">
-          Nueva Categoría
+    
+      
+
+      <div className="mx-auto max-w-screen-md">
+      <div className="flex justify-end mb-5 text-2xl font-bold ">
+        <Link href="/admin/category/new" className="btn-secondary">
+        Nueva Categoría
         </Link>
       </div>
+  <table className="min-w-full">
+    <thead className="bg-gray-400 border-b opacity-100">
+      <tr>
+        <th scope="col" className="text-xl text-white px-6 py-4 text-left">
+          Nombre
+        </th>
+        <th scope="col" className="text-2xl text-white px-6 py-4 text-left">
+          Editar
+        </th>
+        <th scope="col" className="text-2xl text-white px-6 py-4 text-left">
+          Eliminar
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {categories.map((category: any) => (
+        <tr
+          key={category.id}
+          className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
+        >
+          {category.id !== 'f4e6c0f9-9c1f-47c0-af70-19c4a5102a8c' && (
+            <td className="text-lg font-bold px-6 py-4 whitespace-nowrap">
+              {category.name}
+            </td>
+          )}
+          {category.id !== 'f4e6c0f9-9c1f-47c0-af70-19c4a5102a8c' && (
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <Link
+                href={`/admin/category/${category.id}`}
+                className="hover:underline"
+              >
+                <IoArchiveOutline size={40} className="text-black-500" />
+              </Link>
+            </td>
+          )}
+          {category.id !== 'f4e6c0f9-9c1f-47c0-af70-19c4a5102a8c' && (
+            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <DeleteCategory id={category.id} />
+            </td>
+          )}
+        </tr>
+      ))}
+    </tbody>
+  </table>
 
-      <div className="mb-10">
-        <table className="min-w-full">
-          <thead className="bg-gray-200 border-b">
-            <tr>
-            
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-              >
-               Nombre
-              </th>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-              >
-                Editar
-              </th>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-              >
-                Eliminar
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((category:any) => (
-              <tr
-                key={category.id}
-                className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
-              >
-               {category.id!=='f4e6c0f9-9c1f-47c0-af70-19c4a5102a8c'&&
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                 
-                    {category.name}
-                 
-                </td>}
-                {category.id!=='f4e6c0f9-9c1f-47c0-af70-19c4a5102a8c'&&
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {/* Editar */}
-                 
-                  <Link
-                    href={`/admin/category/${category.id}`}
-                    className="hover:underline"
-                  >
-                      <IoPencilOutline size={40} className="text-blue-500" />
-                 
-                    </Link>
-                  </td>}
-                  {category.id!=='f4e6c0f9-9c1f-47c0-af70-19c4a5102a8c'&&
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                
-               
-                  <DeleteCategory id={category.id}/>
-                  </td>}
-                
-              </tr>
-            ))}
-          </tbody>
-        </table>
+  <Pagination totalPages={totalPages} />
+</div>
 
-        <Pagination totalPages={totalPages} />
-      </div>
     </>
   );
 }

@@ -60,6 +60,7 @@ export const ProductSlideshow = ( { images, title, className }: Props ) => {
                   src={ image  }
                   alt={ title }
                   className="object-fill"
+               
                 />
               </SwiperSlide>
   

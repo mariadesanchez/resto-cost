@@ -28,7 +28,8 @@ export default async function OrdersPage({ searchParams }: Props) {
       <Title title="Agregar o Editar Plato" />
 
       <div className="flex justify-end mb-5 text-2xl font-bold">
-        <Link href="/admin/product/new" className="btn-secondary">
+        <Link href="/admin/product/new"
+         className="bg-gray-600 text-white p-2 rounded px-6">
           Nuevo Plato
         </Link>
       </div>
@@ -36,7 +37,6 @@ export default async function OrdersPage({ searchParams }: Props) {
       <div className="mb-10">
         <table className="min-w-full">
         <thead className="bg-gray-400 border-b opacity-100">
-
             <tr>
               <th
                 scope="col"

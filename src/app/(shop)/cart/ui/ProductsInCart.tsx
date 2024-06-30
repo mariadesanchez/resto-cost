@@ -59,7 +59,7 @@ export const ProductsInCart = () => {
                   {product.size} - {product.title}
                 </Link>
   
-                <p>${product.price}</p>
+                <p>${(product.price).toFixed(2)}</p>
                 <QuantitySelector
                   quantity={product.quantity}
                   onQuantityChanged={(quantity) =>

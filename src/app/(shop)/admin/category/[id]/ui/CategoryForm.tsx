@@ -5,7 +5,7 @@ import { Category} from "@/interfaces";
 
 
 import { createUpdateCategory } from "@/actions";
-import { redirect, useRouter } from 'next/navigation';
+import {useRouter } from 'next/navigation';
 
 
 interface Props {
@@ -69,27 +69,23 @@ export const CategoryForm = ({ category }: Props) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3"
-    >
-         <div className="w-full"> <div className="flex flex-col mb-2">
-
+    
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-lg mx-auto bg-white p-5 shadow-lg rounded-lg">    
+      <div className="w-full">
         <div className="flex flex-col mb-2">
-          <span>Nombre</span>
-          <input
-            type="text"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("name", { required: true })}
-          />
+          <div className="flex flex-col mb-2 font-bold">
+            <span>Nombre</span>
+            <input
+              type="text"
+              className="p-2 border rounded-md bg-gray-400"
+              {...register("name", { required: true })}
+            />
+          </div>
+          <div className="flex justify-end mb-5 text-2xl font-bold">
+            <button className="w-full bg-gray-400 text-white">Guardar</button>
+          </div>
         </div>
-
-
-        <button className="btn-primary w-full">Guardar</button>
       </div>
-      </div>
-     
     </form>
-  
   );
 };

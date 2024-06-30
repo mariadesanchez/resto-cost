@@ -167,3 +167,16 @@ model OrderAddress {
   Order      Order    @relation(fields: [orderId], references: [id])
   orderId    String   @unique
 }
+
+model Pedido {
+  id        Int      @id @default(autoincrement())
+  fecha     DateTime @default(now())
+  mesa      Int
+  producto  String
+  precio    Float
+  cantidad  Int
+  moza      String
+  @@map("Pedidos")
+}
+//npx prisma migrate dev --name add_Pedido_table,
+//ej: para migrar solo la tabla Pedido

@@ -8,9 +8,11 @@ import { useEffect, useState } from "react";
 export const OrderSummary = () => {
 
   const router = useRouter();
+  const productsInCart = useCartStore( state => state.cart );
+  const clearCart = useCartStore( state => state.clearCart );
 
   const [loaded, setLoaded] = useState(false);
-  const { itemsInCart, subTotal, tax, total } = useCartStore((state) =>
+  const { itemsInCart, subTotal } = useCartStore((state) =>
     state.getSummaryInformation()
   );
 
@@ -38,15 +40,21 @@ export const OrderSummary = () => {
       <span className="text-right">
         {itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`}
       </span>
+      {productsInCart.map((product) => (
+  // <div key={`${product.slug}-${product.size}`} className="grid grid-cols-2 gap-4 mb-5">
+    <>
+    <span className="text-left">{product.title}</span>
+    <span className="text-right">${product.price.toFixed(2)} x {product.quantity}</span>
+    
+    </>
+    
+  // </div>
+))}
 
-      <span>Subtotal</span>
-      <span className="text-right">{currencyFormat(subTotal)}</span>
-
-      <span>Impuestos (15%)</span>
-      <span className="text-right">{currencyFormat(tax)}</span>
-
+      <span></span>
+      <span className="text-right"></span>
       <span className="mt-5 text-2xl">Total:</span>
-      <span className="mt-5 text-2xl text-right">{currencyFormat(total)}</span>
+      <span className="mt-5 text-2xl text-right">{currencyFormat(subTotal)}</span>
     </div>
   );
 };

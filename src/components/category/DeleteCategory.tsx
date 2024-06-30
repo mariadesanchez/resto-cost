@@ -18,8 +18,8 @@ export const DeleteCategory = ({ id }: Props) => {
        onClick={() => deleteCategoryById(id)}
       className="flex p-2 hover:bg-gray-100 rounded transition-all"
     >
-      <IoTrashOutline size={30} className="text-red-500" />
-      <span className="text-l text-red-500">Remover</span>
+      <IoTrashOutline size={30} className="text-red-500 " />
+      <span className="text-xl text-red-500 font-blod">Remover</span>
     </button>
   </div>
   )

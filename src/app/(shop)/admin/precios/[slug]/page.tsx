@@ -26,7 +26,7 @@ interface FormInputs {
 export default function MermaForm({ merma, params }: Props) {
   const { slug } = params;
   const router = useRouter();
-  const [adjustmentFactor, setAdjustmentFactor] = useState(1)
+  const [adjustmentFactor, setAdjustmentFactor] = useState(1);
   const [initialValues, setInitialValues] = useState<FormInputs>({
     id: merma?.id || '',
     name: '',
@@ -56,7 +56,7 @@ export default function MermaForm({ merma, params }: Props) {
       }
     };
 
-    if (slug) {
+    if (slug && slug !== 'new') {
       fetchMerma();
     } else {
       setLoading(false);
@@ -82,7 +82,6 @@ export default function MermaForm({ merma, params }: Props) {
       setValue("precioAnterior", initialValues.precioAnterior);
       setValue("precioActual", initialValues.precioActual);
       setValue("precioUnitarioActual", initialValues.precioUnitarioActual);
-    
     }
   }, [loading, initialValues, setValue]);
 
@@ -101,14 +100,10 @@ export default function MermaForm({ merma, params }: Props) {
 
   useEffect(() => {
     if (precioActual && precioAnterior) {
-     
       const adjustmentFactor = precioActual / precioAnterior;
       setAdjustmentFactor(adjustmentFactor);
-   
     }
-  
-}, [precioActual, precioAnterior, setValue]);
-
+  }, [precioActual, precioAnterior, setValue]);
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
@@ -133,9 +128,6 @@ export default function MermaForm({ merma, params }: Props) {
     }
 
     // Obtener el factor de ajuste calculado
-    // const adjustmentFactor = data.precioActual / data.precioAnterior;
-
-    // Actualizar el precioConMerma de los ingredientes
     const { ok: updateOk } = await updateIngredientesByMerma(data.name, adjustmentFactor);
 
     if (!updateOk) {
@@ -150,10 +142,13 @@ export default function MermaForm({ merma, params }: Props) {
     return <div>Cargando...</div>;
   }
 
+  const isNew = slug === 'new';
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full bg-white p-5 shadow-lg rounded-lg">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-lg mx-auto bg-white p-5 shadow-lg rounded-lg">
       <div className="w-full mb-4">
-        <h1 className="text-2xl font-bold mb-4 text-center">Merma y Precios</h1>
+        <h1 className="text-xl font-bold mb-4 text-center">Merma y Precios</h1>
+        <h2 className="text-xl  mb-4 text-center">{initialValues.name}</h2>
         <div className="flex flex-col mb-2">
           <label htmlFor="cantidad" className="mb-1 font-bold">Cantidad</label>
           <input
@@ -196,14 +191,14 @@ export default function MermaForm({ merma, params }: Props) {
             {...register("porcentaje", { required: true, min: 0 })}
           />
         </div>
-        <div className="m-1 p-3 bg-orange-400 rounded-xl">
+        <div className={`m-1 p-3 ${isNew ? 'bg-white' : 'bg-gray-400'} rounded-xl opacity-100`}>
           <div className="flex flex-col mb-2">
             <label htmlFor="name" className="mb-1 font-bold">Nombre</label>
             <input
               id="name"
               type="text"
-              className="p-2 border rounded-md bg-white font-bold"
-              disabled
+              className="p-2 border rounded-md bg-gray-200 font-bold"
+              disabled={!isNew}
               {...register("name", { required: true })}
             />
           </div>
@@ -212,9 +207,9 @@ export default function MermaForm({ merma, params }: Props) {
             <input
               id="precioAnterior"
               type="number"
-              className="p-2 border rounded-md bg-white font-bold cursor-not-allowed" // Añadido cursor-not-allowed para indicar que está deshabilitado
-              {...register("precioAnterior", { required: true, min: 0 })}
-              disabled // Añadido atributo disabled
+              className="p-2 border rounded-md bg-gray-200 font-bold cursor-not-allowed"
+              {...register("precioAnterior", { required: true, min: 1 })}
+              disabled={!isNew}
             />
           </div>
         </div>
@@ -228,11 +223,13 @@ export default function MermaForm({ merma, params }: Props) {
             disabled
           />
         </div>
-        <button type="submit" className="btn-primary w-full p-2 bg-blue-500 text-white mb-2 mt-2 text-2xl font-bold rounded-md" disabled={!isValid}>
+        <button type="submit" className="bg-gray-600 text-lg font-bold text-white p-2 w-full rounded px-6" disabled={!isValid}>
           Guardar
         </button>
       </div>
     </form>
   );
 }
+
+
 

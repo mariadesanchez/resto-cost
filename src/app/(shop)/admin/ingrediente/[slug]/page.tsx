@@ -253,11 +253,11 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
   return (
     <div className="flex flex-col lg:flex-row p-8 space-y-8 lg:space-y-0">
       <div className="lg:w-1/2 flex flex-col bg-gray-200 rounded-lg p-4 m-2">
-        <h1 className="text-2xl mb-4">{productName}</h1>
+        <h1 className="text-2xl mb-4 text-center">{productName}</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
           <div className="mb-2">
-            <label className="block mb-1 text-sm font-medium text-gray-900">
-              Selecciona Merma
+            <label className="block mb-1 text-md font-medium text-gray-900">
+              Selecciona Merma:
             </label>
             <select
               onChange={handleMermaChange}
@@ -273,7 +273,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
           </div>
 
           <div className="hidden">
-            <label className="block mb-1 text-sm font-medium text-gray-900">
+            <label className="block mb-1 text-md font-medium text-gray-900">
               Nombre Ingrediente
             </label>
             <input
@@ -295,8 +295,8 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
           </div>
 
           <div className="flex flex-col mb-2">
-            <label className="block mb-1 text-sm font-medium text-gray-900">
-              Cantidad Receta
+            <label className="block mb-1 text-md font-medium text-gray-900">
+              Cantidad Receta:
             </label>
             <input
               type="number"
@@ -306,7 +306,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             />
           </div>
 
-          <div className="m-1 p-3 bg-orange-400 rounded-xl">
+          <div className="m-1 p-3 bg-gray-400 rounded-xl opacity-100">
             <div className="flex flex-col mb-2">
               <label className="block mb-1 text-sm font-medium text-gray-900">
                 Unidad de Medida
@@ -363,12 +363,18 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             </div>
           </div>
           <div className="mb-2">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded w-full"
-            >
-              Guardar Ingrediente
-            </button>
+           
+
+          <div className="flex justify-end mb-5 text-2xl font-bold">
+  <button
+    type="submit"
+    className="bg-gray-600 text-white p-2 rounded w-full"
+    style={{ boxShadow: 'none', transition: 'none' }}
+  >
+    Guardar Ingrediente
+  </button>
+</div>
+
             
           </div>
           <div className="w-full">
@@ -379,18 +385,18 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
           )}
           {selectedPrecio !== null && (
             <div className="flex flex-col mb-2">
-              <span>Precio De Mercado: ${selectedPrecio}</span>
+              <span>Precio De Mercado: ${(selectedPrecio).toFixed(2)}</span>
             </div>
           )}
-          <div className="mt-4">
-            <h3 className="text-lg font-bold text-red-500">Costo Total: ${(costoTotal).toFixed(2)}</h3>
-          </div>
+       
+            <h3 className="text-xl text-center font-bold text-red-500">Costo Total: ${(costoTotal).toFixed(2)}</h3>
+
           </div>
         </form>
       </div>
 
       <div className="lg:w-1/2 mt-8 bg-gray-200 rounded-lg p-4">
-        <h2 className="text-2xl mb-4">Ingredientes</h2>
+        <h2 className="text-2xl mb-4">Ingredientes:</h2>
         <table className="min-w-full bg-white border border-gray-200">
           <thead>
             <tr>
@@ -408,8 +414,8 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
                 <td className="py-2 px-4 border-b">{ingrediente.name}</td>
                 {/* <td className="py-2 px-4 border-b">{ingrediente.cantidadReceta}</td> */}
                 {/* <td className="py-2 px-4 border-b">{ingrediente.unidadMedida}</td> */}
-                <td className="py-2 px-4 border-b">{ingrediente.cantidadConMerma}</td>
-                <td className="py-2 px-4 border-b">{ingrediente.precioConMerma}</td>
+                <td className="py-2 px-4 border-b">{(ingrediente.cantidadConMerma).toFixed(2)}</td>
+                <td className="py-2 px-4 border-b">{(ingrediente.precioConMerma).toFixed(2)}</td>
                 <td className="py-2 px-4 border-b">
                 <DeleteIngrediente id={ingrediente.id} onDelete={fetchIngredientesByProductId} productId={productId} />
                 </td>

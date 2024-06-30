@@ -17,6 +17,8 @@
         "bcryptjs": "^2.4.3",
         "cloudinary": "^1.41.0",
         "clsx": "^2.1.0",
+        "html2canvas": "^1.4.1",
+        "jspdf": "^2.5.1",
         "mercadopago": "^2.0.8",
         "next": "^14.2.3",
         "next-auth": "^5.0.0-beta.3",
