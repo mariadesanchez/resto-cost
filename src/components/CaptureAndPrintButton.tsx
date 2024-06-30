@@ -1,14 +1,18 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-export const CaptureAndPrintButton = () => {
+interface Props {
+  screenId: string;
+  onAfterPrint?: () => Promise<void>; // Hacemos que onAfterPrint sea opcional y asincrónico
+}
+
+export const CaptureAndPrintButton: React.FC<Props> = ({ screenId, onAfterPrint }) => {
   const router = useRouter();
 
   const captureAndPrint = async () => {
-    const screenElement = document.getElementById("Screen");
+    const screenElement = document.getElementById(screenId);
     if (screenElement) {
       const printButton = document.getElementById("printButton");
       const closeButton = document.getElementById("closeButton");
@@ -37,22 +41,46 @@ export const CaptureAndPrintButton = () => {
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-      // Redirigir a la página de inicio
-      router.push("/orders");
       // Abrir el PDF en una nueva ventana
       pdf.output("dataurlnewwindow");
+
+      // Ejecutar el callback después de imprimir si está presente
+      if (onAfterPrint) {
+        await onAfterPrint();
+      }
+
+      // Redirigir después de imprimir si el screenId es "Screen-Order"
+      if (screenId === 'Screen-Order' || screenId === 'Screen') {
+        router.push('/');
+      }
     } else {
-      console.error('Elemento con id "Screen" no encontrado');
+      console.error(`Elemento con id "${screenId}" no encontrado`);
     }
   };
 
   return (
-    <button
-      id="printButton"
-      onClick={captureAndPrint}
-      className="bg-gray-600 text-lg font-bold w-full text-white p-2 rounded px-6"
-    >
-      Imprimir
-    </button>
+    <>
+      {screenId === 'Screen-Order' ? (
+        <button
+          id="printButton"
+          onClick={captureAndPrint}
+          className="bg-gray-600 text-lg font-bold w-full text-white p-2 rounded px-6"
+        >
+          Imprimir
+        </button>
+      ) : (
+        <button
+          id="printButton"
+          onClick={captureAndPrint}
+          className="bg-gray-600 text-lg font-bold w-full text-white p-2 rounded px-6"
+        >
+          Imprimir y Cerrar Mesa
+        </button>
+      )}
+    </>
   );
 };
+
+
+
+

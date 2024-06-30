@@ -25,7 +25,7 @@ export default async function OrdersByIdPage({ params }: Props) {
 
   // Calcular el total usando reduce
   const total = order!.OrderItem.reduce((acc, item) => acc + item.price * item.quantity, 0);
- 
+
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
@@ -55,7 +55,7 @@ export default async function OrdersByIdPage({ params }: Props) {
                 <div>
                   <p>{item.product.title}</p>
                   <p>
-                    ${item.price} x {item.quantity}
+                    ${(item.price).toFixed(2)} x {item.quantity}
                   </p>
                   <p className="font-bold">
                     Subtotal: {currencyFormat(item.price * item.quantity)}
@@ -66,7 +66,7 @@ export default async function OrdersByIdPage({ params }: Props) {
           </div>
 
           {/* Checkout - Resumen de orden */}
-          <div className="bg-white rounded-xl shadow-xl p-7 w-[500px]" id="Screen">
+          <div className="bg-white rounded-xl shadow-xl p-7 w-[500px]" id="Screen-Order">
             <div className="mb-10">
               <h2 className={`${titleFont.className} antialiased text-3xl text-center font-semibold my-1`}>Cocina | Blanch</h2>
               <h3 className={`${titleFont.className} antialiased text-xl text-center font-semibold my-2`}>Cocina de Autor</h3>
@@ -82,7 +82,7 @@ export default async function OrdersByIdPage({ params }: Props) {
                 >
                   <span className="text-left">{item.product.title}</span>
                   <span className="text-right">
-                    ${item.price} x {item.quantity}
+                    {currencyFormat(item.price)} x {item.quantity}
                   </span>
                 </div>
               ))}
@@ -93,7 +93,7 @@ export default async function OrdersByIdPage({ params }: Props) {
               <div className="w-full h-px bg-gray-600 my-1"></div>
               <h3 className={`${titleFont.className} antialiased text-xl text-center font-semibold my-2`}>Gracias Por Visitarnos</h3>
               <div className="mt-5 mb-2 w-full flex justify-center">
-                <CaptureAndPrintButton />
+                <CaptureAndPrintButton screenId="Screen-Order" />
               </div>
             </div>
           </div>
@@ -102,3 +102,4 @@ export default async function OrdersByIdPage({ params }: Props) {
     </div>
   );
 }
+
