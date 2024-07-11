@@ -17,9 +17,16 @@ export * from './ui/not-found/ProductNotFound';
 export * from './ui/pagination/Pagination'
 export * from './ui/sidebar/Sidebar';
 export * from './ui/title/Title';
-export * from './ui/top-menu/TopMenu'
+export * from './ui/top-menu/TopMenu';
 export * from './ingrediente/DeleteIngrediente';
-export * from './CaptureAndPrintButton'
+export * from './orders/CaptureAndPrintButton';
+export * from './mesaSelector/MesaSelector';
+export * from './orders/PrintButton';
+export * from './openWhatsapp/OpenWhatsApp'
+export * from './elaboraciones/ElaboracionesPage'
+
+
+
 
 
 

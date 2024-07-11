@@ -21,7 +21,6 @@ CREATE TABLE "Merma" (
     "name" TEXT NOT NULL,
     "unidadMedida" "UnidadMedida" NOT NULL,
     "porcentaje" DOUBLE PRECISION NOT NULL,
-    "precioAnterior" DOUBLE PRECISION NOT NULL,
     "precioActual" DOUBLE PRECISION NOT NULL,
     "cantidad" DOUBLE PRECISION NOT NULL,
     "precioUnitarioActual" DOUBLE PRECISION NOT NULL,
@@ -124,6 +123,7 @@ CREATE TABLE "Order" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "userId" TEXT NOT NULL,
     "transactionId" TEXT,
+    "mesa" TEXT NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );

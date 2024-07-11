@@ -9,10 +9,9 @@ const mermaSchema = z.object({
   name: z.string().min(1).max(255),
   cantidad: z.number().min(0).transform(val => Number(val.toFixed(2))),
   porcentaje: z.number().min(0).max(100),
-  precioAnterior: z.number().min(0).transform(val => Number(val.toFixed(2))),
   precioActual: z.number().min(0).transform(val => Number(val.toFixed(2))),
   precioUnitarioActual: z.number().min(0).transform(val => Number(val.toFixed(2))),
-  unidadMedida: z.enum(['miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad'])
+  unidadMedida: z.enum(['miligramos', 'gramos', 'kilo', 'mililitros', 'litro', 'unidad']),
 });
 
 export const createUpdateMerma = async (formData: any[] | FormData) => {
@@ -22,9 +21,8 @@ export const createUpdateMerma = async (formData: any[] | FormData) => {
     ...data,
     cantidad: parseFloat(data.cantidad),
     porcentaje: parseFloat(data.porcentaje),
-    precioAnterior: parseFloat(data.precioAnterior),
     precioActual: parseFloat(data.precioActual),
-    precioUnitarioActual: parseFloat(data.precioUnitarioActual)
+    precioUnitarioActual: parseFloat(data.precioUnitarioActual),
   };
 
   const mermaParsed = mermaSchema.safeParse(parsedData);
@@ -34,8 +32,7 @@ export const createUpdateMerma = async (formData: any[] | FormData) => {
     return { ok: false, errors: mermaParsed.error.format() };
   }
 
-  const merma = mermaParsed.data;
-  const { id, ...rest } = merma;
+  const { id, ...rest } = mermaParsed.data;
 
   try {
     const prismaTx = await prisma.$transaction(async (tx) => {
@@ -44,27 +41,23 @@ export const createUpdateMerma = async (formData: any[] | FormData) => {
         // Update
         merma = await prisma.merma.update({
           where: { id },
-          data: { ...rest },
+          data: rest,
         });
       } else {
         // Create
         merma = await prisma.merma.create({
-          data: { ...rest },
+          data: rest,
         });
       }
       return { merma };
     });
 
-    // Revalidate paths if needed
-    // e.g., revalidatePath('/admin/mermas');
-
     return {
       ok: true,
       merma: prismaTx.merma,
-     
     };
   } catch (error) {
-    console.log(error);
+    console.error('Error al actualizar/crear merma:', error);
     return {
       ok: false,
       message: 'Revisar los logs, no se pudo actualizar/crear',

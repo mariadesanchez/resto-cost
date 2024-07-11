@@ -61,17 +61,19 @@ export default async function OrdersPage() {
                   {order.OrderAddress?.firstName} {order.OrderAddress?.lastName}
                 </td>
                 <td className="flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  {order.isPaid ? (
-                    <>
-                      <IoCardOutline className="text-green-800" />
-                      <span className="mx-2 text-green-800">Pagada</span>
-                    </>
-                  ) : (
-                    <>
-                      <IoCardOutline className="text-red-800" />
-                      <span className="mx-2 text-red-800">No Pagada</span>
-                    </>
-                  )}
+                  {order.mesa
+                  // ? (
+                  //   <>
+                  //     <IoCardOutline className="text-green-800" />
+                  //     <span className="mx-2 text-green-800">Pagada</span>
+                  //   </>
+                  // ) : (
+                  //   <>
+                  //     <IoCardOutline className="text-red-800" />
+                  //     <span className="mx-2 text-red-800">No Pagada</span>
+                  //   </>
+                  // )
+                  }
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 ">
                   <Link href={`/orders/${ order.id }`} className="hover:underline">

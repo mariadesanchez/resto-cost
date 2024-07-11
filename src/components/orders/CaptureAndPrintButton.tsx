@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Importa desde next/navigation para Server Components
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -74,13 +74,9 @@ export const CaptureAndPrintButton: React.FC<Props> = ({ screenId, onAfterPrint 
           onClick={captureAndPrint}
           className="bg-gray-600 text-lg font-bold w-full text-white p-2 rounded px-6"
         >
-          Imprimir y Cerrar Mesa
+          Enviar
         </button>
       )}
     </>
   );
 };
-
-
-
-

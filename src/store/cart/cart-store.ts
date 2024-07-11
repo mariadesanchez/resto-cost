@@ -11,6 +11,7 @@ interface State {
     tax: number;
     total: number;
     itemsInCart: number;
+   
   };
 
   addProductTocart: (product: CartProduct) => void;

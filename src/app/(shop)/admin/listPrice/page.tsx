@@ -11,7 +11,7 @@ interface Merma {
   name: string;
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   porcentaje: number;
-  precioAnterior: number;
+  // precioAnterior: number;
   precioActual: number;
   cantidad: number;
 }
@@ -93,7 +93,7 @@ export default function MermaTable() {
             <th className="px-4 py-2 border-b text-left">Medida</th>
             <th className="px-4 py-2 border-b text-left">Cantidad</th>
             <th className="px-4 py-2 border-b text-left">% Merma</th>
-            <th className="px-4 py-2 border-b text-left">$ Anterior</th>
+            {/* <th className="px-4 py-2 border-b text-left">$ Anterior</th> */}
             <th className="px-4 py-2 border-b text-left">$ Actual</th>
             <th className="px-4 py-2 border-b text-left">$ Actual Unitario</th>
             <th className="px-4 py-2 border-b text-left">Editar</th>
@@ -108,7 +108,7 @@ export default function MermaTable() {
               <td className="px-4 py-2 border-b">{merma.unidadMedida}</td>
               <td className="px-4 py-2 border-b">{merma.cantidad}</td>
               <td className="px-4 py-2 border-b">{merma.porcentaje}</td>
-              <td className="px-4 py-2 border-b">{merma.precioAnterior}</td>
+              {/* <td className="px-4 py-2 border-b">{merma.precioAnterior}</td> */}
               <td className="px-4 py-2 border-b">{merma.precioActual}</td>
               <td className="px-4 py-2 border-b">  {merma.cantidad !== 0 ? (merma.precioActual / merma.cantidad).toFixed(2) : ''}</td>                                                                                                                              
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">

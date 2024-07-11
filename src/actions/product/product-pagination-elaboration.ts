@@ -7,7 +7,7 @@ interface PaginationOptions {
   category?: string; // El ID de la categoría como string (UUID)
 }
 
-export const getPaginatedProductsWithImages = async ({
+export const getPaginatedProductsWithImagesElaboration = async ({
   page = 1,
   take = 6,
   category,
@@ -31,11 +31,11 @@ export const getPaginatedProductsWithImages = async ({
       },
       where: {
         categoryId: category,
-        NOT: {
+       
           category: {
             name: 'Elaboraciones', // Excluir productos cuya categoría sea "Elaboraciones"
           },
-        },
+        
       },
     });
 
@@ -43,11 +43,11 @@ export const getPaginatedProductsWithImages = async ({
     const totalCount = await prisma.product.count({
       where: {
         categoryId: category,
-        NOT: {
+   
           category: {
             name: 'Elaboraciones', // Excluir productos cuya categoría sea "Elaboraciones"
           },
-        },
+        
       },
     });
 

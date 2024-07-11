@@ -15,6 +15,7 @@ export interface Product {
 }
 
 export interface CartProduct {
+  mesa: any;
   id: string;
   slug: string;
   title: string;

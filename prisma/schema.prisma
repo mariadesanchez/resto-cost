@@ -33,18 +33,17 @@ model Category {
   Product Product[]
 }
 
+
 model Merma {
   id             String       @id @default(uuid())
   name           String
   unidadMedida   UnidadMedida
   porcentaje     Float
-  precioAnterior Float
   precioActual   Float
   cantidad Float
   precioUnitarioActual   Float
-
+ 
 }
-
 // Definición de Ingrediente
 model Ingrediente {
   id               String              @id @default(uuid())
@@ -56,7 +55,6 @@ model Ingrediente {
   precioConMerma   Float
   products         ProductIngrediente[]
 }
-
 // Definición de Producto
 model Product {
   id          String              @id @default(uuid())
@@ -74,6 +72,7 @@ model Product {
   OrderItem   OrderItem[]
   @@index([sizes])
 }
+
 
 // Tabla intermedia para la relación muchos a muchos entre Producto e Ingrediente
 model ProductIngrediente {
@@ -140,6 +139,7 @@ model Order {
   OrderItem    OrderItem[]
   OrderAddress OrderAddress?
   transactionId String?
+  mesa String
 }
 
 model OrderItem {
@@ -168,15 +168,8 @@ model OrderAddress {
   orderId    String   @unique
 }
 
-model Pedido {
-  id        Int      @id @default(autoincrement())
-  fecha     DateTime @default(now())
-  mesa      Int
-  producto  String
-  precio    Float
-  cantidad  Int
-  moza      String
-  @@map("Pedidos")
-}
+
 //npx prisma migrate dev --name add_Pedido_table,
 //ej: para migrar solo la tabla Pedido
+// Agregar un campo a la tabla Order:
+//npx prisma migrate dev --name add_mesa_to_order

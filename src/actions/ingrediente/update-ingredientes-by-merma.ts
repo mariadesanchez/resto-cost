@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma';
 
-export async function updateIngredientesByMerma(name:any, adjustmentFactor:any) {
+export async function updateIngredientesByMerma(name:any, precioUnitarioActual:any) {
   try {
     const ingredientes = await prisma.ingrediente.findMany({
       where: { name: name },
@@ -14,7 +14,9 @@ export async function updateIngredientesByMerma(name:any, adjustmentFactor:any) 
 
     const updatedIngredientes = await prisma.$transaction(
       ingredientes.map((ingrediente) => {
-        const nuevoPrecioConMerma = ingrediente.precioConMerma * adjustmentFactor;
+        // const nuevoPrecioConMerma = ingrediente.precioConMerma * adjustmentFactor;
+        const nuevoPrecioConMerma = ingrediente.cantidadConMerma * precioUnitarioActual;
+
         return prisma.ingrediente.update({
           where: { id: ingrediente.id },
           data: { precioConMerma: nuevoPrecioConMerma },

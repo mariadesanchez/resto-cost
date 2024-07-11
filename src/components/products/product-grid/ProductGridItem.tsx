@@ -1,6 +1,5 @@
 'use client';
 
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { ProductImage } from '../../product/product-image/ProductImage';
@@ -13,7 +12,6 @@ interface Props {
   product: Product;
 }
 
-
 export const ProductGridItem = ( { product }: Props ) => {
 
   const [ displayImage, setDisplayImage ] = useState( product.images[ 0 ] );
@@ -23,7 +21,7 @@ export const ProductGridItem = ( { product }: Props ) => {
   const isAdmin = session?.user.role === "admin";
 
   return (
-    <div  className={`${titleFont.className} rounded-md overflow-hidden fade-in`}>
+    <div className={`${titleFont.className} rounded-md overflow-hidden fade-in`}>
  
       <Link href={ `/product/${ product.slug }` }>
          <Image
@@ -44,33 +42,21 @@ export const ProductGridItem = ( { product }: Props ) => {
           href={ `/product/${ product.slug }` }>
           { product.title }
         </Link>
-        { (product.inStock ==0 && isAdmin)&&
-        <div className='flex'>
-       
-        <Link className="font-bold text-red-500 text-2xl" href={'admin/products'}>Sin Stock</Link>
-        
-        
-        </div>
-       }
-         { (product.inStock ==0 && !isAdmin)&&
-        <div className='flex'>
-       
-        <span className="font-bold text-red-500 text-2xl">Sin Stock</span>
-        
-        
-        </div>
-       }
-        
-        
-        
-        
-       {product.inStock >0 &&  
-         <div className='flex'>
-         <span className="font-bold mr-5 text-2xl">${(product.price).toFixed(2)  }</span>
-        
-         </div>
+        { (product.inStock == 0 && isAdmin) &&
+          <div className='flex'>
+            <Link className="font-bold text-red-500 text-2xl" href={'/admin/products'}>Sin Stock</Link>
+          </div>
         }
-       
+        { (product.inStock == 0 && !isAdmin) &&
+          <div className='flex'>
+            <span className="font-bold text-red-500 text-2xl">Sin Stock</span>
+          </div>
+        }
+        {product.inStock > 0 &&  
+          <div className='flex'>
+            <span className="font-bold mr-5 text-2xl">${product.price.toFixed(2)}</span>
+          </div>
+        }
       </div>
 
     </div>

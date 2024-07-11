@@ -12,11 +12,12 @@ import {
   IoPeopleOutline,
   IoRestaurantOutline,
   IoTicketOutline,
+  IoFastFoodOutline,
 } from "react-icons/io5";
 // import { MdOutlinePriceChange } from "react-icons/md";
 import { useUIStore } from "@/store";
 import { logout } from "@/actions";
-import { titleFont } from "@/config/fonts";
+import { titleFont } from '@/config/fonts';
 import { Category } from '@/interfaces/category.interface';
 import { getCategories } from '@/actions';
 import { useEffect, useState } from "react";
@@ -157,7 +158,7 @@ export const Sidebar = () => {
             <div className="w-full h-px bg-gray-400 my-10" />
 
             <Link
-              href="/admin/precios/listPrice"
+              href="/admin/listPrice"
               onClick={() => closeMenu()}
               className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all text-black`}
             >
@@ -172,6 +173,14 @@ export const Sidebar = () => {
               <IoRestaurantOutline size={30} />
               <span className="ml-3 text-xl" style={{ color: "black" }}>Platos</span>
             </Link>
+            <Link
+              href="/admin/elaboraciones"
+              onClick={() => closeMenu()}
+              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all text-black`}
+            >
+              <IoFastFoodOutline size={30} />
+              <span className="ml-3 text-xl" style={{ color: "black" }}>Elaboraciones</span>
+            </Link>
 
             <Link
               href="/admin/categories"
@@ -182,14 +191,25 @@ export const Sidebar = () => {
               <span className="ml-3 text-xl" style={{ color: "black" }}>Categorías</span>
             </Link>
 
-            <Link
-              href="/admin/orders"
-              onClick={() => closeMenu()}
-              className={`${titleFont.className} flex items-center mt-10 p-2 hover:bg-gray-200 rounded transition-all text-black`}
-            >
-              <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl" style={{ color: "black" }}>Ordenes</span>
-            </Link>
+            {/* Mesas Section */}
+            <div className="flex flex-col mt-4 mb-4">
+              <div className="flex items-center">
+                <IoTicketOutline size={30} />
+                <span className="ml-3 text-xl" style={{ color: "black" }}>Mesas</span>
+              </div>
+              <div className="flex flex-wrap mt-2">
+                {[1, 2, 3, 4, 5, 6].map((num) => (
+                  <Link
+                    key={num}
+                    href={`/orders/${num}`}
+                    className="m-1 p-1 w-10 h-10 flex items-center justify-center rounded-md bg-gray-200 hover:bg-gray-300 transition-all text-black"
+                    onClick={() => closeMenu()}
+                  >
+                    {num}
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             <Link
               href="/admin/users"
@@ -215,4 +235,5 @@ export const Sidebar = () => {
     </div>
   );
 };
+
 

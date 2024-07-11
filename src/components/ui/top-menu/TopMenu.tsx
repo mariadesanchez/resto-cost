@@ -72,6 +72,12 @@ export const TopMenu = () => {
         >
           Dulces
         </Link>
+        <Link
+          className="m-1 p-1 rounded-md transition-all hover:bg-white text-3xl"
+          href="/Elaboraciones"
+        >
+          Elaboraciones
+        </Link>
       </div>
       
       {/* Right Menu */}

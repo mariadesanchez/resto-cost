@@ -50,6 +50,6 @@ export {createUpdateMerma} from './precios/create-update-precios-mermas'
 export {getMermaById} from './precios/get-precio-merma-by-id'
 export {getMermas} from './precios/get-precios-mermas'
 export {deleteMermaById} from './precios/detelete-merma'
-
-
-
+export {getProductsByCategory} from './product/get-products-by-category'
+export {getMermaByName} from './precios/get-precio-merma-by-name'
+export {updateMermaPrice} from './precios/update-merma-price'

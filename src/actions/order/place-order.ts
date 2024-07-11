@@ -1,4 +1,5 @@
 "use server";
+
 import prisma from "@/lib/prisma";
 
 import { auth } from "@/auth.config";
@@ -12,8 +13,9 @@ interface ProductToOrder {
 
 export async function placeOrder(
   productIds: ProductToOrder[],
-  address: Address
-){
+  address: Address,
+  mesa: string // Nuevo parámetro mesa
+) {
   const session = await auth();
   const userId = session?.user.id;
 
@@ -26,7 +28,6 @@ export async function placeOrder(
   }
 
   // Obtener la información de los productos
-  // Nota: recuerden que podemos llevar 2+ productos con el mismo ID
   const products = await prisma.product.findMany({
     where: {
       id: {
@@ -59,11 +60,9 @@ export async function placeOrder(
 
   // Crear la transacción de base de datos
   try {
-
     const prismaTx = await prisma.$transaction(async (tx) => {
       // 1. Actualizar el stock de los productos
       const updatedProductsPromises = products.map((product) => {
-        //  Acumular los valores
         const productQuantity = productIds
           .filter((p) => p.productId === product.id)
           .reduce((acc, item) => item.quantity + acc, 0);
@@ -75,7 +74,6 @@ export async function placeOrder(
         return tx.product.update({
           where: { id: product.id },
           data: {
-            // inStock: product.inStock - productQuantity // no hacer
             inStock: {
               decrement: productQuantity,
             },
@@ -100,7 +98,7 @@ export async function placeOrder(
           subTotal: subTotal,
           tax: tax,
           total: total,
-
+          mesa: mesa, // Agregar el campo mesa aquí
           OrderItem: {
             createMany: {
               data: productIds.map((p) => ({
@@ -116,10 +114,7 @@ export async function placeOrder(
         },
       });
 
-      // Validar, si el price es cero, entonces, lanzar un error
-
-      // 3. Crear la direccion de la orden
-      // Address
+      // 3. Crear la dirección de la orden
       const { country, ...restAddress } = address;
       const orderAddress = await tx.orderAddress.create({
         data: {
@@ -136,18 +131,16 @@ export async function placeOrder(
       };
     });
 
-
     return {
       ok: true,
       order: prismaTx.order,
       prismaTx: prismaTx,
-    }
-
-
+    };
   } catch (error: any) {
     return {
       ok: false,
       message: error?.message,
     };
   }
-};
+}
+

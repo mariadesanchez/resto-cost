@@ -75,7 +75,7 @@ export default async function OrdersPage() {
                   )}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 ">
-                  <Link href={`/orders/${ order.id }`} className="hover:underline">
+                  <Link href={`/orders/${ order.mesa }`} className="hover:underline">
                     Ver orden
                   </Link>
                 </td>
