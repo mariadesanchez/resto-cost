@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/actions/order/delete-order-by-id.ts", "src/actions/search/SearchProducts.ts", "src/components/ui/top-menu/TopMenu.tsx", "src/app/(shop)/admin/ingrediente/[slug]", "src/app/(shop)/admin/precios/[slug]", "src/app/(shop)/admin/precios/[slug].tsx", "src/app/(shop)/admin/precios/[slug]/listPrice", "src/app/(shop)/admin/precios/[slug]/listPrice"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/actions/order/delete-order-by-id.ts", "src/actions/search/SearchProducts.ts", "src/components/ui/top-menu/TopMenu.tsx", "src/app/(shop)/admin/ingrediente-plato/[slug]", "src/app/(shop)/admin/precios/[slug]", "src/app/(shop)/admin/precios/[slug].tsx", "src/app/(shop)/admin/precios/[slug]/listPrice", "src/app/(shop)/admin/precios/[slug]/listPrice"],
   "exclude": ["node_modules"]
 }

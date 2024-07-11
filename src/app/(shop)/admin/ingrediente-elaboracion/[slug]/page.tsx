@@ -5,8 +5,6 @@ import { UnidadMedida } from "@/interfaces/unidad.interface";
 import { DeleteIngrediente } from "@/components";
 import { createUpdateIngrediente, getIngredientsByProductId, getMermas, getProductById, updateProductPrice } from "@/actions";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { useRouter } from 'next/router';
 
 interface Props {
   params: {
@@ -416,7 +414,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
                 <td className="py-2 px-4 border-b">{ingrediente.name}</td>
                 {/* <td className="py-2 px-4 border-b">{ingrediente.cantidadReceta}</td> */}
                 {/* <td className="py-2 px-4 border-b">{ingrediente.unidadMedida}</td> */}
-                <td className="py-2 px-4 border-b">{(ingrediente.cantidadConMerma).toFixed(2)} ({ingrediente.unidadMedida})</td>
+                <td className="py-2 px-4 border-b">{(ingrediente.cantidadConMerma).toFixed(2)}</td>
                 <td className="py-2 px-4 border-b">{(ingrediente.precioConMerma).toFixed(2)}</td>
                 <td className="py-2 px-4 border-b">
                 <DeleteIngrediente id={ingrediente.id} onDelete={fetchIngredientesByProductId} productId={productId} />
@@ -425,18 +423,13 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             ))}
           </tbody>
         </table>
-      <div className="flex justify-end mb-5 text-2xl font-bold">
-  <Link 
-    href={`/admin/precios/${slug}`} 
-    className="bg-gray-600 w-full text-center mt-4 text-white p-2 rounded px-6"
-  >
-    Enviar a Lista de Precios
-  </Link>
-</div>
-
       </div>
     </div>
   );
 }
+
+
+
+
 
 
