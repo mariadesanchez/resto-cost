@@ -24,6 +24,7 @@ CREATE TABLE "Merma" (
     "precioActual" DOUBLE PRECISION NOT NULL,
     "cantidad" DOUBLE PRECISION NOT NULL,
     "precioUnitarioActual" DOUBLE PRECISION NOT NULL,
+    "productId" TEXT,
 
     CONSTRAINT "Merma_pkey" PRIMARY KEY ("id")
 );

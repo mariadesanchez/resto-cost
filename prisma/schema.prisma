@@ -42,6 +42,7 @@ model Merma {
   precioActual   Float
   cantidad Float
   precioUnitarioActual   Float
+  productId String?
  
 }
 // Definición de Ingrediente

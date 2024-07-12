@@ -6,33 +6,35 @@ import prisma from '@/lib/prisma';
 export const createUpdateMermaIngrediente = async (
   precioActual: number,
   name: string,
-  mermaId?: string // mermaId es opcional
+  mermaId?: string,
+  productId?: string | null, // Permitir null
 ): Promise<{ ok: boolean; merma?: Merma; message?: string }> => {
   try {
     if (mermaId) {
-      // Intenta actualizar la merma existente
+      // Actualiza la merma existente
       const updatedMerma = await prisma.merma.update({
         where: { id: mermaId },
         data: {
           name,
           precioActual,
-          // Actualiza otros campos si es necesario
+          ...(productId && { productId }), // Solo agrega productId si tiene valor
         },
       });
-
       return { ok: true, merma: updatedMerma };
     } else {
-      // Si no se encuentra el mermaId, crea un nuevo registro
+      // Crea un nuevo registro
+      const data: any = {
+        name,
+        precioActual,
+        ...(productId && { productId }), // Solo agrega productId si tiene valor
+        unidadMedida: 'gramos', // Valor por defecto
+        porcentaje: 0, // Valor por defecto
+        cantidad: 0, // Valor por defecto
+        precioUnitarioActual: precioActual, // O cualquier lógica que necesites
+      };
+
       const newMerma = await prisma.merma.create({
-        data: {
-          name,
-          precioActual,
-          // Asigna valores predeterminados para otros campos si es necesario
-          unidadMedida: 'gramos', // Por ejemplo
-          porcentaje: 0, // Valor predeterminado
-          cantidad: 0, // Valor predeterminado
-          precioUnitarioActual: precioActual, // O cualquier lógica que necesites
-        },
+        data,
       });
 
       return { ok: true, merma: newMerma };

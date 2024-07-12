@@ -263,7 +263,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
       if (fetchedMermaId) {
         setMermaId(fetchedMermaId);
         // Actualiza la merma existente
-        result = await createUpdateMermaIngrediente(costoTotal, productName, fetchedMermaId);
+        result = await createUpdateMermaIngrediente(costoTotal, productName, fetchedMermaId,productId);
         if (result.ok) {
           console.log('MermaIngrediente actualizado correctamente:', result.merma);
         } else {

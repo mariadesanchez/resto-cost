@@ -1,4 +1,5 @@
 
+
 export interface Merma {
   id: string;
   name: string;
@@ -7,7 +8,6 @@ export interface Merma {
   precioActual: number;
   cantidad: number;
   precioUnitarioActual: number;
-  
+  productId?: string | null; // Make this optional and allow null
 }
-
 
