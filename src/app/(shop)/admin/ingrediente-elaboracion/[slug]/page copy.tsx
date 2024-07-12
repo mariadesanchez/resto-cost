@@ -3,8 +3,10 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Ingrediente } from "@/interfaces";
 import { UnidadMedida } from "@/interfaces/unidad.interface";
 import { DeleteIngrediente } from "@/components";
-import { createUpdateIngrediente, getIngredientsByProductId, getMermas, getProductById, updateProductPrice } from "@/actions";
+import { createUpdateIngrediente, getMermaByName,getIngredientsByProductId, getMermas, getProductById, updateProductPrice, createUpdateMermaIngrediente } from "@/actions";
 import { useForm } from "react-hook-form";
+
+import { useRouter } from 'next/navigation';
 
 interface Props {
   params: {
@@ -35,7 +37,7 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
   const [ingredientesByProduct, setIngredientesByProduct] = useState<{ id: string; slug: string; name: string; cantidadReceta: number; unidadMedida: UnidadMedida; cantidadConMerma: number; precioConMerma: number; }[]>([]);
   const [cantidadConMerma, setCantidadConMerma] = useState<number | null>(null);
   const [precioConMerma, setPrecioConMerma] = useState<number | null>(null);
-
+ const [mermaId, setMermaId] = useState('')
   const [productName, setProductName] = useState('');
   const [costoTotal, setCostoTotal] = useState<number>(0);
 
@@ -250,6 +252,43 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
     setCantidadReceta(null);
   }, [selectedUnidadMedida]);
 
+  const router = useRouter();
+
+
+  const handleUpdateMerma = async () => {
+    if (productName) {
+      const fetchedMermaId = await getMermaByName(productName);
+      let result;
+
+      if (fetchedMermaId) {
+        setMermaId(fetchedMermaId);
+        // Actualiza la merma existente
+        result = await createUpdateMermaIngrediente(costoTotal, productName, fetchedMermaId);
+        if (result.ok) {
+          console.log('MermaIngrediente actualizado correctamente:', result.merma);
+        } else {
+          console.error('Error al actualizar MermaIngrediente:', result.message);
+        }
+      } else {
+        console.log('Merma no encontrada para el producto:', productName);
+        // Crea un nuevo registro si no se encuentra
+        result = await createUpdateMermaIngrediente(costoTotal, productName);
+        if (result.ok) {
+          console.log('MermaIngrediente creado correctamente:', result.merma);
+        } else {
+          console.error('Error al crear MermaIngrediente:', result.message);
+        }
+      }
+
+      // Redirige a la página deseada
+      if (result?.ok) {
+        router.push(`/admin/precios/${result.merma!.id}`);
+      }
+    }
+  };
+  
+
+
   return (
     <div className="flex flex-col lg:flex-row p-8 space-y-8 lg:space-y-0">
       <div className="lg:w-1/2 flex flex-col bg-gray-200 rounded-lg p-4 m-2">
@@ -423,10 +462,19 @@ export default function IngredienteForm({ ingrediente, params }: Props) {
             ))}
           </tbody>
         </table>
+        <button
+    type="button" // Cambia a "button" para evitar el comportamiento de envío de formularios
+    onClick={handleUpdateMerma}
+    className="bg-gray-600 text-white p-2 mt-4 text-xl font-bold rounded w-full"
+    style={{ boxShadow: 'none', transition: 'none' }}
+  >
+    Enviar a Ingrediente
+  </button>
       </div>
     </div>
   );
 }
+
 
 
 

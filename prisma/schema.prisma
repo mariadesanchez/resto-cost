@@ -35,8 +35,8 @@ model Category {
 
 
 model Merma {
-  id             String       @id @default(uuid())
-  name           String
+  id            String       @id @default(uuid())
+  name          String
   unidadMedida   UnidadMedida
   porcentaje     Float
   precioActual   Float

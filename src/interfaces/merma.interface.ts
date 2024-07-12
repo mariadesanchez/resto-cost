@@ -7,6 +7,7 @@ export interface Merma {
   precioActual: number;
   cantidad: number;
   precioUnitarioActual: number;
-  // productId? : string;
-
+  
 }
+
+
