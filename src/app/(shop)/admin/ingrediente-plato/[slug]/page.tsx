@@ -22,7 +22,7 @@ interface FormInputs {
   precioConMerma?: number;
 }
 
-export default function IngredienteForm({ ingrediente, params }: Props) {
+export default  function IngredienteForm({ ingrediente, params }: Props) {
   const { slug } = params;
   const [productId, setProductId] = useState(slug);
 

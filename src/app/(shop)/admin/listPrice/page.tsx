@@ -11,9 +11,10 @@ interface Merma {
   name: string;
   unidadMedida: 'miligramos' | 'gramos' | 'kilo' | 'mililitros' | 'litro' | 'unidad';
   porcentaje: number;
-  // precioAnterior: number;
   precioActual: number;
   cantidad: number;
+  productId?: string | null; // Permitir null
+
 }
 
 export default function MermaTable() {
@@ -112,10 +113,11 @@ export default function MermaTable() {
               <td className="px-4 py-2 border-b">{merma.precioActual}</td>
               <td className="px-4 py-2 border-b">  {merma.cantidad !== 0 ? (merma.precioActual / merma.cantidad).toFixed(2) : ''}</td>                                                                                                                              
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                <Link href={`/admin/precios/${merma.id}`}>
-                  <IoArchiveOutline size={30} />
-                  <span className="ml-3 text-xl" style={{ color: "red" }}></span>
-                </Link>
+               
+              <Link href={merma.productId ? `/admin/ingrediente-elaboracion/${merma.productId}` : `/admin/precios/${merma.id}`}>
+              <IoArchiveOutline size={30} />
+              <span className="ml-3 text-xl" style={{ color: "red" }}></span>
+              </Link>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <button
