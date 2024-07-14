@@ -119,7 +119,7 @@ export default async function OrdersPage({ searchParams }: Props) {
 
                 <td className="text-xl font-bold text-black-900 px-6 py-4 whitespace-nowrap">
                   <Link
-                    href={`/admin/ingrediente-plato/${product.id}`}
+                    href={`/admin/ingrediente-elaboracion/${product.id}`}
                     className="hover:underline"
                   >
                     Ingredientes

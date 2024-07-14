@@ -19,7 +19,7 @@ export const updateProductPrice = async (productId: string, newPrice: number) =>
         data: { price: newPrice },
       });
   
-      // Devolver el producto actualizado
+      // Devolver el producto actualizado en su price
       return updatedProduct;
     } catch (error) {
       console.error("Error al actualizar el precio del producto:", error);

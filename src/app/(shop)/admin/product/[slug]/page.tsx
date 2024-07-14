@@ -23,7 +23,7 @@ export default async function ProductPage({ params }: Props) {
 
   // Todo: new
   if ( !product && slug !== 'new' ) {
-    redirect('/admin/products')
+    redirect('/admin/elaboraciones')
   }
 
   const title = (slug === 'new') ? 'Nuevo plato' : 'Editar plato'
