@@ -456,7 +456,8 @@ useEffect(() => {
      <IngredientsList slug ={productId} name ={productName} total = {costoTotal}/>
 
      </div>
-
+//En este componente lo que hacemos es asociar el producto con sus ingredientes
+//y enviamos a DB intermedia ProductIngrediente
      );
 }
 

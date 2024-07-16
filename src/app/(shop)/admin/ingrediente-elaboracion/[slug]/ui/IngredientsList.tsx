@@ -10,7 +10,10 @@ interface Props {
   name: string;
   total: number;
 }
-
+//En este componente vamos mostrando los ingredientes que vamos agregando
+//al producto, podemos eliminar, volver a agregar algun Ingrediente
+//Si llegara a ser una Elaboracion, tendria que visibilizarse el boton
+//Enviar a Ingrediente, 
 export default function IngredientePage({ slug, name, total }: Props) {
   // const [name, setProductName] = useState(name);
   const router = useRouter();
@@ -27,12 +30,12 @@ export default function IngredientePage({ slug, name, total }: Props) {
     } catch (error) {
       console.error('Error al obtener los ingredientes:', error);
     }
-  }, [slug]);
+  }, [slug, total]);
 
   useEffect(() => {
     fetchIngredientesByProductId();
   }, [fetchIngredientesByProductId]);
-
+//Actualizar o Crear Merma, si llegara a ser una Elaboracion
   const handleUpdateMerma = async () => {
     if (name) {
       const fetchedMermaId = await getMermaByName(name);
