@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useState } from "react";
-import { getMermaByName, createUpdateMermaIngrediente, getIngredientsByProductId, getProductIdByMermaName } from "@/actions";
+import { getMermaByName, createUpdateMermaIngrediente, getIngredientsByProductId } from "@/actions";
 import { useRouter } from 'next/navigation';
 import { DeleteIngrediente } from "@/components";
 import { UnidadMedida } from "@prisma/client";
@@ -10,12 +10,15 @@ interface Props {
   name: string;
   total: number;
 }
-
+//En este componente vamos mostrando los ingredientes que vamos agregando
+//al producto, podemos eliminar, volver a agregar algun Ingrediente
+//Si llegara a ser una Elaboracion, tendria que visibilizarse el boton
+//Enviar a Ingrediente/s, 
 export default function IngredientePage({ slug, name, total }: Props) {
+ 
   const router = useRouter();
   const [mermaId, setMermaId] = useState('');
-  const [productId, setProductId] = useState<string | null>(null);
-  
+
   const [ingredientesByProduct, setIngredientesByProduct] = useState<{ id: string; slug: string; name: string; cantidadReceta: number; unidadMedida: UnidadMedida; cantidadConMerma: number; precioConMerma: number; }[]>([]);
 
   console.log('Received props:', { slug, name, total });
@@ -32,17 +35,7 @@ export default function IngredientePage({ slug, name, total }: Props) {
   useEffect(() => {
     fetchIngredientesByProductId();
   }, [fetchIngredientesByProductId]);
-
-  useEffect(() => {
-    const fetchProductIdByName = async () => {
-      const productId = await getProductIdByMermaName(name);
-      setProductId(productId);
-      console.log('Product ID fetched by name:', productId);
-    };
-
-    fetchProductIdByName();
-  }, [name]);
-
+//Actualizar o Crear Merma, si llegara a ser una Elaboracion
   const handleUpdateMerma = async () => {
     if (name) {
       const fetchedMermaId = await getMermaByName(name);
@@ -100,16 +93,16 @@ export default function IngredientePage({ slug, name, total }: Props) {
           ))}
         </tbody>
       </table>
-      {productId && (
-        <button
-          type="button"
-          onClick={handleUpdateMerma}
-          className="bg-gray-600 text-white p-2 mt-4 text-xl font-bold rounded w-full"
-          style={{ boxShadow: 'none', transition: 'none' }}
-        >
-          Enviar a Ingrediente
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={handleUpdateMerma}
+        className="bg-gray-600 text-white p-2 mt-4 text-xl font-bold rounded w-full"
+        style={{ boxShadow: 'none', transition: 'none' }}
+      >
+        Enviar a Ingrediente
+      </button>
     </div>
   );
 }
+
+
