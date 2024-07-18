@@ -1,14 +1,12 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { Category, Product,ProductImage as ProductWithImage } from "@/interfaces";
+import { Category, Product, ProductImage as ProductWithImage } from "@/interfaces";
 import Image from "next/image";
 import clsx from "clsx";
 import { createUpdateProduct, deleteProductImage } from "@/actions";
 import { useRouter } from 'next/navigation';
 import { useEffect } from "react";
-
-
 
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductWithImage[] };
@@ -25,13 +23,12 @@ interface FormInputs {
   inStock: number;
   sizes: string[];
   tags: string;
-  plato: "carne" | "pastas" | "kid" | "vegetales"|"pescados";
+  plato: "carne" | "pastas" | "kid" | "vegetales" | "pescados";
   categoryId: string;
   images?: FileList;
 }
 
-export const ProductForm = ({ product,categories }: Props) => {
-
+export const ProductForm = ({ product, categories }: Props) => {
   const router = useRouter();
 
   const {
@@ -60,13 +57,12 @@ export const ProductForm = ({ product,categories }: Props) => {
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
-
     const { images, ...productToSave } = data;
 
-    if ( product.id ){
+    if (product.id) {
       formData.append("id", product.id ?? "");
     }
-    
+
     formData.append("title", productToSave.title);
     formData.append("slug", productToSave.slug);
     formData.append("description", productToSave.description);
@@ -76,25 +72,28 @@ export const ProductForm = ({ product,categories }: Props) => {
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
     formData.append("plato", productToSave.plato);
-    
-    if ( images ) {
-      for ( let i = 0; i < images.length; i++  ) {
+
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
         formData.append('images', images[i]);
       }
     }
 
+    const { ok, product: updatedProduct } = await createUpdateProduct(formData);
 
-
-    const { ok, product:updatedProduct } = await createUpdateProduct(formData);
-
-    if ( !ok ) {
+    if (!ok) {
       alert('Producto no se pudo actualizar');
       return;
     }
 
-    router.replace(`/admin/product/${ updatedProduct?.slug }`)
-    router.push('/admin/products')
-
+    const selectedCategory = categories.find(category => category.id === productToSave.categoryId);
+    if (selectedCategory?.name === "Elaboraciones") {
+      router.replace(`/admin/elaboraciones/${updatedProduct?.slug}`);
+      router.push('/admin/elaboraciones');
+    } else {
+      router.replace(`/admin/product/${updatedProduct?.slug}`);
+      router.push('/admin/products');
+    }
   };
 
   const title = watch('title');
@@ -109,7 +108,6 @@ export const ProductForm = ({ product,categories }: Props) => {
       setValue('slug', slug);
     }
   }, [title, setValue]);
-  
 
   return (
     <form
@@ -118,25 +116,25 @@ export const ProductForm = ({ product,categories }: Props) => {
     >
       {/* Textos */}
       <div className="w-full">
-      <div className="flex flex-col mb-2 font-bold">
-        <span>Título</span>
-        <input
-          type="text"
-          className="p-2 border rounded-md bg-gray-400"
-          {...register("title", { required: true })}
-        />
-      </div>
+        <div className="flex flex-col mb-2 font-bold">
+          <span>Título</span>
+          <input
+            type="text"
+            className="p-2 border rounded-md bg-gray-400"
+            {...register("title", { required: true })}
+          />
+        </div>
 
-      <div className="flex flex-col mb-2 font-bold">
-        <span>Slug</span>
-        <input
-          type="text"
-          className="p-2 border rounded-md bg-gray-400 font-bold"
-          {...register("slug", { required: true })}
-          readOnly // Para que el campo sea de solo lectura
-          value={watch('slug')} // El valor se obtiene del hook watch
-        />
-      </div>
+        <div className="flex flex-col mb-2 font-bold">
+          <span>Slug</span>
+          <input
+            type="text"
+            className="p-2 border rounded-md bg-gray-400 font-bold"
+            {...register("slug", { required: true })}
+            readOnly // Para que el campo sea de solo lectura
+            value={watch('slug')} // El valor se obtiene del hook watch
+          />
+        </div>
 
         <div className="flex flex-col mb-2 font-bold">
           <span>Descripción</span>
@@ -164,7 +162,6 @@ export const ProductForm = ({ product,categories }: Props) => {
             {...register("tags", { required: true })}
           />
         </div>
-       
 
         <div className="flex flex-col mb-2 font-bold">
           <span>Categoria</span>
@@ -178,11 +175,11 @@ export const ProductForm = ({ product,categories }: Props) => {
                 {category.name}
               </option>
             ))}
-            </select>
-          </div>
-  
-          <button className="btn-primary w-full">Guardar</button>
+          </select>
         </div>
+
+        <button className="btn-primary w-full">Guardar</button>
+      </div>
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
@@ -196,8 +193,7 @@ export const ProductForm = ({ product,categories }: Props) => {
         </div>
 
         {/* As checkboxes */}
-      
-          <div className="flex flex-col font-bold">
+        <div className="flex flex-col font-bold">
           <span>Porción</span>
           <div className="flex flex-wrap">
             {sizes.map((size) => (
@@ -228,11 +224,11 @@ export const ProductForm = ({ product,categories }: Props) => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {product.images?.map((imageUrl:any) => (
+            {product.images?.map((imageUrl: any) => (
               <div key={imageUrl.id}>
                 <Image
                   alt={product.title ?? ""}
-                  src={ imageUrl }
+                  src={imageUrl}
                   width={300}
                   height={300}
                   className="rounded-t shadow-md"
@@ -244,7 +240,7 @@ export const ProductForm = ({ product,categories }: Props) => {
                   className="btn-danger w-full rounded-b-xl"
                 >
                   Eliminar
-                  </button>
+                </button>
               </div>
             ))}
           </div>
@@ -253,4 +249,5 @@ export const ProductForm = ({ product,categories }: Props) => {
     </form>
   );
 };
+
 

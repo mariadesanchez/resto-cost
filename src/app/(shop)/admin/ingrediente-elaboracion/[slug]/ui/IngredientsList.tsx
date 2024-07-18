@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useState } from "react";
-import { getMermaByName, createUpdateMermaIngrediente, getIngredientsByProductId, getProductIdByMermaName } from "@/actions";
+import { getMermaByName, createUpdateMermaIngrediente, getIngredientsByProductId, getProductById } from "@/actions";
 import { useRouter } from 'next/navigation';
 import { DeleteIngrediente } from "@/components";
 import { UnidadMedida } from "@prisma/client";
@@ -14,8 +14,7 @@ interface Props {
 export default function IngredientePage({ slug, name, total }: Props) {
   const router = useRouter();
   const [mermaId, setMermaId] = useState('');
-  const [productId, setProductId] = useState<string | null>(null);
-  
+  const [showEnviarIngrediente, setShowEnviarIngrediente] = useState(false);
   const [ingredientesByProduct, setIngredientesByProduct] = useState<{ id: string; slug: string; name: string; cantidadReceta: number; unidadMedida: UnidadMedida; cantidadConMerma: number; precioConMerma: number; }[]>([]);
 
   console.log('Received props:', { slug, name, total });
@@ -34,14 +33,20 @@ export default function IngredientePage({ slug, name, total }: Props) {
   }, [fetchIngredientesByProductId]);
 
   useEffect(() => {
-    const fetchProductIdByName = async () => {
-      const productId = await getProductIdByMermaName(name);
-      setProductId(productId);
-      console.log('Product ID fetched by name:', productId);
+    const checkProductCategory = async () => {
+      try {
+        const product = await getProductById(slug);
+        if (product && product.category && product.category.name === 'Elaboraciones') {
+          setShowEnviarIngrediente(true);
+        } else {
+          setShowEnviarIngrediente(false);
+        }
+      } catch (error) {
+        console.error('Error al verificar la categoría del producto:', error);
+      }
     };
-
-    fetchProductIdByName();
-  }, [name]);
+    checkProductCategory();
+  }, [slug]);
 
   const handleUpdateMerma = async () => {
     if (name) {
@@ -50,7 +55,6 @@ export default function IngredientePage({ slug, name, total }: Props) {
 
       if (fetchedMermaId) {
         setMermaId(fetchedMermaId);
-        // Actualiza la merma existente
         result = await createUpdateMermaIngrediente(total, name, fetchedMermaId, slug);
         if (result.ok) {
           console.log('MermaIngrediente actualizado correctamente:', result.merma);
@@ -59,7 +63,6 @@ export default function IngredientePage({ slug, name, total }: Props) {
         }
       } else {
         console.log('Merma no encontrada para el producto:', name);
-        // Crea un nuevo registro si no se encuentra
         result = await createUpdateMermaIngrediente(total, name);
         if (result.ok) {
           console.log('MermaIngrediente creado correctamente:', result.merma);
@@ -68,7 +71,6 @@ export default function IngredientePage({ slug, name, total }: Props) {
         }
       }
 
-      // Redirige a la página deseada
       if (result?.ok) {
         router.push(`/admin/precios/${result.merma!.id}`);
       }
@@ -100,7 +102,7 @@ export default function IngredientePage({ slug, name, total }: Props) {
           ))}
         </tbody>
       </table>
-      {productId && (
+      {showEnviarIngrediente && (
         <button
           type="button"
           onClick={handleUpdateMerma}

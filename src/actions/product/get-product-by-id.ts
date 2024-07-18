@@ -10,7 +10,8 @@ export async function getProductById( id: string ){
 
     const product = await prisma.product.findFirst({
       include: {
-        images: true
+        images: true,
+        category: true
       },
       where: {
         id: id,
