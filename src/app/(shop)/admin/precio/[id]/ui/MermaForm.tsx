@@ -69,85 +69,86 @@ export const MermaForm = ({ merma }: Props) => {
   };
 
   return (
-      <div className="bg-white p-10 rounded-lg shadow-lg ">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3"
-        >
-          <div className="w-full">
-            <div className="flex flex-col mb-2 font-bold">
-              <span>Ingrediente</span>
-              <input
-                type="text"
-                className="p-2 border rounded-md bg-gray-400"
-                {...register("name", { required: true })}
-              />
-            </div>
-
-            <div className="flex flex-col mb-2">
-              <label className="block mb-1 text-sm font-medium text-gray-900">
-                Unidad de Medida
-              </label>
-              <select
-                {...register('unidadMedida')}
-                className="input w-full"
-              >
-                <option value="miligramos">Miligramos</option>
-                <option value="gramos">Gramos</option>
-                <option value="kilo">Kilo</option>
-                <option value="mililitros">Mililitros</option>
-                <option value="litro">Litro</option>
-                <option value="unidad">Unidad</option>
-              </select>
-            </div>
-
-            <div className="flex flex-col mb-2 font-bold">
-              <span>Porcentaje</span>
+    <div className="bg-gray-200 p-10 rounded-lg shadow-lg max-w-xl mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="grid grid-cols-1 gap-3"
+    >
+      <div className="w-full">
+        <div className="flex flex-col mb-2 font-bold w-full">
+          <span>Ingrediente</span>
+          <input
+            type="text"
+            className="p-2 border rounded-md bg-gray-300 w-full"
+            {...register("name", { required: true })}
+          />
+        </div>
+  
+        <div className="flex flex-col mb-2 w-full">
+          <label className="block mb-1 text-sm font-medium text-gray-900">
+            Unidad de Medida
+          </label>
+          <select
+            {...register('unidadMedida')}
+            className="input w-full"
+          >
+            <option value="miligramos">Miligramos</option>
+            <option value="gramos">Gramos</option>
+            <option value="kilo">Kilo</option>
+            <option value="mililitros">Mililitros</option>
+            <option value="litro">Litro</option>
+            <option value="unidad">Unidad</option>
+          </select>
+        </div>
+  
+        <div className="flex flex-col mb-2 font-bold w-full">
+          <span>Porcentaje</span>
+          <input
+            type="number"
+            className="p-2 border rounded-md bg-gray-300 font-bold w-full"
+            {...register("porcentaje", { required: true, min: 0 })}
+          />
+        </div>
+  
+        <div className="flex flex-col mb-2 font-bold w-full">
+          <span>Precio Actual</span>
+          <input
+            type="number"
+            className="p-2 border rounded-md bg-gray-300 font-bold w-full"
+            {...register("precioActual", { required: true, min: 0 })}
+          />
+        </div>
+  
+        <div className="flex flex-col mb-2 font-bold w-full">
+          <span>Cantidad</span>
+          <input
+            type="number"
+            className="p-2 border rounded-md bg-gray-300 font-bold w-full"
+            {...register("cantidad", { required: true, min: 0 })}
+          />
+        </div>
+  
+        <div className="flex flex-col mb-2 font-bold w-full">
+          <span>Precio Unitario Actual</span>
+          <Controller
+            name="precioUnitarioActual"
+            control={control}
+            render={({ field }) => (
               <input
                 type="number"
-                className="p-2 border rounded-md bg-gray-400 font-bold"
-                {...register("porcentaje", { required: true, min: 0 })}
+                className="p-2 border rounded-md bg-gray-300 font-bold w-full"
+                {...field}
+                readOnly
               />
-            </div>
-
-            <div className="flex flex-col mb-2 font-bold">
-              <span>Precio Actual</span>
-              <input
-                type="number"
-                className="p-2 border rounded-md bg-gray-400 font-bold"
-                {...register("precioActual", { required: true, min: 0 })}
-              />
-            </div>
-
-            <div className="flex flex-col mb-2 font-bold">
-              <span>Cantidad</span>
-              <input
-                type="number"
-                className="p-2 border rounded-md bg-gray-400 font-bold"
-                {...register("cantidad", { required: true, min: 0 })}
-              />
-            </div>
-
-            <div className="flex flex-col mb-2 font-bold">
-              <span>Precio Unitario Actual</span>
-              <Controller
-                name="precioUnitarioActual"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    type="number"
-                    className="p-2 border rounded-md bg-gray-400 font-bold"
-                    {...field}
-                    readOnly
-                  />
-                )}
-              />
-            </div>
-
-            <button className="btn-primary w-full">Guardar</button>
-          </div>
-        </form>
+            )}
+          />
+        </div>
+  
+        <button className=" bg-gray-500 rounded-md text-2xl text-white font-bold w-full m-2 p-2">Guardar</button>
+      
       </div>
+    </form>
+  </div>
  
   );
 };

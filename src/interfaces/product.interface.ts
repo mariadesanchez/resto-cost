@@ -1,5 +1,9 @@
 
-
+// interfaces.ts
+export interface Category {
+  id: string;
+  name: string;
+}
 export interface Product {
   images: any;
   id: string;
@@ -10,6 +14,8 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
+  category: Category; // Añadir esto
+
 
  
 }

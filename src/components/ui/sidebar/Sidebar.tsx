@@ -198,7 +198,7 @@ export const Sidebar = () => {
                 <span className="ml-3 text-xl" style={{ color: "black" }}>Mesas</span>
               </div>
               <div className="flex flex-wrap mt-2">
-                {[1, 2, 3, 4, 5, 6].map((num) => (
+                {[1, 2, 3, 4, 5, 6,7,8,9,10].map((num) => (
                   <Link
                     key={num}
                     href={`/orders/${num}`}

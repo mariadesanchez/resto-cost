@@ -53,50 +53,59 @@ export const PlaceOrder = () => {
 
   return (
     <div className="grid grid-cols-2 w-[600px]">
-      <div id="Screen" className="col-span-2 mb-5">
-        <label htmlFor="mesa" className="block text-sm font-medium text-gray-700">Mesa</label>
-        <input
-          type="text"
-          id="mesa"
-          value={mesa}
-          onChange={(e) => setMesa(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div className="col-span-2 w-full max-w-6xl bg-white rounded-xl shadow-xl p-7 h-fit mx-auto">
-        <h2 className={`${titleFont.className} antialiased text-3xl text-center font-semibold my-1`}>Cocina | Blanch</h2>
-        <h3 className={`${titleFont.className} antialiased text-xl text-center font-semibold my-2`}>Cocina de Autor</h3>
-        <div className="w-full h-px bg-gray-600 my-2"></div>
-        <div className="grid grid-cols-2 gap-4 mb-5">
-          <span className="text-left">No. Productos</span>
-          <span className="text-right">
-            {itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`}
-          </span>
-        </div>
-        {cart.map((product) => (
-          <div key={`${product.slug}-${product.size}`} className="grid grid-cols-2 gap-4 mb-5">
-            <>
-              <span className="text-left">{product.title}</span>
-              <span className="text-right">${product.price.toFixed(2)} x {product.quantity}</span>
-            </>
-          </div>
+    <div id="Screen" className="col-span-2 mb-5">
+      <label htmlFor="mesa" className="block text-xl font-medium text-gray-700 mb-2">Mesa:</label>
+      <div className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-2xl ">
+        {Array.from({ length: 10 }, (_, index) => index + 1).map((number) => (
+          <label key={number} className="inline-flex items-center mr-2">
+            <input
+              type="radio"
+              name="mesa"
+              value={number}
+              checked={mesa === number.toString()}
+              onChange={(e) => setMesa(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+            />
+            <span className="ml-2">{number}</span>
+          </label>
         ))}
-        <span></span>
-        <div className="grid grid-cols-2 gap-4 mb-5">
-          <span className="text-left">Total:</span>
-          <span className="text-right">{currencyFormat(subTotal)}</span>
-        </div>
-        <div className="w-full h-px bg-gray-600 my-2"></div>
-      
-        <h3 className={`${titleFont.className} antialiased text-xl text-center font-semibold my-2`}>Gracias Por Visitarnos</h3>
-        <div className="mt-5 mb-2 w-full flex justify-center">
-          <CaptureAndPrintButton
-            screenId='Screen'
-            onAfterPrint={onPlaceOrder}
-          />
-        </div>
       </div>
     </div>
+    <div className="col-span-2 w-full max-w-6xl bg-white rounded-xl shadow-xl p-7 h-fit mx-auto">
+      <h2 className={`${titleFont.className} antialiased text-3xl text-center font-semibold my-1`}>Cocina | Blanch</h2>
+      <h3 className={`${titleFont.className} antialiased text-xl text-center font-semibold my-2`}>Cocina de Autor</h3>
+      <div className="w-full h-px bg-gray-600 my-2"></div>
+      <div className="grid grid-cols-2 gap-4 mb-5">
+        <span className="text-left">No. Productos</span>
+        <span className="text-right">
+          {itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`}
+        </span>
+      </div>
+      {cart.map((product) => (
+        <div key={`${product.slug}-${product.size}`} className="grid grid-cols-2 gap-4 mb-5">
+          <>
+            <span className="text-left">{product.title}</span>
+            <span className="text-right">${product.price.toFixed(2)} x {product.quantity}</span>
+          </>
+        </div>
+      ))}
+      <span></span>
+      <div className="grid grid-cols-2 gap-4 mb-5">
+        <span className="text-left">Total:</span>
+        <span className="text-right">{currencyFormat(subTotal)}</span>
+      </div>
+      <div className="w-full h-px bg-gray-600 my-2"></div>
+    
+      <h3 className={`${titleFont.className} antialiased text-xl text-center font-semibold my-2`}>Gracias Por Visitarnos</h3>
+      <div className="mt-5 mb-2 w-full flex justify-center">
+        <CaptureAndPrintButton
+          screenId='Screen'
+          onAfterPrint={onPlaceOrder}
+        />
+      </div>
+    </div>
+  </div>
+  
   );
   
 };

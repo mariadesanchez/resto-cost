@@ -72,7 +72,7 @@ export default function IngredientePage({ slug, name, total }: Props) {
       }
 
       if (result?.ok) {
-        router.push(`/admin/precios/${result.merma!.id}`);
+        router.push(`/admin/precio/${result.merma!.id}`);
       }
     }
   };
