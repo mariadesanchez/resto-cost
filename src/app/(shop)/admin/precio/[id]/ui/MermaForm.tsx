@@ -1,13 +1,13 @@
 "use client";
 import { useForm, Controller } from "react-hook-form";
-import { Ingrediente } from "@/interfaces";
+import {  Merma } from "@/interfaces";
 import { createUpdateMerma } from "@/actions";
 import { useRouter } from 'next/navigation';
 import { UnidadMedida } from "@/interfaces/unidad.interface";
 import { useEffect } from "react";
 
 interface Props {
-  ingredient: Ingrediente;
+  merma: Merma;
 }
 
 interface FormInputs {
@@ -19,7 +19,7 @@ interface FormInputs {
   precioUnitarioActual: number;
 }
 
-export const IngredientForm = ({ ingredient }: Props) => {
+export const MermaForm = ({ merma }: Props) => {
   const router = useRouter();
 
   const {
@@ -32,7 +32,7 @@ export const IngredientForm = ({ ingredient }: Props) => {
     control,
   } = useForm<FormInputs>({
     defaultValues: {
-      ...ingredient,
+      ...merma,
     },
   });
 
@@ -46,17 +46,17 @@ export const IngredientForm = ({ ingredient }: Props) => {
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
-    const { ...ingredientToSave } = data;
-    if (ingredient.id) {
-      formData.append("id", ingredient.id ?? "");
+    const { ...mermaToSave } = data;
+    if (merma.id) {
+      formData.append("id", merma.id ?? "");
     }
 
-    formData.append("name", ingredientToSave.name);
-    formData.append("unidadMedida", ingredientToSave.unidadMedida);
-    formData.append("porcentaje", ingredientToSave.porcentaje.toString());
-    formData.append("precioActual", ingredientToSave.precioActual.toString());
-    formData.append("cantidad", ingredientToSave.cantidad.toString());
-    formData.append("precioUnitarioActual", ingredientToSave.precioUnitarioActual.toString());
+    formData.append("name", mermaToSave.name);
+    formData.append("unidadMedida", mermaToSave.unidadMedida);
+    formData.append("porcentaje", mermaToSave.porcentaje.toString());
+    formData.append("precioActual", mermaToSave.precioActual.toString());
+    formData.append("cantidad", mermaToSave.cantidad.toString());
+    formData.append("precioUnitarioActual", mermaToSave.precioUnitarioActual.toString());
 
     const { ok } = await createUpdateMerma(formData);
 

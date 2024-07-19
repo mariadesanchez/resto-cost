@@ -1,8 +1,8 @@
 import { getMermaById } from '@/actions';
 import { Title } from '@/components';
 import { redirect } from 'next/navigation';
-import { IngredientForm } from './ui/IngredientForm';
-import { Ingrediente } from "@/interfaces";
+import { MermaForm } from './ui/MermaForm';
+import { Merma } from "@/interfaces";
 
 interface Props {
   params: {
@@ -15,28 +15,32 @@ export default async function IngredientPage({ params }: Props) {
 
   const { ok, merma } = await getMermaById(id);
 
-  // Redirigir si no se encuentra el ingrediente y no es una nueva creación
+  // Redirige si no se encuentra la merma y no es una nueva creación
   if (!ok && id !== 'new') {
     redirect('/admin/listPrice');
+    return; // Asegúrate de detener la ejecución después de la redirección
   }
 
-  const ingredient: Ingrediente = ok && merma ? merma : {
+  // Proporciona un valor predeterminado si merma es null
+  const defaultMerma: Merma = {
     id: '',
     name: '',
     unidadMedida: 'gramos',
     porcentaje: 0,
     precioActual: 0,
     cantidad: 0,
-    precioUnitarioActual: 0
+    precioUnitarioActual: 0,
+    productId: null
   };
+
+  const mermaToPass: Merma = merma || defaultMerma;
 
   const title = (id === 'new') ? 'Nuevo Ingrediente' : 'Editar Ingrediente';
 
   return (
     <>
       <Title title={title} />
-      <IngredientForm ingredient={ingredient} />
+      <MermaForm merma={mermaToPass} />
     </>
   );
 }
-
