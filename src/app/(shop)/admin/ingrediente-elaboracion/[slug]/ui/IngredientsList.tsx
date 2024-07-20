@@ -36,7 +36,7 @@ export default function IngredientePage({ slug, name, total }: Props) {
     const checkProductCategory = async () => {
       try {
         const product = await getProductById(slug);
-        if (product && product.category && product.category.name === 'Elaboraciones') {
+        if (product && product && product.category.name === 'Elaboraciones') {
           setShowEnviarIngrediente(true);
         } else {
           setShowEnviarIngrediente(false);
