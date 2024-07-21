@@ -1,8 +1,5 @@
 
 
-export {deleteUserAddress}from './address/delete-user-address';
-export {getUserAddress}from './address/get-user-address';
-export {setUserAddress}from './address/set-user-address';
 
 
 export {login,authenticate} from './auth/login';
@@ -14,7 +11,7 @@ export {getCategoryByid} from './category/get-category-by-id';
 export {createUpdateCategory} from './category/create-update-category';
 export {getCategoryByName} from './category/get-category-by-name'
 
-export {getCountries} from './country/get-countries';
+
 
 export {placeOrder} from './order/place-order';
 export {getOrderById} from './order/get-order-by-id';

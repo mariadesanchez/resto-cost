@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 
 import { auth } from "@/auth.config";
-import type { Address, Size } from "@/interfaces";
+import type {  Size } from "@/interfaces";
 
 interface ProductToOrder {
   productId: string;
@@ -11,10 +11,12 @@ interface ProductToOrder {
   size: Size;
 }
 
+
 export async function placeOrder(
   productIds: ProductToOrder[],
-  address: Address,
-  mesa: string // Nuevo parámetro mesa
+  mesa: string ,// Nuevo parámetro mesa
+  camarera: string,
+ 
 ) {
   const session = await auth();
   const userId = session?.user.id;
@@ -98,7 +100,8 @@ export async function placeOrder(
           subTotal: subTotal,
           tax: tax,
           total: total,
-          mesa: mesa, // Agregar el campo mesa aquí
+          mesa: mesa,
+          camarera: camarera,
           OrderItem: {
             createMany: {
               data: productIds.map((p) => ({
@@ -115,26 +118,26 @@ export async function placeOrder(
       });
 
       // 3. Crear la dirección de la orden
-      const { country, ...restAddress } = address;
-      const orderAddress = await tx.orderAddress.create({
-        data: {
-          ...restAddress,
-          countryId: country,
-          orderId: order.id,
-        },
-      });
+      // const { country, ...restAddress } = address;
+      // const orderAddress = await tx.orderAddress.create({
+      //   data: {
+      //     ...restAddress,
+      //     countryId: country,
+      //     orderId: order.id,
+      //   },
+      // });
 
       return {
         updatedProducts: updatedProducts,
         order: order,
-        orderAddress: orderAddress,
+        // orderAddress: orderAddress,
       };
     });
 
     return {
       ok: true,
       order: prismaTx.order,
-      prismaTx: prismaTx,
+      // prismaTx: prismaTx,
     };
   } catch (error: any) {
     return {

@@ -96,31 +96,31 @@ model User {
   password      String
   role          Role      @default(user)
   image         String?
-  address       UserAddress?
+  // address       UserAddress?
   Order         Order[]
 }
 
-model Country {
-  id           String       @id
-  name         String
-  UserAddress  UserAddress[]
-  OrderAddress OrderAddress[]
-}
+// model Country {
+//   id           String       @id
+//   name         String
+//   UserAddress  UserAddress[]
+//   OrderAddress OrderAddress[]
+// }
 
-model UserAddress {
-  id         String  @id @default(uuid())
-  firstName  String
-  lastName   String
-  address    String
-  address2   String?
-  postalCode String
-  phone      String
-  city       String
-  country    Country  @relation(fields: [countryId], references: [id])
-  countryId  String
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String   @unique
-}
+// model UserAddress {
+//   id         String  @id @default(uuid())
+//   firstName  String
+//   lastName   String
+//   address    String
+//   address2   String?
+//   postalCode String
+//   phone      String
+//   city       String
+//   country    Country  @relation(fields: [countryId], references: [id])
+//   countryId  String
+//   user       User     @relation(fields: [userId], references: [id])
+//   userId     String   @unique
+// }
 
 model Order {
   id           String     @id @default(uuid())
@@ -135,9 +135,10 @@ model Order {
   user         User       @relation(fields: [userId], references: [id])
   userId       String
   OrderItem    OrderItem[]
-  OrderAddress OrderAddress?
+  // OrderAddress OrderAddress?
   transactionId String?
   mesa String
+  camarera String
 }
 
 model OrderItem {
@@ -151,17 +152,17 @@ model OrderItem {
   productId String
 }
 
-model OrderAddress {
-  id         String  @id @default(uuid())
-  firstName  String
-  lastName   String
-  address    String
-  address2   String?
-  postalCode String
-  city       String
-  phone      String
-  country    Country  @relation(fields: [countryId], references: [id])
-  countryId  String
-  Order      Order    @relation(fields: [orderId], references: [id])
-  orderId    String   @unique
-}
+// model OrderAddress {
+//   id         String  @id @default(uuid())
+//   firstName  String
+//   lastName   String
+//   address    String
+//   address2   String?
+//   postalCode String
+//   city       String
+//   phone      String
+//   country    Country  @relation(fields: [countryId], references: [id])
+//   countryId  String
+//   Order      Order    @relation(fields: [orderId], references: [id])
+//   orderId    String   @unique
+// }

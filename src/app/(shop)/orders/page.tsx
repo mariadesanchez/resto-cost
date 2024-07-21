@@ -58,9 +58,9 @@ export default async function OrdersPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {order.id.split("-").at(-1)}
                 </td>
-                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                {/* <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   {order.OrderAddress?.firstName} {order.OrderAddress?.lastName}
-                </td>
+                </td> */}
                 <td className="flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   {order.isPaid ? (
                     <>

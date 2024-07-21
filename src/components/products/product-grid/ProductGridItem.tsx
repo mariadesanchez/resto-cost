@@ -1,12 +1,13 @@
 'use client';
 
+
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { ProductImage } from '../../product/product-image/ProductImage';
-import { Product } from '@/interfaces';
 import { useState } from 'react';
 import { useSession } from "next-auth/react";
 import { titleFont } from '@/config/fonts';
+import { Product } from '@/interfaces';
 
 interface Props {
   product: Product;
@@ -14,7 +15,7 @@ interface Props {
 
 export const ProductGridItem = ( { product }: Props ) => {
 
-  const [ displayImage, setDisplayImage ] = useState( product.images[ 0 ] );
+  const [ displayImage, setDisplayImage ] = useState(product.images[0]);
 
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
@@ -22,10 +23,9 @@ export const ProductGridItem = ( { product }: Props ) => {
 
   return (
     <div className={`${titleFont.className} rounded-md overflow-hidden fade-in`}>
- 
       <Link href={ `/product/${ product.slug }` }>
          <Image
-          src={ displayImage }
+          src={ displayImage } // Asegúrate de que este valor sea una URL válida
           alt={ product.title }
           className="w-full object-cover rounded"
           width={ 500 }
@@ -33,7 +33,6 @@ export const ProductGridItem = ( { product }: Props ) => {
           onMouseEnter={ () => setDisplayImage( product.images[1] )  }
           onMouseLeave={ () => setDisplayImage( product.images[0] ) }
           />
-        
       </Link>
 
       <div className="p-4 flex flex-col">
@@ -42,12 +41,12 @@ export const ProductGridItem = ( { product }: Props ) => {
           href={ `/product/${ product.slug }` }>
           { product.title }
         </Link>
-        { (product.inStock == 0 && isAdmin) &&
+        { (product.inStock === 0 && isAdmin) &&
           <div className='flex'>
             <Link className="font-bold text-red-500 text-2xl" href={'/admin/products'}>Sin Stock</Link>
           </div>
         }
-        { (product.inStock == 0 && !isAdmin) &&
+        { (product.inStock === 0 && !isAdmin) &&
           <div className='flex'>
             <span className="font-bold text-red-500 text-2xl">Sin Stock</span>
           </div>
@@ -58,7 +57,6 @@ export const ProductGridItem = ( { product }: Props ) => {
           </div>
         }
       </div>
-
     </div>
   );
 };

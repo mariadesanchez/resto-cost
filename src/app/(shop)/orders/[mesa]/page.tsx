@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { titleFont } from '@/config/fonts';
 import { getOrdersByUserByDayByMesa } from "@/actions/order/get-orders-by-user-day-mesa";
 import { currencyFormat } from "@/utils";
@@ -14,13 +14,13 @@ interface Props {
 
 export default async function OrdersByUserDayMesaPage({ params }: Props) {
   const { mesa } = params;
-
   const { ok, orders } = await getOrdersByUserByDayByMesa(mesa);
 
   if (!ok) {
     console.error("No se pudieron obtener las órdenes:", orders);
     // Puedes manejar la redirección de otra manera aquí si es necesario
   }
+  
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -32,13 +32,16 @@ export default async function OrdersByUserDayMesaPage({ params }: Props) {
           <div className="mb-10">
             <h2 className={`${titleFont.className} antialiased text-3xl text-center font-semibold my-1`}>Cocina | Blanch</h2>
             <h3 className={`${titleFont.className} antialiased text-2xl text-center font-semibold my-2`}>Cocina de Autor</h3>
+
           </div>
           <div className="w-full h-px bg-gray-600"></div>
           <div className="flex flex-col mt-5 justify-center items-center">
             {orders!.map((order) => (
               <div key={order.id} className="grid grid-cols-2 gap-4 mb-5">
+            
                 {order.OrderItem.map((item) => (
                   <React.Fragment key={item.id}>
+
                     <span className="text-left">{item.product.title}</span>
                     <span className="text-right">
                       {currencyFormat(item.price)} x {item.quantity}

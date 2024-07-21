@@ -1,17 +1,17 @@
 import prisma from '../lib/prisma';
 import { initialData } from './seed';
-import { countries } from './seed-countries';
+// import { countries } from './seed-countries';
 import { mermas } from './seed-mermas';
 
 async function main() {
   // 1. Borrar registros previos
-  await prisma.orderAddress.deleteMany();
+  // await prisma.orderAddress.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();
 
-  await prisma.userAddress.deleteMany();
+  // await prisma.userAddress.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.country.deleteMany();
+  // await prisma.country.deleteMany();
 
   // Eliminar primero las relaciones de ProductIngrediente
   await prisma.productIngrediente.deleteMany();
@@ -29,9 +29,9 @@ async function main() {
   });
 
   // Crear países
-  await prisma.country.createMany({
-    data: countries,
-  });
+  // await prisma.country.createMany({
+  //   data: countries,
+  // });
 
   // Crear mermas
   await prisma.merma.createMany({
