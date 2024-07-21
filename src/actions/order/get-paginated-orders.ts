@@ -20,14 +20,7 @@ export async function getPaginatedOrders() {
     orderBy: {
       createdAt: 'desc'
     },
-    include: {
-      OrderAddress: {
-        select: {
-          firstName: true,
-          lastName: true
-        }
-      }
-    }
+    
   })
 
   return {

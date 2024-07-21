@@ -20,14 +20,7 @@ export async function getOrdersByUser() {
     where: {
       userId: session.user.id
     },
-    include: {
-      OrderAddress: {
-        select: {
-          firstName: true,
-          lastName: true
-        }
-      }
-    }
+    
   })
 
   return {

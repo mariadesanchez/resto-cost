@@ -22,7 +22,7 @@ export async function getOrderById( id: string ) {
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        OrderAddress: true,
+      
         OrderItem: {
           select: {
             price: true,

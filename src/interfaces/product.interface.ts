@@ -9,10 +9,6 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
- 
-
-
- 
 }
 
 export interface CartProduct {
@@ -27,15 +23,11 @@ export interface CartProduct {
   inStock: number;
   
 }
-
-
 export interface ProductImage {
   id: number;
   url: string;
   productId: string;
 }
-
-
 export type Size = 'CH'|'M'|'G';
 
 
